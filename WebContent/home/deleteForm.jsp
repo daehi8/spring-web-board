@@ -4,7 +4,7 @@
 <%
 	String sessionId = (String)session.getAttribute("id");
 	if(sessionId == null){
-	response.sendRedirect("loginForm.jsp");
+	response.sendRedirect("main.jsp");
 }
 %>
 <form action = "deletePro.jsp" method = "post">

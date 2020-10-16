@@ -54,7 +54,7 @@ public class SignupDAO {
 	public void insert(SignupDTO dto) {
 		try {
 			conn = getConnection();
-	    	String sql = "insert into signup values(?,?,?,?,?,?,?,?,sysdate)";
+	    	String sql = "insert into signup values(?,?,?,?,?,?,?,?, sysdate,?)";
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setString(1, dto.getId());
 	    	pstmt.setString(2, dto.getPw());
@@ -62,8 +62,9 @@ public class SignupDAO {
 	    	pstmt.setString(4, dto.getGender());
 	    	pstmt.setString(5, dto.getNickname());
 	    	pstmt.setString(6, dto.getNum());
-	    	pstmt.setString(7, dto.getEmail()+"@"+dto.getEmail2());
-	    	pstmt.setString(8, dto.getAddress()+" "+dto.getAddress());
+	    	pstmt.setString(7, dto.getEmail());
+	    	pstmt.setString(8, dto.getAddress());
+	    	pstmt.setString(9, dto.getImg());
 	    	
 	    	pstmt.executeUpdate();
 	    	
@@ -74,13 +75,13 @@ public class SignupDAO {
 		}		
 	}
 	
-	public boolean selectNum(String num) {
+	public boolean selectId(String id) {
 		boolean result = false;
 		try {
 			conn = getConnection();
-			String sql = "select * from signup where num = ?";
+			String sql = "select * from signup where id = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, num);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = true;

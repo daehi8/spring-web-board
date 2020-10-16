@@ -6,7 +6,7 @@
     <%
 	String sessionId = (String)session.getAttribute("id");
 	if(sessionId == null){
-	response.sendRedirect("loginForm.jsp");
+	response.sendRedirect("main.jsp");
 }
     %>
     
@@ -22,11 +22,11 @@
     	%>
     	<script>
     		alert("탈퇴되었습니다");
-    		window.location = "loginForm.jsp"
+    		window.location = "main.jsp"
     	</script>
    	<%}else{%>
    		<script>
    			alert("비밀번호가 맞지 않습니다.");
-   			window.location = "deleteForm.jsp"
+   			window.location = "main_delete.jsp"
    		</script>		
    	<%}%>

@@ -7,7 +7,7 @@
 	<%
 	String sessionId = (String)session.getAttribute("id");
 	if(sessionId == null){
-		response.sendRedirect("loginForm.jsp");
+		response.sendRedirect("main.jsp");
 	}
 	SignupDAO dao = new SignupDAO();
 	SignupDTO dto = dao.myInfo(sessionId);

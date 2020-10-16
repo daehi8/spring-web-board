@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<form action = "insert.jsp" method = "post">
+<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%> 
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page import="home.sign.model.SignupDAO" %>
+<%@ page import="home.sign.model.SignupDTO" %>
+
+<%request.setCharacterEncoding("UTF-8"); %>    
+   
+<form action = "insert.jsp" method = "post" enctype="multipart/form-data">
 	<style>
 	table{
 		border-collapse:collapse; 
@@ -54,7 +60,7 @@
     	<tr>
     		<td align = "center">이메일</td>
     		<td>
-    			<input type = "text" size = 15 name = "email"/>@
+    			<input type = "text" size = 15 name = "email1"/>
     			<select name = "email2">
     				<option value="naver.com" selected>naver.com</option>
     				<option value="hanmail.net">hanmail.net</option>
@@ -64,16 +70,23 @@
     	</tr>    	
      	<tr>
     		<td align = "center">주소</td>
-    		<td ><input type = "text" size = 50 name = "address"/></td>
+    		<td ><input type = "text" size = 50 name = "address1"/></td>
     	</tr>
     	<tr>
     		<td align = "center">상세 주소 </td>
     		<td><input type = "text" name = "address2"/></td>
     	</tr>
     	<tr>
+    		<td align = "center">학생사진</td>
+    		<td>
+    			 <input type="file" name="img"/> <br />
+				<input type="submit" value="등록" /> <br />
+    		</td>
+    	</tr>
+    	<tr>
     		<td colspan = "2" align = "center">
     		<input type = "submit" value = "확인" />
-    		<input type = "button" value = "취소" />
+    		<input type = "button" value = "취소" onclick="window.location='main.jsp'"/>
     		</td>
     	</tr>    	   	   	
     	    		

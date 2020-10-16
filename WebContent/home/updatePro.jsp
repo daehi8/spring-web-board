@@ -7,7 +7,7 @@
 		request.setCharacterEncoding("UTF-8");
 		String sessionId = (String)session.getAttribute("id");
 		if(sessionId == null){
-			response.sendRedirect("loginForm.jsp");
+			response.sendRedirect("main.jsp");
 		}
 	%>
 	
@@ -20,5 +20,5 @@
 	%>
 	<script>
 		alert("수정되었습니다.");
-		window.location="main.jsp";
+		window.location="main_auto.jsp";
 	</script>
