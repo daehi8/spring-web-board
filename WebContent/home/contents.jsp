@@ -2,4 +2,4 @@
     pageEncoding="UTF-8"%>
     
     
-<h1> main </h1>
+<%@ include file = "../board/list.jsp"%>

@@ -14,5 +14,5 @@
     BoardDAO dao = BoardDAO.getInstance();
     dao.insertArticle(article);
 
-    response.sendRedirect("list.jsp");
+    response.sendRedirect("../board/list.jsp");
 %>

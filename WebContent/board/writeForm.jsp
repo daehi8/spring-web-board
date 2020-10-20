@@ -17,10 +17,12 @@
 			re_level=Integer.parseInt(request.getParameter("re_level"));
 	}
 %>
-
+<head>
+	<link href="../board/write.css" rel="stylesheet">
+</head>
 <body>
 <br>
-<form method = "post" name = "writeform" action = "writePro.jsp">
+<form method = "post" name = "writeform" action = "../board/writePro.jsp">
 	<%-- 히든타입으로 만든 값을 pro페이지로 전송 --%>
 	<input type="hidden" name="num" value="<%=num%>">
 	<input type="hidden" name="ref" value="<%=ref%>">
@@ -29,42 +31,39 @@
 	
 	<table>
 		<tr>
-			<td>
-				<a href="list.jsp">글목록</a>
-			</td>
+			<td class="hd" colspan="2">글목록</td>
 		</tr>
 		<tr>
-			<td>이름</td>
-			<td><input type="text" size ="10" maxlength="10" name="writer"></td>			
+			<td class="hd">이름</td>
+			<td><input type="text" size="10" maxlength="10"name="writer"></td>			
 		</tr>
 		<tr>
-			<td>제목</td>		
+			<td class="hd">제목</td>		
 			<td>
+			<%-- 답변글일경우 제목에 답변 표시 --%>
 			<%if(request.getParameter("num")==null) {%> 
-				<%-- 글 쓰기  --%>
-				<input type="text" size="40" maxlength="40" name="subject"></td>
+				<input type="text" size="40" maxlength="50" name="subject"></td>
 			<%}else{ %>
-				<%-- 답변 쓰기  --%>
-				<input type="text" size="40" maxlength="40" name="subject" value="[답변]"></td>
+				<input type="text" size="40" maxlength="50" name="subject" value="[답변]"></td>
 			<%} %>
 		</tr>
 		<tr>
-			<td>Email</td>		
+			<td class="hd">Email</td>		
 			<td><input type="text" size="40" maxlength="30" name="email" ></td>
 		</tr>
 		<tr>
-			<td>내용</td>		
-			<td><textarea name="content" rows="13" cols="40"></textarea></td>
+			<td class="hd">내용</td>		
+			<td><textarea name="content" ></textarea></td>
 		</tr>
 		<tr>
-			<td>비밀번호</td>		
-			<td><input type="password" size="8" maxlength="12" name="passwd"></td>
+			<td class="hd">비밀번호</td>		
+			<td><input type="password" name="pw" size="8" maxlength="12"></td>
 		</tr>
 		<tr>
-			<td>
+			<td colspan="2">
 				<input type="submit" value="글쓰기" >  
   				<input type="reset" value="다시작성">
-  				<input type="button" value="목록보기" OnClick="window.location='list.jsp'">
+  				<input type="button" value="목록보기" OnClick="window.location='../board/list.jsp'">
 			</td>		
 		</tr>										
 	</table>
