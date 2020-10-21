@@ -11,20 +11,20 @@
 	<table width="800" border="1" cellpadding="2" cellspacing="0">
 		<tr>
 			<td>
-				<jsp:include page = "top.jsp" flush = "false" ></jsp:include>
+				<jsp:include page = "/home/top.jsp" flush = "false" ></jsp:include>
 			</td>
 			<td width = "150">
-				<jsp:include page = "loginHome.jsp" flush = "false"></jsp:include>
+				<jsp:include page = "/home/loginHome.jsp" flush = "false"></jsp:include>
 			</td>
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<jsp:include page = "main.jsp" flush = "false"></jsp:include>
+				<jsp:include page = "/home/main.jsp" flush = "false"></jsp:include>
 			</td>
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<jsp:include page = "bottom.jsp" flush = "false"></jsp:include>
+				<jsp:include page = "/home/bottom.jsp" flush = "false"></jsp:include>
 			</td>
 		</tr>				
 	</table>

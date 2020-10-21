@@ -27,6 +27,6 @@
    	<%}else{%>
    		<script>
    			alert("비밀번호가 맞지 않습니다.");
-   			window.location = "main_delete.jsp"
+   			window.location = "deleteForm.jsp"
    		</script>		
    	<%}%>

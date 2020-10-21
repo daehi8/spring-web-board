@@ -52,19 +52,32 @@
 	</tr>
 	<tr>
 		<td class="hd" colspan="4" >
+		<%
+    	String id = (String)session.getAttribute("id");
+    	if (!id.equals("admin")){
+    		if(id.equals(article.getWriter())){
+    	%> 
 			<%-- 수정하거나 삭제할 페이지 번호 전송 --%>
 	  		<input type="button" value="글수정" 
      		onclick="document.location.href='../board/writeUpdateForm.jsp?num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
 	 		&nbsp;&nbsp;&nbsp;&nbsp;
+	 		
 	 		<input type="button" value="글삭제" 
      		onclick="document.location.href='../board/writeDeleteForm.jsp?num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
 	  		&nbsp;&nbsp;&nbsp;&nbsp;
 	  		
-	  		<%-- 답글 쓰기 누를경우 값을 전송해 글쓰기와 구분 --%>
+			<%}%>
+		<%}else{%>
+			<%-- 답글 쓰기 누를경우 값을 전송해 글쓰기와 구분 --%>
 	  		<input type="button" value="답글쓰기" 
        		onclick="document.location.href='../board/writeForm.jsp?num=<%=num%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'">
 	  		&nbsp;&nbsp;&nbsp;&nbsp;
-	  		
+		
+			<input type="button" value="글삭제" 
+     		onclick="document.location.href='../board/writeDeletePro.jsp?num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
+	  		&nbsp;&nbsp;&nbsp;&nbsp;
+		<%}%>
+		  		
 	  		<%-- 현재 글의 페이지를 확인해 위치한 페이지로 이동 --%>
 	  		<input type="button" value="글목록" 
        		onclick="document.location.href='../board/list.jsp?pageNum=<%=pageNum%>'">

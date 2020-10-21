@@ -13,7 +13,7 @@
 		}
 	}
 	if (auto != null && id != null && pw != null){
-		response.sendRedirect("loginPro.jsp");
+		response.sendRedirect("cookiePro.jsp");
 	}
 %>
 <form action = "loginPro.jsp" method="post" >

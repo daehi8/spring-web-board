@@ -20,5 +20,5 @@
 	%>
 	<script>
 		alert("수정되었습니다.");
-		window.location="main_auto.jsp";
+		window.location="loginHome.jsp";
 	</script>

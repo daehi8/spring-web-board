@@ -25,6 +25,9 @@ td{
 	border : 1px solid black;
 	background: #eee;	
 }
+td.writeId{
+	text-align : left;
+}
 input[type=text],input[type=password]{
 	float:left;
 }

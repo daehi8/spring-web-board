@@ -22,6 +22,8 @@
 		}
 	}
 %>
-	<button onclick="window.location='main_myInfo.jsp'">내정보 확인</button>
+	<button onclick="window.location='myInfo.jsp'">내정보 확인</button>
 	<button onclick="window.location='logout.jsp'">로그아웃</button>
-	<button onclick="window.location='main_delete.jsp'">회원탈퇴</button>
+	<button onclick="window.location='delete.jsp'">회원탈퇴</button>
+	<button onclick="window.location='../board/myList.jsp'">나의 작성글목록</button>
+	<button onclick="window.location='../board/list.jsp'">게시판</button>

@@ -302,6 +302,52 @@ public class BoardDAO {
 		return x;
 	}
 	
+	public List getList(int start, int end) throws Exception{
+        List myList=null;
+        try {
+        	BoardDTO article= new BoardDTO();
+        	conn = getConnection();
+            pstmt = conn.prepareStatement(
+
+            // ref 내림차순하고 re_step 오름차순으로 정렬
+            // rownum r을 차례로 생성
+            // rownum r을 startrow와 endrow사이의 값만 select 
+            "select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,r "+
+        	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r " +
+        	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount " +
+        	"from homeboard order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ? and writer=?");
+            pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			pstmt.setString(3, article.getWriter());
+            rs = pstmt.executeQuery();        	
+        if(rs.next()) {
+        	myList = new ArrayList(end);
+        	do{
+                 
+				 article.setNum(rs.getInt("num"));
+				 article.setWriter(rs.getString("writer"));
+                 article.setEmail(rs.getString("email"));
+                 article.setSubject(rs.getString("subject"));
+                 article.setPw(rs.getString("pw"));
+			     article.setReg_date(rs.getTimestamp("reg_date"));
+				 article.setReadcount(rs.getInt("readcount"));
+                 article.setRef(rs.getInt("ref"));
+                 article.setRe_step(rs.getInt("re_step"));
+				 article.setRe_level(rs.getInt("re_level"));
+                 article.setContent(rs.getString("content"));
+			     article.setIp(rs.getString("ip")); 
+				  
+			     myList.add(article);
+        	 	 }while(rs.next());
+        	}	
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        	closeAll();
+        }
+		return myList;
+	}
+	
 	// 연결 종료 메소드
 	private void closeAll() {
 		if(rs != null) {try {rs.close();}catch(SQLException s) {}}

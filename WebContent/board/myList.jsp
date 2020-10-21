@@ -81,7 +81,9 @@ if(id.equals("admin")){%>
 <%
 	for(int i = 0; i < articleList.size(); i++) {
 		BoardDTO article = (BoardDTO)articleList.get(i);
-%>
+		if(id.equals(article.getWriter())){
+			%>
+	
 	<tr>
 		<td><%=number--%></td>
 		<td>
@@ -116,8 +118,10 @@ if(id.equals("admin")){%>
 		<td><%=article.getIp() %></td>
 	</tr>
 	<%}%>
-</table>
 <%}%>
+	
+</table>
+
 
 <%
 	if(count > 0) {
@@ -130,21 +134,22 @@ if(id.equals("admin")){%>
         
         // 현재 페이지에서 -10페이지
         if (startPage > 10) {    %>
-        <a href="../board/list.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
+        <a href="../board/myList.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
 <%      }
         
         // 페이지 숫자 설정
         for (int i = startPage ; i <= endPage ; i++) {  %>
-        <a href="../board/list.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+        <a href="../board/myList.jsp?pageNum=<%= i %>">[<%= i %>]</a>
 <%
         }
         
         // 현재 페이지에서 +10페이지
         if (endPage < pageCount) {  %>
-        <a href="../board/list.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
+        <a href="../board/myList.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
 <%
         }
     }
+}
 %>
 </body>
 </html>

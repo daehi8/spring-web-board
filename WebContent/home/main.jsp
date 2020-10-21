@@ -18,8 +18,9 @@
 			}
 		}
 		if (auto != null && id != null && pw != null){		// 쿠키가 있으면 -> true
-			response.sendRedirect("loginPro.jsp");			// 세션 생성
+			response.sendRedirect("cookiePro.jsp");			// 세션 생성
 		}
+		String sessionId = (String)session.getAttribute("id");
 	%>
 	<table width="800" border="1" cellpadding="2" cellspacing="0">
 		<tr>
@@ -27,7 +28,11 @@
 				<jsp:include page = "top.jsp" flush = "false" ></jsp:include>
 			</td>
 			<td width = "150">
+				<%if(sessionId == null){%> 
 				<jsp:include page = "loginForm2.jsp" flush = "false"></jsp:include>
+				<%}else{%>
+				<jsp:include page = "loginHome.jsp" flush = "false"></jsp:include>
+				<%}%>
 			</td>
 		</tr>
 		<tr>

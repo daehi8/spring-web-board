@@ -4,8 +4,10 @@
 <%
 	int num = Integer.parseInt(request.getParameter("num"));
 	String pageNum = request.getParameter("pageNum");
+	
+    String id = (String)session.getAttribute("id");
 %>
-
+	
 <script>
 	function deleteSave(){
 		if(document.delForm.pw.value==''){

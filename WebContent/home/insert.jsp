@@ -30,7 +30,7 @@
     %>
    		 <script>
     		alert("이미 등록되었습니다.");
-    		window.location = "main_signup";  
+    		window.location = "signup01.jsp";  
   		</script>
   	  <%}else{
     	dao.insert(dto);

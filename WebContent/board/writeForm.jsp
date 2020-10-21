@@ -5,7 +5,15 @@
 	table{	border :  3px solid black;}
 </style>
     
-    
+<% 
+
+	String id = (String)session.getAttribute("id");
+	if(id == null){
+%>	<script>
+		alert("로그인후 사용가능합니다.");
+		window.location='/home/home/main.jsp';
+	</script>		
+<%}%>    
 <%
 	int num=0,ref=1,re_step=1,re_level=0;
 		try{
@@ -35,7 +43,7 @@
 		</tr>
 		<tr>
 			<td class="hd">이름</td>
-			<td><input type="text" size="10" maxlength="10"name="writer"></td>			
+			<td class="writeId"><%=id %><input type="hidden" name="writer" value = "<%=id%>"></td>			
 		</tr>
 		<tr>
 			<td class="hd">제목</td>		
