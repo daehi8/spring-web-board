@@ -23,6 +23,7 @@ select * from homeboard;
 select * from homeboard_seq;
 drop table homeboard;
 drop sequence homeboard_seq;
+select * from homeboard where writer='java' order by reg_date;
 
 select * from 
 (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r
