@@ -22,6 +22,8 @@
 					response.addCookie(c);
 				}
 			}
-		}
-		response.sendRedirect("main.jsp");
-	%>
+		}%>
+	<script>            
+        alert("로그아웃되었습니다.");
+        history.go(-1);
+   </script>

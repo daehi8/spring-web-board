@@ -7,8 +7,8 @@
     
 <% 
 
-	String id = (String)session.getAttribute("id");
-	if(id == null){
+	String sessionId = (String)session.getAttribute("id");
+	if(sessionId == null){
 %>	<script>
 		alert("로그인후 사용가능합니다.");
 		window.location='/home/home/main.jsp';
@@ -43,7 +43,7 @@
 		</tr>
 		<tr>
 			<td class="hd">이름</td>
-			<td class="writeId"><%=id %><input type="hidden" name="writer" value = "<%=id%>"></td>			
+			<td class="writeId"><%=sessionId %><input type="hidden" name="writer" value = "<%=sessionId%>"></td>			
 		</tr>
 		<tr>
 			<td class="hd">제목</td>		

@@ -5,7 +5,7 @@
 	int num = Integer.parseInt(request.getParameter("num"));
 	String pageNum = request.getParameter("pageNum");
 	
-    String id = (String)session.getAttribute("id");
+    String sessionId = (String)session.getAttribute("id");
 %>
 	
 <script>

@@ -13,8 +13,8 @@
 	BoardDAO dao = BoardDAO.getInstance();
 	int check = dao.deleteArticle(num, pw);
 	
-	String id = (String)session.getAttribute("id");
-	if(id.equals("admin")){%>
+	String sessionId = (String)session.getAttribute("id");
+	if("admin".equals(sessionId)){%>
 		<meta http-equiv="Refresh" content="0;url=../board/list.jsp?pageNum=<%=pageNum%>" >		
 	<%}%>
 	<%if(check == 1){%>

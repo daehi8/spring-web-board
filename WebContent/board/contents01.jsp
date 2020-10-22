@@ -53,9 +53,9 @@
 	<tr>
 		<td class="hd" colspan="4" >
 		<%
-    	String id = (String)session.getAttribute("id");
-    	if (!id.equals("admin")){
-    		if(id.equals(article.getWriter())){
+    	String sessionId = (String)session.getAttribute("id");
+    	if (!"admin".equals(sessionId)){
+    		if(sessionId.equals(article.getWriter())){
     	%> 
 			<%-- 수정하거나 삭제할 페이지 번호 전송 --%>
 	  		<input type="button" value="글수정" 

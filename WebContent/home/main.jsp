@@ -18,7 +18,7 @@
 			}
 		}
 		if (auto != null && id != null && pw != null){		// 쿠키가 있으면 -> true
-			response.sendRedirect("cookiePro.jsp");			// 세션 생성
+			response.sendRedirect("/home/home/cookiePro.jsp");			// 세션 생성
 		}
 		String sessionId = (String)session.getAttribute("id");
 	%>

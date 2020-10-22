@@ -7,6 +7,7 @@
 
 
 <%!
+
 	int pageSize = 10;	// 한 화면에 표시할 게시글 수
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");	// 년-월-일 시:분
 %>
@@ -32,27 +33,32 @@
     
  	// 게시판 글번호 처리 식  11-(1-1)*10													  
     number = count - (currentPage - 1) * pageSize;	
-	
-    String id = (String)session.getAttribute("id");
+    String sessionId = (String)session.getAttribute("id");
 %>
 <html>
 <head>
 	<title>게시판</title>
-	<link href="../board/write.css" rel="stylesheet">
+	<link href="/home/board/write.css" rel="stylesheet">
 </head>
 <body>
 <%
-if(id.equals("admin")){%>
+if("admin".equals(sessionId)){%>
 <b>관리자입니다.</b> <br />
-<%}%>  
+<%}else%>  
 <b>글목록(전체글:<%=count %>)</b>
 <table>
 	<tr>
 		<td>
-			<%if(id != null){ %>
-			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='../board/writeForm.jsp'">
+			<%if(sessionId != null){ %>
+			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='/home/board/writeForm.jsp'"/>
+			<input type= "button" value="게시판" onclick="window.location='/home/board/list.jsp'" />
+			<input type= "button" value="나의 작성글목록" onclick="window.location='/home/board/myList.jsp'" />
+			<input type= "button" value="회원탈퇴" onclick="window.location='/home/home/deleteForm.jsp'" />
+			<input type= "button" value="내정보확인" onclick="window.location='/home/home/myInfo.jsp'" />
+			<input type= "button" value="로그아웃" onclick="window.location='/home/home/logout.jsp'" />
 			<%}else{%>
 			<input type= "button" class = "listbt" value = "로그인" onclick = "location.href='../home/loginForm.jsp'">
+			<input type = "button"  value ="회원가입" onclick="window.location='/home/signup01.jsp'">
 			<%}%>
 		</td>
 	</tr>
@@ -72,7 +78,7 @@ if(id.equals("admin")){%>
 <table>
 	<tr class="hd">
 		<td>번호</td>
-		<td class = "listsubject">제목</td>
+		<td class = "listsubject_menu">제목</td>
 		<td>작성자</td>
 		<td>작성일</td>
 		<td>조회</td>
@@ -84,7 +90,7 @@ if(id.equals("admin")){%>
 %>
 	<tr>
 		<td><%=number--%></td>
-		<td>
+		<td class = "listsubject">
 		<%
 			int wid = 0;
 			if(article.getRe_level() > 0){

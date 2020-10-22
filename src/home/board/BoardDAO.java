@@ -15,7 +15,7 @@ public class BoardDAO {
 		return instance;
 	}
 	
-	// DB¿Í ¿¬°á ¸Ş¼Òµå
+	// DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½
 	private Connection getConnection() throws Exception{
 	      Context initCtx = new InitialContext();
 	      Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -23,9 +23,9 @@ public class BoardDAO {
 	      return ds.getConnection();		
 	}
 	
-	// °Ô½Ã±Û ÀÛ¼º ¸Ş¼Òµå
+	// ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½ ï¿½Ş¼Òµï¿½
 	public void insertArticle(BoardDTO article)	{
-		// writeForm¿¡¼­ º¸³½ hidden °ª ÀúÀå
+		// writeFormï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ hidden ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int num=article.getNum();
 		int ref=article.getRef();
 		int re_step=article.getRe_step();
@@ -35,18 +35,18 @@ public class BoardDAO {
 		
 		try {
 			conn = getConnection();
-			// °Ô½Ã±Û ¼ö¸¦ È®ÀÎÇÑ ÈÄ ±Û¹øÈ£°¡ ÀÚµ¿À¸·Î Áõ°¡ÇÏ´Â ¸Ş¼Òµå
+			// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Û¹ï¿½È£ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ş¼Òµï¿½
 			pstmt = conn.prepareStatement("select max(num) from homeboard");
 			rs = pstmt.executeQuery();
 						
-			if(rs.next())					// select¹®ÀÇ °á°ú°¡ ÀÖÀ» °æ¿ì true
-				number = rs.getInt(1)+1;	 // selectÇÑ °á°úÀÇ °ª +1
+			if(rs.next())					// selectï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ true
+				number = rs.getInt(1)+1;	 // selectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ +1
 			else
-				number = 1;		// Ã¹¹øÂ° °Ô½Ã±ÛÀÏ °æ¿ì
+				number = 1;		// Ã¹ï¿½ï¿½Â° ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			
 			if(num != 0) {
-				// ´äº¯±ÛÀÏ °æ¿ì
-				// ref ¿Í re_stepÀÇ °ªÀÌ µ¿ÀÏÇÑ ÄÃ·³À» °Ë»ö
+				// ï¿½äº¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+				// ref ï¿½ï¿½ re_stepï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 				sql ="update homeboard set re_step = re_step+1 where ref = ? and re_step > ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, ref);
@@ -55,14 +55,14 @@ public class BoardDAO {
 				re_step = re_step+1;
 				re_level = re_level+1;
 			}else {
-				// ´äº¯±ÛÀÌ ¾Æ´Ò°æ¿ì
+				// ï¿½äº¯ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ò°ï¿½ï¿½
 				ref = number;
 				re_step = 0;
 				re_level = 0;
 			}
 			
 			
-			// °Ô½Ã±Û ÀÛ¼º Äõ¸®¹®
+			// ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             sql = "insert into homeboard(num, writer,email,subject,pw,reg_date,";
 		    sql+="ref,re_step,re_level,content,ip) values(board_seq.nextval,?,?,?,?,?,?,?,?,?,?)";
 
@@ -86,7 +86,7 @@ public class BoardDAO {
         }
 	}
 	
-	// Å×ÀÌºí¿¡ ÀúÀåµÈ ¸ğµç °Ô½Ã±ÛÀÇ ¼ö¸¦ °Ë»öÇÏ´Â ¸Ş¼Òµå
+	// ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï´ï¿½ ï¿½Ş¼Òµï¿½
 	public int getArticleCount() throws Exception{
         int x=0;
 		try {
@@ -95,7 +95,7 @@ public class BoardDAO {
 	         rs = pstmt.executeQuery();
 	         
 	         if(rs.next()) {
-	        	 x = rs.getInt(1);		// °á°ú°¡ Á¸ÀçÇÏ¸é ±× Ã¹¹øÂ° °ªÀ» ¹ŞÀº ÈÄ ¸®ÅÏ
+	        	 x = rs.getInt(1);		// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	         }
 		}catch(Exception ex) {
             ex.printStackTrace();
@@ -105,16 +105,16 @@ public class BoardDAO {
 		return x;
 	}
 	
-	// °Ô½ÃÆÇ¿¡ Ç¥½ÃµÇ´Â °Ô½Ã±Û °³¼ö¸¦ Ç¥½ÃÇÏ´Â ¸Ş¼Òµå
+	// ï¿½Ô½ï¿½ï¿½Ç¿ï¿½ Ç¥ï¿½ÃµÇ´ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ş¼Òµï¿½
 	public List getArticles(int start, int end) throws Exception{
         List articleList=null;
         try {
         	conn = getConnection();
             pstmt = conn.prepareStatement(
 
-            // ref ³»¸²Â÷¼øÇÏ°í re_step ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
-            // rownum rÀ» Â÷·Ê·Î »ı¼º
-            // rownum rÀ» startrow¿Í endrow»çÀÌÀÇ °ª¸¸ select 
+            // ref ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ re_step ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // rownum rï¿½ï¿½ ï¿½ï¿½ï¿½Ê·ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // rownum rï¿½ï¿½ startrowï¿½ï¿½ endrowï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ select 
             "select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,r "+
         	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r " +
         	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount " +
@@ -150,19 +150,19 @@ public class BoardDAO {
 		return articleList;
 	}
 	
-	// °Ô½Ã±Û ³»¿ë È®ÀÎ ¸Ş¼Òµå
+	// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½Ş¼Òµï¿½
 	public BoardDTO getArticle(int num) {
         BoardDTO article=null;
 		try {
 			conn = getConnection();
 			
-			// ³»¿ë È®ÀÎ½Ã Á¶È¸¼ö Áõ°¡ÇÏ´Â ¸Ş¼Òµå
+			// ï¿½ï¿½ï¿½ï¿½ È®ï¿½Î½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ş¼Òµï¿½
             pstmt = conn.prepareStatement(
             		"update homeboard set readcount=readcount+1 where num = ?");
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate();
 			
-			// Àü´Ş¹ŞÀº ¹øÈ£ÀÇ °Ô½Ã±Û ³»¿ë È®ÀÎÇÏ´Â ¸Ş¼Òµå
+			// ï¿½ï¿½ï¿½Ş¹ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ş¼Òµï¿½
             pstmt = conn.prepareStatement(
             		"select * from homeboard where num = ?");
             pstmt.setInt(1, num);
@@ -191,7 +191,7 @@ public class BoardDAO {
 	return article;
 }
 	
-	// ¾÷µ¥ÀÌÆ®ÇÒ °Ô½Ã±Û Á¤º¸ È®ÀÎ ¸Ş¼Òµå
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½Ş¼Òµï¿½
 	public BoardDTO updateGetArticle(int num)throws Exception{
 		BoardDTO article = null;
 		try {
@@ -226,16 +226,16 @@ public class BoardDAO {
 	
 	
 
-	// °Ô½Ã±Û ºñ¹Ğ¹øÈ£ ÀÏÄ¡ È®ÀÎ ÈÄ ¼öÁ¤ ¸Ş¼Òµå
-	// x = 1 -> true ÀÏÄ¡
-	// x = 0 -> false ºÒÀÏÄ¡
+	// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½Ğ¹ï¿½È£ ï¿½ï¿½Ä¡ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½
+	// x = 1 -> true ï¿½ï¿½Ä¡
+	// x = 0 -> false ï¿½ï¿½ï¿½ï¿½Ä¡
 	public int updateArticle(BoardDTO article)throws Exception{
 		String dbpw = "";
 		String sql = "";
 		int x = -1;
 		try {
 			conn = getConnection();
-			// ¹øÈ£¿¡ ÇØ´çÇÏ´Â °Ô½Ã±ÛÀÇ ºñ¹Ğ¹øÈ£ È®ÀÎ ¸Ş¼Òµå
+			// ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½Ğ¹ï¿½È£ È®ï¿½ï¿½ ï¿½Ş¼Òµï¿½
 			pstmt = conn.prepareStatement(
 				"select pw from homeboard where num = ?");
 			pstmt.setInt(1, article.getNum());
@@ -243,7 +243,7 @@ public class BoardDAO {
 			
 			if(rs.next()) {
 				dbpw = rs.getString("pw");
-				// °Ô½Ã±Û ºñ¹Ğ¹øÈ£¿Í ÀÏÄ¡ÇÏ´ÂÁö È®ÀÎ
+				// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 				if(dbpw.equals(article.getPw())) {
 					sql = "update homeboard set writer=?,email=?,subject=?,pw=?";
 					sql += ",content=? where num=?";
@@ -270,21 +270,21 @@ public class BoardDAO {
 		return x;
 	}
 	
-	// °Ô½Ã±Û ºñ¹Ğ¹øÈ£ È®ÀÎ ÈÄ »èÁ¦ ¸Ş¼Òµå
-	// x = 1 -> true ÀÏÄ¡
-	// x = 0 -> false ºÒÀÏÄ¡
+	// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½Ğ¹ï¿½È£ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½
+	// x = 1 -> true ï¿½ï¿½Ä¡
+	// x = 0 -> false ï¿½ï¿½ï¿½ï¿½Ä¡
 	public int deleteArticle(int num, String pw)throws Exception{
 		String dbpw = "";
 		int x = -1;
 		try {
 			conn = getConnection();
-			// °Ô½Ã±Û ¹øÈ£·Î »èÁ¦ÇÒ °Ô½Ã±Û È®ÀÎ
+			// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ È®ï¿½ï¿½
 			pstmt = conn.prepareStatement("select pw from homeboard where num = ?");
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				// ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÒ½Ã °Ô½Ã±Û »èÁ¦
+				// ï¿½ï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ò½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 				dbpw = rs.getString("pw");
 				pstmt = conn.prepareStatement("delete from homeboard where num =?");
 				pstmt.setInt(1, num);
@@ -301,54 +301,28 @@ public class BoardDAO {
 		}
 		return x;
 	}
-	
-	public List getList(int start, int end) throws Exception{
-        List myList=null;
-        try {
-        	BoardDTO article= new BoardDTO();
-        	conn = getConnection();
-            pstmt = conn.prepareStatement(
 
-            // ref ³»¸²Â÷¼øÇÏ°í re_step ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
-            // rownum rÀ» Â÷·Ê·Î »ı¼º
-            // rownum rÀ» startrow¿Í endrow»çÀÌÀÇ °ª¸¸ select 
-            "select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,r "+
-        	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r " +
-        	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount " +
-        	"from homeboard order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ? and writer=?");
-            pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			pstmt.setString(3, article.getWriter());
-            rs = pstmt.executeQuery();        	
-        if(rs.next()) {
-        	myList = new ArrayList(end);
-        	do{
-                 
-				 article.setNum(rs.getInt("num"));
-				 article.setWriter(rs.getString("writer"));
-                 article.setEmail(rs.getString("email"));
-                 article.setSubject(rs.getString("subject"));
-                 article.setPw(rs.getString("pw"));
-			     article.setReg_date(rs.getTimestamp("reg_date"));
-				 article.setReadcount(rs.getInt("readcount"));
-                 article.setRef(rs.getInt("ref"));
-                 article.setRe_step(rs.getInt("re_step"));
-				 article.setRe_level(rs.getInt("re_level"));
-                 article.setContent(rs.getString("content"));
-			     article.setIp(rs.getString("ip")); 
-				  
-			     myList.add(article);
-        	 	 }while(rs.next());
-        	}	
-        }catch(Exception ex) {
-            ex.printStackTrace();
+	public int getMyListCount(String id) throws Exception{
+        int y=0;
+		try {
+			 conn = getConnection();
+			 BoardDTO article= new BoardDTO();
+			 pstmt = conn.prepareStatement("select count(*) from homeboard where writer=?");
+			 pstmt.setString(1, id);
+	         rs = pstmt.executeQuery();
+	         
+	         if(rs.next()) {
+	        	 y = rs.getInt(1);		// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	         }
+		}catch(Exception e) {
+            e.printStackTrace();
         } finally {
         	closeAll();
         }
-		return myList;
+		return y;
 	}
-	
-	// ¿¬°á Á¾·á ¸Ş¼Òµå
+
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½
 	private void closeAll() {
 		if(rs != null) {try {rs.close();}catch(SQLException s) {}}
 		if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}

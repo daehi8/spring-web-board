@@ -11,6 +11,9 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");	// 년-월-일 시:분
 %>
 <%
+	String sessionId = (String)session.getAttribute("id");
+	BoardDAO dao = BoardDAO.getInstance();	
+	
 	// 페이지 처리식 (첫페이지일시 1로 표시)
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null){
@@ -21,35 +24,33 @@
     int startRow = (currentPage - 1) * pageSize + 1;	// 시작값 (1-1)*10+1
     int endRow = currentPage * pageSize;				// 종료값	1*10
     int count = 0;										// 전체 게시글 개수
+    int mycount = dao.getMyListCount(sessionId);
     int number = 0;									 	// 게시판 글번호
     
-    List articleList = null;
-    BoardDAO dao = BoardDAO.getInstance();		
+    List articleList = null;	
     count = dao.getArticleCount();
     if(count > 0){
     	articleList = dao.getArticles(startRow, endRow);	// 게시글 정렬
     }
     
  	// 게시판 글번호 처리 식  11-(1-1)*10													  
-    number = count - (currentPage - 1) * pageSize;	
-	
-    String id = (String)session.getAttribute("id");
+    number = mycount - (currentPage - 1) * pageSize;	
 %>
 <html>
 <head>
 	<title>게시판</title>
-	<link href="../board/write.css" rel="stylesheet">
+	<link href="/home/board/write.css" rel="stylesheet">
 </head>
 <body>
 <%
-if(id.equals("admin")){%>
+if("admin".equals(sessionId)){%>
 <b>관리자입니다.</b> <br />
 <%}%>  
-<b>글목록(전체글:<%=count %>)</b>
+<b>글목록(전체글:<%=mycount%>)</b>
 <table>
 	<tr>
 		<td>
-			<%if(id != null){ %>
+			<%if(sessionId != null){ %>
 			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='../board/writeForm.jsp'">
 			<%}else{%>
 			<input type= "button" class = "listbt" value = "로그인" onclick = "location.href='../home/loginForm.jsp'">
@@ -59,7 +60,7 @@ if(id.equals("admin")){%>
 </table>
 
 <% 
-	if(count == 0){
+	if(mycount == 0){
 %>
 <table>
 	<tr>
@@ -72,7 +73,7 @@ if(id.equals("admin")){%>
 <table>
 	<tr class="hd">
 		<td>번호</td>
-		<td class = "listsubject">제목</td>
+		<td class = "listsubject_menu">제목</td>
 		<td>작성자</td>
 		<td>작성일</td>
 		<td>조회</td>
@@ -81,12 +82,11 @@ if(id.equals("admin")){%>
 <%
 	for(int i = 0; i < articleList.size(); i++) {
 		BoardDTO article = (BoardDTO)articleList.get(i);
-		if(id.equals(article.getWriter())){
-			%>
-	
+		if(sessionId.equals(article.getWriter())){
+%>
 	<tr>
 		<td><%=number--%></td>
-		<td>
+		<td class = "listsubject">
 		<%
 			int wid = 0;
 			if(article.getRe_level() > 0){
@@ -124,8 +124,8 @@ if(id.equals("admin")){%>
 
 
 <%
-	if(count > 0) {
-		int pageCount = count / pageSize + ( count % pageSize == 0 ? 0 : 1);  // 전체 페이지 개수
+	if(mycount > 0) {
+		int pageCount = mycount / pageSize + ( mycount % pageSize == 0 ? 0 : 1);  // 전체 페이지 개수
 		
         int startPage = (int)(currentPage/10)*10+1;							// 처음 페이지
 		int pageBlock=10;													// 한화면에 표시되는 페이지 개수

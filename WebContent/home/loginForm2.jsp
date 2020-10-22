@@ -12,12 +12,12 @@
 			}
 		}
 		if (auto != null && id != null && pw != null){		// 쿠키가 있으면 -> true
-			response.sendRedirect("cookiePro.jsp");			// 세션 생성
+			response.sendRedirect("/home/home/cookiePro.jsp");			// 세션 생성
 		}
 %>
-	<form action = "loginPro.jsp" method = "post">
-		<input type = "button" onclick="window.location='signup01.jsp'" value ="회원가입">
-		<input type = "button" onclick="window.location='loginForm.jsp'" value = "로그인">
+	<form action = "/home/home/loginPro.jsp" method = "post">
+		<input type = "button" value ="회원가입" onclick="window.location='/home/home/signup01.jsp'"/>
+		<input type = "button" value = "로그인" onclick="window.location='/home/home/loginForm.jsp'"/>
 		<input type="button" value ="게시판" onclick="window.location='/home/board/list.jsp'"/>
 	</form>
 

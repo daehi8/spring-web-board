@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<h1> login home </h1>
-
 <%
 	String sessionId = (String)session.getAttribute("id");
 	if(sessionId == null){ 		// 세션 = null -> true
@@ -16,14 +14,13 @@
 			}
 		}
 		if (auto != null && id != null && pw != null){		// 쿠키가 있으면 -> true
-			response.sendRedirect("cookiePro.jsp");			// 세션 생성
+			response.sendRedirect("../home/cookiePro.jsp");			// 세션 생성
 		}else{
-			response.sendRedirect("loginForm2.jsp"); 		// 쿠키 = null -> flase
+			response.sendRedirect("../home/loginForm2.jsp"); 		// 쿠키 = null -> flase
 		}
 	}
 %>
-	<button onclick="window.location='myInfo.jsp'">내정보 확인</button>
-	<button onclick="window.location='logout.jsp'">로그아웃</button>
-	<button onclick="window.location='delete.jsp'">회원탈퇴</button>
-	<button onclick="window.location='../board/myList.jsp'">나의 작성글목록</button>
-	<button onclick="window.location='../board/list.jsp'">게시판</button>
+	<input type= "button" onclick="window.location='/home/board/list.jsp'" value="게시판">
+	<input type= "button" onclick="window.location='/home/home/delete.jsp'" value="회원탈퇴">
+	<input type= "button" onclick="window.location='/home/home/myInfo.jsp'" value="내정보확인">
+	<input type= "button" onclick="window.location='/home/home/logout.jsp'" value="로그아웃">
