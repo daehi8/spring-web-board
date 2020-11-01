@@ -20,7 +20,7 @@
 		}
 	}
 %>
-	<input type= "button" onclick="window.location='/home/board/list.jsp'" value="게시판">
-	<input type= "button" onclick="window.location='/home/home/delete.jsp'" value="회원탈퇴">
-	<input type= "button" onclick="window.location='/home/home/myInfo.jsp'" value="내정보확인">
-	<input type= "button" onclick="window.location='/home/home/logout.jsp'" value="로그아웃">
+	<input type= "button" onclick="window.location='/home/home/main.jsp?main=/board/list.jsp'" value="게시판">
+	<input type= "button" onclick="window.location='/home/home/main.jsp?main=delete.jsp'" value="회원탈퇴">
+	<input type= "button" onclick="window.location='/home/home/main.jsp?main=myInfo.jsp'" value="내정보확인">
+	<input type= "button" onclick="window.location='/home/home/main.jsp?main=logout.jsp'" value="로그아웃">

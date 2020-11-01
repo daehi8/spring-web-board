@@ -13,7 +13,7 @@
 	SignupDTO dto = dao.myInfo(sessionId);
 	%>
 	
-	<form action="updatePro.jsp" method="post">
+	<form action="updatePro.jsp" method="post" enctype="multipart/form-data">
 		아이디 : <%=dto.getId() %> <br />
 			<input type="hidden" name="id" value="<%=dto.getId() %>" />
  		비밀번호 : <input type="text" name="pw" value="<%=dto.getPw() %>" /> <br />

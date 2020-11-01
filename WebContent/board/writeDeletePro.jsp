@@ -15,10 +15,10 @@
 	
 	String sessionId = (String)session.getAttribute("id");
 	if("admin".equals(sessionId)){%>
-		<meta http-equiv="Refresh" content="0;url=../board/list.jsp?pageNum=<%=pageNum%>" >		
+		<meta http-equiv="Refresh" content="0;url=/home/home/main.jsp?main=/board/list.jsp&pageNum=<%=pageNum%>" >		
 	<%}%>
 	<%if(check == 1){%>
-		  <meta http-equiv="Refresh" content="0;url=../board/list.jsp?pageNum=<%=pageNum%>" >
+		  <meta http-equiv="Refresh" content="0;url=/home/home/main.jsp?main=/board/list.jsp&pageNum=<%=pageNum%>" >
 	<%}else{%>
 		<script>            
 	         alert("비밀번호가 맞지 않습니다");

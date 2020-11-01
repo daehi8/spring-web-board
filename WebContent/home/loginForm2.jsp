@@ -16,9 +16,9 @@
 		}
 %>
 	<form action = "/home/home/loginPro.jsp" method = "post">
-		<input type = "button" value ="회원가입" onclick="window.location='/home/home/signup01.jsp'"/>
-		<input type = "button" value = "로그인" onclick="window.location='/home/home/loginForm.jsp'"/>
-		<input type="button" value ="게시판" onclick="window.location='/home/board/list.jsp'"/>
+		<input type = "button" value ="회원가입" onclick="window.location='/home/home/main.jsp?main=signup01.jsp'"/>
+		<input type = "button" value = "로그인" onclick="window.location='/home/home/main.jsp?main=loginForm.jsp'"/>
+		<input type="button" value ="게시판" onclick="window.location='/home/home/main.jsp?main=/board/list.jsp'"/>
 	</form>
 
     

@@ -50,15 +50,9 @@ if("admin".equals(sessionId)){%>
 	<tr>
 		<td>
 			<%if(sessionId != null){ %>
-			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='/home/board/writeForm.jsp'"/>
-			<input type= "button" value="게시판" onclick="window.location='/home/board/list.jsp'" />
-			<input type= "button" value="나의 작성글목록" onclick="window.location='/home/board/myList.jsp'" />
-			<input type= "button" value="회원탈퇴" onclick="window.location='/home/home/deleteForm.jsp'" />
-			<input type= "button" value="내정보확인" onclick="window.location='/home/home/myInfo.jsp'" />
-			<input type= "button" value="로그아웃" onclick="window.location='/home/home/logout.jsp'" />
+			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='/home/home/main.jsp?main=/board/writeForm.jsp'"/>
+			<input type= "button" value="나의 작성글목록" onclick="window.location='/home/home/main.jsp?main=/board/myList.jsp'" />
 			<%}else{%>
-			<input type= "button" class = "listbt" value = "로그인" onclick = "location.href='../home/loginForm.jsp'">
-			<input type = "button"  value ="회원가입" onclick="window.location='/home/signup01.jsp'">
 			<%}%>
 		</td>
 	</tr>
@@ -136,18 +130,18 @@ if("admin".equals(sessionId)){%>
         
         // 현재 페이지에서 -10페이지
         if (startPage > 10) {    %>
-        <a href="../board/list.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
+        <a href="/home/home/main.jsp?main=/board/list.jsp&pageNum=<%= startPage - 10 %>">[이전]</a>
 <%      }
         
         // 페이지 숫자 설정
         for (int i = startPage ; i <= endPage ; i++) {  %>
-        <a href="../board/list.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+        <a href="/home/home/main.jsp?main=/board/list.jsp&pageNum=<%= i %>">[<%= i %>]</a>
 <%
         }
         
         // 현재 페이지에서 +10페이지
         if (endPage < pageCount) {  %>
-        <a href="../board/list.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
+        <a href="/home/home/main.jsp?main=/board/list.jsp&pageNum=<%= startPage + 10 %>">[다음]</a>
 <%
         }
     }

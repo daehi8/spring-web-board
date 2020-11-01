@@ -8,6 +8,11 @@
 </head>
 <body>
 	<%	
+		String main = request.getParameter("main");
+		if(main == null){
+			main = "contents.jsp";
+		}
+		
 		String id = null, pw = null, auto = null;	// 쿠키 확인
 		Cookie [] cookies = request.getCookies();
 		if(cookies != null){
@@ -37,7 +42,7 @@
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<jsp:include page = "contents.jsp" flush = "false"></jsp:include>
+				<jsp:include page = "<%=main%>" flush = "false"></jsp:include>
 			</td>
 		</tr>
 		<tr>

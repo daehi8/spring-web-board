@@ -51,9 +51,8 @@ if("admin".equals(sessionId)){%>
 	<tr>
 		<td>
 			<%if(sessionId != null){ %>
-			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='../board/writeForm.jsp'">
+			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='/home/home/main.jsp?main=/board/writeForm.jsp'">
 			<%}else{%>
-			<input type= "button" class = "listbt" value = "로그인" onclick = "location.href='../home/loginForm.jsp'">
 			<%}%>
 		</td>
 	</tr>
@@ -100,7 +99,7 @@ if("admin".equals(sessionId)){%>
 		<%}%>
 		
 		<%-- 제목 클릭시 내용 확인 --%>
-		<a href ="../board/contents01.jsp?num=<%=article.getNum()%>&pageNum=<%=currentPage %>&number=<%=number%>">
+		<a href ="/home/home/main.jsp?main=/board/contents01.jsp&num=<%=article.getNum()%>&pageNum=<%=currentPage %>&number=<%=number%>">
 		<%=article.getSubject()%></a>
 		
 		<%-- 조회수가 20 이상일시 이미지 표시 --%>
@@ -134,18 +133,18 @@ if("admin".equals(sessionId)){%>
         
         // 현재 페이지에서 -10페이지
         if (startPage > 10) {    %>
-        <a href="../board/myList.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
+        <a href="/home/home/main.jsp?main=/board/myList.jsp&pageNum=<%= startPage - 10 %>">[이전]</a>
 <%      }
         
         // 페이지 숫자 설정
         for (int i = startPage ; i <= endPage ; i++) {  %>
-        <a href="../board/myList.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+        <a href="/home/home/main.jsp?main=/board/myList.jsp&pageNum=<%= i %>">[<%= i %>]</a>
 <%
         }
         
         // 현재 페이지에서 +10페이지
         if (endPage < pageCount) {  %>
-        <a href="../board/myList.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
+        <a href="/home/home/main.jsp?main=/board/myList.jsp&pageNum=<%= startPage + 10 %>">[다음]</a>
 <%
         }
     }
