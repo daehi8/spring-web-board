@@ -77,7 +77,7 @@
     		<td><input type = "text" name = "address2"/></td>
     	</tr>
     	<tr>
-    		<td align = "center">학생사진</td>
+    		<td align = "center">프로필</td>
     		<td>
     			 <input type="file" name="img"/> <br />
 				<input type="submit" value="등록" /> <br />

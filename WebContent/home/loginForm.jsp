@@ -21,5 +21,4 @@
 	pw : <input type = "password" name = "pw"/> <br />
 	<input type="checkbox" name = "auto" value="1">자동로그인 <br />
 	<input type = "submit" value="로그인"/>
-
 </form>

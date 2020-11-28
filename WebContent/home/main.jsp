@@ -32,11 +32,18 @@
 			<td>
 				<jsp:include page = "top.jsp" flush = "false" ></jsp:include>
 			</td>
-			<td width = "150">
+		</tr>
+		<tr width = "150">
+			<td>
 				<%if(sessionId == null){%> 
-				<jsp:include page = "loginForm2.jsp" flush = "false"></jsp:include>
+					<input type = "button" value ="회원가입" onclick="window.location='/home/home/main.jsp?main=signup01.jsp'"/>
+					<input type = "button" value = "로그인" onclick="window.location='/home/home/main.jsp?main=loginForm.jsp'"/>
+					<input type="button" value ="게시판" onclick="window.location='/home/home/main.jsp?main=/board/list.jsp'"/>
 				<%}else{%>
-				<jsp:include page = "loginHome.jsp" flush = "false"></jsp:include>
+					<input type= "button" value="게시판" onclick="window.location='/home/home/main.jsp?main=/board/list.jsp'">
+					<input type= "button" value="회원탈퇴"onclick="window.location='/home/home/main.jsp?main=delete.jsp'">
+					<input type= "button" value="내정보확인" onclick="window.location='/home/home/main.jsp?main=myInfo.jsp'">
+					<input type= "button" value="로그아웃" onclick="window.location='/home/home/main.jsp?main=logout.jsp'">
 				<%}%>
 			</td>
 		</tr>

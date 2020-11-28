@@ -16,8 +16,8 @@ input[type=text], input[type=password]{
 	box-sizing : boder-box;
 }
 button{
-	background-color : black;
-	color : white;
+	background-color : #aaa;
+	color : black;
 	padding : 14px 20px;
 	margin : 8px 0;
 	border : none;
@@ -30,7 +30,7 @@ button:hover {
 .cancel{
 	width : auto;
 	padding : 10px 18px;
-	background-color : black;
+	background-color : #aaa;
 }
 .container {
 	padding: 16px;
