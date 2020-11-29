@@ -1,94 +1,113 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%> 
-<%@ page import="com.oreilly.servlet.MultipartRequest" %>
-<%@ page import="home.home.model.SignupDAO" %>
-<%@ page import="home.home.model.SignupDTO" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-<%request.setCharacterEncoding("UTF-8"); %>    
-   
-<form action = "insert.jsp" method = "post" enctype="multipart/form-data">
-	<style>
-	table{
-		border-collapse:collapse; 
-		font-size : 9pt; 
-		width : 700px; 
-		height : 400px; 
-		padding: 10px; 
-		border: 1px;
-		border-style: solid none;
-		margin : auto;
-	}
-	</style>
+* {
+  box-sizing: border-box;
+}
 
-    <table>
-      
-  	  	<tr>
-    		<td align = "center">아이디</td>
-    		<td>
-    			<input type = "text" size = 10 name = "id"/> 
-    			<input type = "button" value = "중복확인" /> 
-    		</td>
-    	</tr>
-        <tr>
-    		<td align = "center">비밀번호</td>
-    		<td><input type = "password" name = "pw"/></td>
-    	</tr>
-    	<tr>
-    		<td align = "center">비밀번호 확인</td>
-    		<td><input type = "password" name = "pw2"/></td>
-    	</tr>
-    	<tr>
-    		<td align = "center">이름</td>
-    		<td><input type = "text" size = 10 name = "name"/></td>
-    	</tr>
-    	<tr>
-    		<td align = "center">성별</td>
-    		<td>
-    			남<input type = "radio" name = "gender" value = "남"/> 
-    			여<input type = "radio" name = "gender" value = "여"/>
-    		</td>
-    	</tr>    	
-    	<tr>
-    		<td align = "center">닉네임</td>
-    		<td><input type = "text" name = "nickname"/></td>
-    	</tr> 
-    	<tr>
-    		<td align = "center">휴대폰 번호</td>
-    		<td><input type = "text" placeholder = "-빼고 숫자만 입력" name = "num"/></td>
-    	</tr>
-    	<tr>
-    		<td align = "center">이메일</td>
-    		<td>
-    			<input type = "text" size = 15 name = "email1"/>
-    			<select name = "email2">
-    				<option value="naver.com" selected>naver.com</option>
-    				<option value="hanmail.net">hanmail.net</option>
-    				<option value="gmail.com">gmail.com</option>
-    			</select>
-    		</td>
-    	</tr>    	
-     	<tr>
-    		<td align = "center">주소</td>
-    		<td ><input type = "text" size = 50 name = "address1"/></td>
-    	</tr>
-    	<tr>
-    		<td align = "center">상세 주소 </td>
-    		<td><input type = "text" name = "address2"/></td>
-    	</tr>
-    	<tr>
-    		<td align = "center">프로필</td>
-    		<td>
-    			 <input type="file" name="img"/> <br />
-				<input type="submit" value="등록" /> <br />
-    		</td>
-    	</tr>
-    	<tr>
-    		<td colspan = "2" align = "center">
-    		<input type = "submit" value = "확인" />
-    		<input type = "button" value = "취소" onclick="window.location='main.jsp'"/>
-    		</td>
-    	</tr>    	   	   	
-    	    		
-    </table>
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+  margin: auto;
+  width : 500px;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #666;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+}
+</style>
+</head>
+
+
+<form action = "signupPro.jsp" method = "post">
+	<div class ="container">
+		<h1>회원가입</h1>
+		<p>계정을 만들려면 양식에 따라 작성해주세요.</p>
+		<hr>
+		
+		<label for ="id"><b>아이디</b></label>
+		<input type ="text" placeholder= "아이디를 입력해주세요" name = "id" required>
+		
+		<label for ="pw"><b>비밀번호</b></label>
+		<input type ="password" placeholder= "바밀번호를 입력해주세요" name ="pw" required>
+		
+		<label for ="pw-check"><b>비밀번호 확인</b></label>
+		<input type ="password" placeholder= "비밀번호를 한번 더 입력해주세요" name ="pw-check" required>
+		
+		<label for ="name"><b>이름</b></label>
+		<input type ="text" placeholder= "이름을 입력해주세요" name = "name" required>		
+		
+		<label for ="nickname"><b>닉네임</b></label>
+		<input type ="text" placeholder= "닉네임을 입력해주세요" name = "nickname" required>
+		
+		<label for ="email"><b>이메일</b></label>
+		<input type ="text" placeholder= "이메일를 입력해주세요" name ="email" required>
+    	
+		<hr>
+		<p>계정을 생성함으로써 저희의 <a href="#" style="color:dodgerblue">약관 및 개인정보 보호 정책</a>에</p>
+		<p>동의하는것입니다.</p>
+		
+		<button type="submit" class="registerbtn">회원가입</button>
+
+		<div class="signin">
+    		<p>이미 계정이 있습니까? <a href="#">로그인</a></p>
+ 		</div>
+ 	</div>
 </form>

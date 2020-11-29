@@ -12,6 +12,6 @@
 	
 	<servlet-mapping>
 		<servlet-name>home</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.hm</url-pattern>
 	</servlet-mapping>
 </web-app>

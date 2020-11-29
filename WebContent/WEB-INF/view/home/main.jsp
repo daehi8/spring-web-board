@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +9,7 @@
 <title> start page </title>
 </head>
 <body>
-	<%	
-		String main = request.getParameter("main");
-		if(main == null){
-			main = "/board/list.jsp";
-		}
-		
+	<%			
 		String id = null, pw = null, auto = null;	// 쿠키 확인
 		Cookie [] cookies = request.getCookies();
 		if(cookies != null){
@@ -23,14 +20,14 @@
 			}
 		}
 		if (auto != null && id != null && pw != null){		// 쿠키가 있으면 -> true
-			response.sendRedirect("/home/home/cookiePro.jsp");			// 세션 생성
+			response.sendRedirect("cookiePro.jsp");			// 세션 생성		
 		}
 		String sessionId = (String)session.getAttribute("id");
 	%>
 	<table width="800" border="1" cellpadding="2" cellspacing="0">
 		<tr>
 			<td>
-				<jsp:include page = "top.jsp" flush = "false" ></jsp:include>
+				<c:import url="http://localhost:8080/home/home/top.hm" />
 			</td>
 		</tr>
 		<tr width = "150">
@@ -49,12 +46,12 @@
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<jsp:include page = "<%=main%>" flush = "false"></jsp:include>
+				<c:import url="http://localhost:8080/home/board/list.hm" />
 			</td>
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<jsp:include page = "bottom.jsp" flush = "false"></jsp:include>
+				<c:import url="http://localhost:8080/home/home/bottom.hm" />
 			</td>
 		</tr>				
 	</table>

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import home.home.action.SuperAction;
+import home.action.action.SuperAction;
 
 /**
  * Servlet implementation class HomeController
