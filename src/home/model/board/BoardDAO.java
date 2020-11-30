@@ -21,7 +21,7 @@ public class BoardDAO {
 	      DataSource ds = (DataSource)envCtx.lookup("jdbc/orcl");
 	      return ds.getConnection();		
 	}
-	
+	// 글작성
 	public void insertArticle(BoardDTO article)	{
 		int no=article.getNo();
 		int ref=article.getRef();
@@ -40,9 +40,9 @@ public class BoardDAO {
 			else
 				number = 1;		
 			
-			if(num != 0) {
+			if(no != 0) {
 
-				sql ="update homeboard set re_step = re_step+1 where ref = ? and re_step > ?";
+				sql ="update home_board set re_step = re_step+1 where ref = ? and re_step > ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, ref);
 				pstmt.setInt(2, re_step);
@@ -57,20 +57,18 @@ public class BoardDAO {
 			}
 			
 
-            sql = "insert into homeboard(no, writer,email,subject,pw,reg_date,";
-		    sql+="ref,re_step,re_level,content,ip) values(board_seq.nextval,?,?,?,?,?,?,?,?,?,?)";
+            sql = "insert into home_board(no, member_no, member_id, subject, reg_date,";
+		    sql+="ref, re_step, re_level, content, ip) values(board_seq.nextval,?,?,?,sysdate,?,?,?,?,?)";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, article.getWriter());
-            pstmt.setString(2, article.getEmail());
+            pstmt.setInt(1, article.getMember_no());
+            pstmt.setString(2, article.getMember_id());
             pstmt.setString(3, article.getSubject());
-            pstmt.setString(4, article.getPw());
-			pstmt.setTimestamp(5, article.getReg_date());
-            pstmt.setInt(6, ref);
-            pstmt.setInt(7, re_step);
-            pstmt.setInt(8, re_level);
-			pstmt.setString(9, article.getContent());
-			pstmt.setString(10, article.getIp());
+            pstmt.setInt(4, ref);
+            pstmt.setInt(5, re_step);
+            pstmt.setInt(6, re_level);
+			pstmt.setString(7, article.getContent());
+			pstmt.setString(8, article.getIp());
 			
             pstmt.executeUpdate();
 		}catch(Exception ex) {
@@ -79,13 +77,53 @@ public class BoardDAO {
         	closeAll();
         }
 	}
+	// 회원 고유번호 리턴
+	public int getMemberNo() throws Exception{
+        int x=0;
+		try {
+			 conn = getConnection();
+			 pstmt = conn.prepareStatement("select member_no from home_member where id =? and fleg =Y ");
+	         rs = pstmt.executeQuery();
+	   
+	         if(rs.next()) {
+	        	 x = rs.getInt(1);	
+	         }
+		}catch(Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        	closeAll();
+        }
+		return x;
+	}
+	// 답변이 달린 글일경우 리턴
+	public int notDeleteComment(int no) throws Exception { 	        
+        int result = 0;
+        try {
+			conn = getConnection();
+			String sql = 
+					" select * from (select * from home_board "
+					+ "where ref in (select ref "
+					+ "from (select ref, count(ref) "
+					+ "from home_board group by ref having count(ref) > '1'))) where no=? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        	closeAll();
+        }
+        return result;  
+	}
 	
-
 	public int getArticleCount() throws Exception{
         int x=0;
 		try {
 			 conn = getConnection();
-			 pstmt = conn.prepareStatement("select count(*) from homeboard");
+			 pstmt = conn.prepareStatement("select count(*) from home_board");
 	         rs = pstmt.executeQuery();
 	         
 	         if(rs.next()) {
@@ -106,10 +144,10 @@ public class BoardDAO {
         	conn = getConnection();
             pstmt = conn.prepareStatement(
 
-            "select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,r "+
-        	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r " +
-        	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount " +
-        	"from homeboard order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ? ");
+            "select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,r "+
+        	"from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r " +
+        	"from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount " +
+        	"from home_board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ? ");
             pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
             rs = pstmt.executeQuery();        	
@@ -117,11 +155,10 @@ public class BoardDAO {
         	articleList = new ArrayList(end);
         	do{
                  BoardDTO article= new BoardDTO();
-				 article.setNum(rs.getInt("num"));
-				 article.setWriter(rs.getString("writer"));
-                 article.setEmail(rs.getString("email"));
+				 article.setNo(rs.getInt("num"));
+				 article.setMember_no(rs.getInt("member_no"));
+				 article.setMember_id(rs.getString("Member_id"));
                  article.setSubject(rs.getString("subject"));
-                 article.setPw(rs.getString("pw"));
 			     article.setReg_date(rs.getTimestamp("reg_date"));
 				 article.setReadcount(rs.getInt("readcount"));
                  article.setRef(rs.getInt("ref"));
@@ -142,28 +179,26 @@ public class BoardDAO {
 	}
 	
 
-	public BoardDTO getArticle(int num) {
+	public BoardDTO getArticle(int no) {
         BoardDTO article=null;
 		try {
 			conn = getConnection();
 			
             pstmt = conn.prepareStatement(
-            		"update homeboard set readcount=readcount+1 where num = ?");
-			pstmt.setInt(1, num);
+            		"update home_board set readcount=readcount+1 where no = ?");
+			pstmt.setInt(1, no);
 			pstmt.executeUpdate();
 			
             pstmt = conn.prepareStatement(
-            		"select * from homeboard where num = ?");
-            pstmt.setInt(1, num);
+            		"select * from home_board where no = ?");
+            pstmt.setInt(1, no);
             rs = pstmt.executeQuery();
             
             if (rs.next()) {
                 article = new BoardDTO();
-                article.setNum(rs.getInt("num"));
-				article.setWriter(rs.getString("writer"));
-                article.setEmail(rs.getString("email"));
+                article.setNo(rs.getInt("no"));
+				article.setMember_id(rs.getString("member_id"));
                 article.setSubject(rs.getString("subject"));
-                article.setPw(rs.getString("pw"));
 			    article.setReg_date(rs.getTimestamp("reg_date"));
 				article.setReadcount(rs.getInt("readcount"));
                 article.setRef(rs.getInt("ref"));
@@ -180,22 +215,20 @@ public class BoardDAO {
 	return article;
 }
 	
-	public BoardDTO updateGetArticle(int num)throws Exception{
+	public BoardDTO updateGetArticle(int no)throws Exception{
 		BoardDTO article = null;
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(
-				"select * from homeboard where num = ?");
-			pstmt.setInt(1, num);
+				"select * from home_board where no = ?");
+			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				article = new BoardDTO();
-				article.setNum(rs.getInt("num"));
-				article.setWriter(rs.getString("writer"));
-				article.setEmail(rs.getString("email"));
+				article.setNo(rs.getInt("no"));
+				article.setMember_id(rs.getString("member_id"));
 				article.setSubject(rs.getString("subject"));
-				article.setPw(rs.getString("pw"));
 			    article.setReg_date(rs.getTimestamp("reg_date"));
 				article.setReadcount(rs.getInt("readcount"));
                 article.setRef(rs.getInt("ref"));
@@ -214,30 +247,27 @@ public class BoardDAO {
 	
 	
 
-	public int updateArticle(BoardDTO article)throws Exception{
-		String dbpw = "";
+	public int updateArticle(BoardDTO article, int memNo)throws Exception{
+		int dbMemNo = 0;
 		String sql = "";
 		int x = -1;
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(
-				"select pw from homeboard where num = ?");
-			pstmt.setInt(1, article.getNum());
+				"select member_no from home_board where no = ?");
+			pstmt.setInt(1, article.getNo());
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				dbpw = rs.getString("pw");
-				if(dbpw.equals(article.getPw())) {
-					sql = "update homeboard set writer=?,email=?,subject=?,pw=?";
-					sql += ",content=? where num=?";
+				dbMemNo = rs.getInt("member_no");
+				if(dbMemNo==memNo) {
+					sql = "update home_board set subject=?";
+					sql += ",content=? where no=?";
 					pstmt = conn.prepareStatement(sql);
 					
-					pstmt.setString(1, article.getWriter());
-					pstmt.setString(2, article.getEmail());
 					pstmt.setString(3, article.getSubject());
-					pstmt.setString(4, article.getPw());
 					pstmt.setString(5, article.getContent());
-					pstmt.setInt(6, article.getNum());
+					pstmt.setInt(6, article.getNo());
 					pstmt.executeUpdate();
 					x= 1;					
 				}else{
@@ -252,22 +282,24 @@ public class BoardDAO {
 		}
 		return x;
 	}
-
-	public int deleteArticle(int num, String pw)throws Exception{
-		String dbpw = "";
+	// 글삭제
+	public int deleteArticle(int no, int memberNo)throws Exception{
+		int dbmemberNo = 0;
 		int x = -1;
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select pw from homeboard where num = ?");
-			pstmt.setInt(1, num);
+			pstmt = conn.prepareStatement("select member_no from home_board where no = ?");
+			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				dbpw = rs.getString("pw");
-				pstmt = conn.prepareStatement("delete from homeboard where num =?");
-				pstmt.setInt(1, num);
-				pstmt.executeUpdate();
-				x= 1;
+				dbmemberNo = rs.getInt("member_no");
+				if(dbmemberNo == memberNo) {
+					pstmt = conn.prepareStatement("delete from home_board where no =?");
+					pstmt.setInt(1, no);
+					pstmt.executeUpdate();
+					x= 1;
+				}
 			}else {
 				x= 0;
 			}
@@ -279,14 +311,44 @@ public class BoardDAO {
 		}
 		return x;
 	}
-
-	public int getMyListCount(String id) throws Exception{
+	
+	public int deleteCommentArticle(int no, int memberNo)throws Exception{
+		int dbmemberNo = 0;
+		int x = -1;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select member_no from home_board where no = ?");
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dbmemberNo = rs.getInt("member_no");
+				if(dbmemberNo == memberNo) {
+					pstmt = conn.prepareStatement(
+							"update home_board set fleg ='D', subject ='삭제된 글입니다.', content='', member_id='', ip='' where no =?");
+					pstmt.setInt(1, no);
+					pstmt.executeUpdate();
+					x= 1;
+				}
+			}else {
+				x= 0;
+			}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally {
+			closeAll();
+		}
+		return x;
+	}
+	
+	public int getMyListCount(int memNo) throws Exception{
         int y=0;
 		try {
 			 conn = getConnection();
 			 BoardDTO article= new BoardDTO();
-			 pstmt = conn.prepareStatement("select count(*) from homeboard where writer=?");
-			 pstmt.setString(1, id);
+			 pstmt = conn.prepareStatement("select count(*) from home_board where member_no=?");
+			 pstmt.setInt(1, memNo);
 	         rs = pstmt.executeQuery();
 	         
 	         if(rs.next()) {
@@ -300,7 +362,6 @@ public class BoardDAO {
 		return y;
 	}
 
-	// ���� ���� �޼ҵ�
 	private void closeAll() {
 		if(rs != null) {try {rs.close();}catch(SQLException s) {}}
 		if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}

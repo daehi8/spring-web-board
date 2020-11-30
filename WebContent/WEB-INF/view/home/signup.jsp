@@ -94,9 +94,6 @@ a {
 		<label for ="name"><b>이름</b></label>
 		<input type ="text" placeholder= "이름을 입력해주세요" name = "name" required>		
 		
-		<label for ="nickname"><b>닉네임</b></label>
-		<input type ="text" placeholder= "닉네임을 입력해주세요" name = "nickname" required>
-		
 		<label for ="email"><b>이메일</b></label>
 		<input type ="text" placeholder= "이메일를 입력해주세요" name ="email" required>
     	

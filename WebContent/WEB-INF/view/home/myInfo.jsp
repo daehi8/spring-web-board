@@ -18,7 +18,6 @@
 			<input type="hidden" name="id" value="<%=dto.getId() %>" />
  		비밀번호 : <input type="text" name="pw" value="<%=dto.getPw() %>" /> <br />
 		이름 : <input type="text" name="name" value="<%=dto.getName() %>" /> <br />
-		닉네임 : <input type="text" name="nickname" value="<%=dto.getNickname() %>" /> <br />
 		이메일 : <input type="text" name="email" value="<%=dto.getEmail() %>" /> <br />
 		가입날짜 : <%=dto.getReg() %> <br />
 		<input type="hidden" name = "id" value="<%=dto.getId() %>"/>

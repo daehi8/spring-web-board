@@ -7,7 +7,6 @@ public class MemberDTO {
 	private String id;
 	private String pw;
 	private String name;
-	private String nickname;
 	private String email;
 	private String fleg;
 	private Timestamp reg;
@@ -30,12 +29,6 @@ public class MemberDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
 	}
 	public String getEmail() {
 		return email;

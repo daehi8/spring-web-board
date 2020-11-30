@@ -10,7 +10,6 @@
 			dto.setId(request.getParameter("id"));
 			dto.setPw(request.getParameter("pw"));
 			dto.setName(request.getParameter("name"));
-			dto.setNickname(request.getParameter("nickname"));
 			dto.setEmail(request.getParameter("email"));
 			
 			MemberDAO dao = new MemberDAO();

@@ -13,14 +13,15 @@
 	String pageNum = request.getParameter("pageNum");
 	
 	BoardDAO dao = BoardDAO.getInstance();
-	int check = dao.updateArticle(article);
-	
+	int memNo = dao.getMemberNo();
+	int check = dao.updateArticle(article, memNo);
+		
 	if(check == 1){
 %>	
 		<meta http-equiv = "Refresh" content = "0;url=/home/home/main.jsp?main=/board/list.jsp&pageNum=<%=pageNum%>">	
 <%	}else{%>
 		<script>
-			alert("비밀번호가 맞지 않습니다.");
+			alert("작성자만 수정할 수 있습니다.");
 			history.go(-1);
 		</script>
 <%}%>

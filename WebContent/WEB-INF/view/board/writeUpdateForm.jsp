@@ -23,20 +23,14 @@
 			<tr>
 				<td>이름</td>
 				<td>
-					<input type = "text" size="10" maxlength="10" name="writer" value="<%=article.getWriter()%>">
-					<input type="hidden" name="num" value="<%=article.getNum()%>">
+					<input type = "text" size="10" maxlength="10" name="writer" value="<%=article.getMember_id()%>">
+					<input type="hidden" name="num" value="<%=article.getNo()%>">
 				</td>
 			</tr>
 			<tr>
 				<td>제목</td>
 				<td>
 					<input type="text" size="40" maxlength="50" name="subject" value="<%=article.getSubject()%>">
-				</td>
-			</tr>
-			<tr>
-				<td>Email</td>
-				<td>
-					<input type="text" size="40" maxlength="30" name="email" value="<%=article.getEmail()%>">
 				</td>
 			</tr>
 			<tr>

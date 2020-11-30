@@ -34,7 +34,6 @@ public class MemberDAO {
 				dto.setId(rs.getString("id"));
 				dto.setPw(rs.getString("pw"));
 				dto.setName(rs.getString("name"));
-				dto.setNickname(rs.getString("nickname"));
 				dto.setEmail(rs.getString("email"));
 				dto.setReg(rs.getTimestamp("reg"));
 				list.add(dto);
@@ -51,12 +50,11 @@ public class MemberDAO {
 	public void insert(MemberDTO dto) {
 		try {
 			conn = getConnection();
-	    	String sql = "insert into home_member values(board_seq.nextval,?,?,?,?,?,Y,sysdate)";
+	    	String sql = "insert into home_member values(board_seq.nextval,?,?,?,?,Y,sysdate)";
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setString(1, dto.getId());
 	    	pstmt.setString(2, dto.getPw());
 	    	pstmt.setString(3, dto.getName());
-	    	pstmt.setString(4, dto.getNickname());
 	    	pstmt.setString(5, dto.getEmail());
 	    	
 	    	pstmt.executeUpdate();
@@ -121,7 +119,6 @@ public class MemberDAO {
 				dto.setId(rs.getString("id"));
 				dto.setPw(rs.getString("pw"));
 				dto.setName(rs.getString("name"));
-				dto.setNickname(rs.getString("nickname"));
 				dto.setEmail(rs.getString("email"));
 				dto.setReg(rs.getTimestamp("reg"));
 			}
@@ -160,11 +157,10 @@ public class MemberDAO {
 	public void update(MemberDTO dto) {
 		try{
 			conn = getConnection();
-			String sql = "update home_member set pw=?, name=?, nickname=?, email=? where id=? and fleg=Y";
+			String sql = "update home_member set pw=?, name=?, email=? where id=? and fleg=Y";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getPw());
 			pstmt.setString(2, dto.getName());
-			pstmt.setString(4, dto.getNickname());
 			pstmt.setString(5, dto.getEmail());
 			pstmt.setString(8, dto.getId());
 			pstmt.executeQuery();

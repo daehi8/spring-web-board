@@ -7,13 +7,13 @@
 <%
 	int number = Integer.parseInt(request.getParameter("number"));
 
-	int num = Integer.parseInt(request.getParameter("num"));
+	int no = Integer.parseInt(request.getParameter("no"));
 	String pageNum = request.getParameter("pageNum");
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	try{
 		BoardDAO dao = BoardDAO.getInstance();
-		BoardDTO article = dao.getArticle(num);
+		BoardDTO article = dao.getArticle(no);
 		
 		int ref=article.getRef();
 		int re_step=article.getRe_step();
@@ -38,7 +38,7 @@
 	</tr>
 	<tr >
 		<td class="hd">작성자</td>
-		<td><%=article.getWriter() %></td>
+		<td><%=article.getMember_id() %></td>
 		<td class="hd">작성일</td>
 		<td><%=sdf.format(article.getReg_date())%></td>
 	</tr>
@@ -55,26 +55,28 @@
 		<%
     	String sessionId = (String)session.getAttribute("id");
     	if (!"admin".equals(sessionId)){
-    		if(sessionId.equals(article.getWriter())){
+    		if(sessionId.equals(article.getMember_id())){
     	%> 
 			<%-- 수정하거나 삭제할 페이지 번호 전송 --%>
 	  		<input type="button" value="글수정" 
-     		onclick="document.location.href='/home/home/main.jsp?main=/board/writeUpdateForm.jsp&num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
+     		onclick="document.location.href='/home/home/main.jsp?main=/board/writeUpdateForm.jsp&no=<%=article.getNo()%>&pageNum=<%=pageNum%>'">
 	 		&nbsp;&nbsp;&nbsp;&nbsp;
 	 		
 	 		<input type="button" value="글삭제" 
-     		onclick="document.location.href='/home/home/main.jsp?main=/board/writeDeleteForm.jsp&num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
+     		onclick="document.location.href='/home/home/main.jsp?main=/board/writeDeleteForm.jsp&no=<%=article.getNo()%>&pageNum=<%=pageNum%>'">
+	  		&nbsp;&nbsp;&nbsp;&nbsp;
+	  		
+	  		<%-- 답글 쓰기 누를경우 값을 전송해 글쓰기와 구분 --%>
+	  		<input type="button" value="답글쓰기" 
+       		onclick="document.location.href='/home/home/main.jsp?main=/board/writeForm.jsp&no=<%=no%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'">
 	  		&nbsp;&nbsp;&nbsp;&nbsp;
 	  		
 			<%}%>
 		<%}else{%>
 			<%-- 답글 쓰기 누를경우 값을 전송해 글쓰기와 구분 --%>
-	  		<input type="button" value="답글쓰기" 
-       		onclick="document.location.href='/home/home/main.jsp?main=/board/writeForm.jsp&num=<%=num%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'">
-	  		&nbsp;&nbsp;&nbsp;&nbsp;
 		
 			<input type="button" value="글삭제" 
-     		onclick="document.location.href='/home/home/main.jsp?main=/board/writeDeletePro.jsp&num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
+     		onclick="document.location.href='/home/home/main.jsp?main=/board/writeDeletePro.jsp&no=<%=article.getNo()%>&pageNum=<%=pageNum%>'">
 	  		&nbsp;&nbsp;&nbsp;&nbsp;
 		<%}%>
 		  		

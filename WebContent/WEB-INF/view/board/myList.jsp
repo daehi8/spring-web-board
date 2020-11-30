@@ -11,9 +11,9 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");	// 년-월-일 시:분
 %>
 <%
-	String sessionId = (String)session.getAttribute("id");
+
 	BoardDAO dao = BoardDAO.getInstance();	
-	
+	int memNo = dao.getMemberNo();
 	// 페이지 처리식 (첫페이지일시 1로 표시)
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null){
@@ -24,7 +24,7 @@
     int startRow = (currentPage - 1) * pageSize + 1;	// 시작값 (1-1)*10+1
     int endRow = currentPage * pageSize;				// 종료값	1*10
     int count = 0;										// 전체 게시글 개수
-    int mycount = dao.getMyListCount(sessionId);
+    int mycount = dao.getMyListCount(memNo);
     int number = 0;									 	// 게시판 글번호
     
     List articleList = null;	
@@ -42,18 +42,11 @@
 	<link href="/home/board/write.css" rel="stylesheet">
 </head>
 <body>
-<%
-if("admin".equals(sessionId)){%>
-<b>관리자입니다.</b> <br />
-<%}%>  
 <b>글목록(전체글:<%=mycount%>)</b>
 <table>
 	<tr>
 		<td>
-			<%if(sessionId != null){ %>
-			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='/home/home/main.jsp?main=/board/writeForm.jsp'">
-			<%}else{%>
-			<%}%>
+			<input type= "button" class = "listbt" value = "글쓰기" onclick = "location.href='/home/home/main.jsp?'">
 		</td>
 	</tr>
 </table>
@@ -81,43 +74,42 @@ if("admin".equals(sessionId)){%>
 <%
 	for(int i = 0; i < articleList.size(); i++) {
 		BoardDTO article = (BoardDTO)articleList.get(i);
-		if(sessionId.equals(article.getWriter())){
+		if(memNo == article.getMember_no()){
 %>
-	<tr>
-		<td><%=number--%></td>
-		<td class = "listsubject">
-		<%
-			int wid = 0;
-			if(article.getRe_level() > 0){
-				wid = 5 * (article.getRe_level());		
-		%>
-		<%-- 답변 이미지 표시와 들여쓰기 --%>
-		<img src="../board/images/level.gif" width="<%=wid%>">
-		<img src="../board/images/re.gif">
-		<%}else{%>
-		<img src="../board/images/level.gif" width="<%=wid%>">
+			<tr>
+				<td><%=number--%></td>
+				<td class = "listsubject">
+				<%
+					int wid = 0;
+					if(article.getRe_level() > 0){
+						wid = 5 * (article.getRe_level());		
+				%>
+				<%-- 답변 이미지 표시와 들여쓰기 --%>
+				<img src="../board/images/level.gif" width="<%=wid%>">
+				<img src="../board/images/re.gif">
+				<%}else{%>
+				<img src="../board/images/level.gif" width="<%=wid%>">
+				<%}%>
+				
+				<%-- 제목 클릭시 내용 확인 --%>
+				<a href ="/home/home/main.jsp?main=/board/contents01.jsp&no=<%=article.getNo()%>&pageNum=<%=currentPage %>&number=<%=number%>">
+				<%=article.getSubject()%></a>
+				
+				<%-- 조회수가 20 이상일시 이미지 표시 --%>
+				<% if(article.getReadcount()>=20){%>
+				<img src="../board/images/hot.gif"><%}%></td>
+				
+				<td>
+					<%=article.getMember_id() %>
+				</td>
+				
+				<%-- 작성 시간, 조회수, 작성IP 표시 --%>
+				<td><%=sdf.format(article.getReg_date())%></td>
+				<td><%=article.getReadcount() %></td>
+				<td><%=article.getIp() %></td>
+			</tr>
 		<%}%>
-		
-		<%-- 제목 클릭시 내용 확인 --%>
-		<a href ="/home/home/main.jsp?main=/board/contents01.jsp&num=<%=article.getNum()%>&pageNum=<%=currentPage %>&number=<%=number%>">
-		<%=article.getSubject()%></a>
-		
-		<%-- 조회수가 20 이상일시 이미지 표시 --%>
-		<% if(article.getReadcount()>=20){%>
-		<img src="../board/images/hot.gif"><%}%></td>
-		
-		<%-- 이메일 클릭시 메일 링크로 이동 --%>
-		<td>
-			<a href="mailto:<%=article.getEmail() %>"><%=article.getWriter() %></a>
-		</td>
-		
-		<%-- 작성 시간, 조회수, 작성IP 표시 --%>
-		<td><%=sdf.format(article.getReg_date())%></td>
-		<td><%=article.getReadcount() %></td>
-		<td><%=article.getIp() %></td>
-	</tr>
 	<%}%>
-<%}%>
 	
 </table>
 

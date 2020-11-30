@@ -12,7 +12,7 @@
 <%
 	article.setReg_date(new Timestamp(System.currentTimeMillis()) );
 	article.setIp(request.getRemoteAddr());
-
+	
     BoardDAO dao = BoardDAO.getInstance();
     dao.insertArticle(article);
 

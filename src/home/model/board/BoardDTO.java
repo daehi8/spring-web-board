@@ -14,6 +14,7 @@ public class BoardDTO{
     private int ref;			
     private int re_step;		
     private int re_level;
+    private String fleg;
     
 	public int getNo() {
 		return no;
@@ -80,6 +81,12 @@ public class BoardDTO{
 	}
 	public void setRe_level(int re_level) {
 		this.re_level = re_level;
+	}
+	public String getFleg() {
+		return fleg;
+	}
+	public void setFleg(String fleg) {
+		this.fleg = fleg;
 	}		
     
 }

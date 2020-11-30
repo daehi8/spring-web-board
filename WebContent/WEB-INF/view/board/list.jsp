@@ -41,10 +41,6 @@
 	<link href="/home/board/write.css" rel="stylesheet">
 </head>
 <body>
-<%
-if("admin".equals(sessionId)){%>
-<b>관리자입니다.</b> <br />
-<%}else%>  
 <b>글목록(전체글:<%=count %>)</b>
 <table>
 	<tr>
@@ -98,16 +94,15 @@ if("admin".equals(sessionId)){%>
 		<%}%>
 		
 		<%-- 제목 클릭시 내용 확인 --%>
-		<a href ="/home/board/contents.jsp?num=<%=article.getNum()%>&pageNum=<%=currentPage %>&number=<%=number%>">
+		<a href ="/home/board/contents.jsp?no=<%=article.getNo()%>&pageNum=<%=currentPage %>&number=<%=number%>">
 		<%=article.getSubject()%></a>
 		
 		<%-- 조회수가 20 이상일시 이미지 표시 --%>
 		<% if(article.getReadcount()>=20){%>
 		<img src="/home/board/images/hot.gif"><%}%></td>
 		
-		<%-- 이메일 클릭시 메일 링크로 이동 --%>
 		<td>
-			<a href="mailto:<%=article.getEmail() %>"><%=article.getWriter() %></a>
+			<%=article.getMember_id() %>
 		</td>
 		
 		<%-- 작성 시간, 조회수, 작성IP 표시 --%>
