@@ -27,7 +27,7 @@
 	<table width="800" border="1" cellpadding="2" cellspacing="0">
 		<tr>
 			<td>
-				<c:import url="http://localhost:8080/home/home/top.hm" />
+				<c:import url="http://localhost:8080/home/top.do" />
 			</td>
 		</tr>
 		<tr width = "150">
@@ -46,12 +46,12 @@
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<c:import url="http://localhost:8080/home/board/list.hm" />
+				<c:import url="http://localhost:8080/home/list.do" />
 			</td>
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<c:import url="http://localhost:8080/home/home/bottom.hm" />
+				<c:import url="http://localhost:8080/home/bottom.do" />
 			</td>
 		</tr>				
 	</table>

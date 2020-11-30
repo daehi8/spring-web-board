@@ -10,7 +10,7 @@
 	>
 	
 	<!-- 해당 패키지에서 @controller가 있는 곳을 호출 -->
-	<context:component-scan base-package="spring.model"></context:component-scan>
+	<context:component-scan base-package="home.model"></context:component-scan>
 	
 
 </beans>

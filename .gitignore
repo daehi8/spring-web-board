@@ -1,6 +1,6 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,java-web
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,eclipse,java,java-web
+@@ -0,0 +1,151 @@
+# Created by https://www.gitignore.io/api/git,java,maven,windows,eclipse
+# Edit at https://www.gitignore.io/?templates=git,java,maven,windows,eclipse
 
 ### Eclipse ###
 .metadata
@@ -14,7 +14,10 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-build/
+.target/
+
+# ignore properties file
+config.properties
 
 # External tool builders
 .externalToolBuilders/
@@ -54,20 +57,38 @@ build/
 
 # Annotation Processing
 .apt_generated/
-.apt_generated_test/
 
 # Scala IDE specific (Scala & Java development for Eclipse)
 .cache-main
 .scala_dependencies
 .worksheet
 
-# Uncomment this line if you wish to ignore the project description file.
-# Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
-
 ### Eclipse Patch ###
-# Spring Boot Tooling
+# Eclipse Core
+.project
+
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+# Annotation Processing
+.apt_generated
+
 .sts4-cache/
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Java ###
 # Compiled class file
@@ -94,9 +115,13 @@ build/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-### Java-Web ###
-## ignoring target file
+### Maven ###
 target/
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -124,4 +149,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,java-web
+# End of https://www.gitignore.io/api/git,java,maven,windows,eclipse
