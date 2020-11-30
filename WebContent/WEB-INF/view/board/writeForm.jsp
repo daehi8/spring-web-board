@@ -15,11 +15,11 @@
 	</script>		
 <%}%>    
 <%
-	int num=0,ref=1,re_step=1,re_level=0;
+	int no=0,ref=1,re_step=1,re_level=0;
 		try{
-		if(request.getParameter("num") != null){
+		if(request.getParameter("no") != null){
 			// 답글일경우 원래글에서 값을 전달받아 저장
-			num=Integer.parseInt(request.getParameter("num"));
+			no=Integer.parseInt(request.getParameter("no"));
 			ref=Integer.parseInt(request.getParameter("ref"));
 			re_step=Integer.parseInt(request.getParameter("re_step"));
 			re_level=Integer.parseInt(request.getParameter("re_level"));
@@ -32,7 +32,7 @@
 <br>
 <form method = "post" name = "writeform" action = "../board/writePro.jsp">
 	<%-- 히든타입으로 만든 값을 pro페이지로 전송 --%>
-	<input type="hidden" name="num" value="<%=num%>">
+	<input type="hidden" name="no" value="<%=no%>">
 	<input type="hidden" name="ref" value="<%=ref%>">
 	<input type="hidden" name="re_step" value="<%=re_step%>">
 	<input type="hidden" name="re_level" value="<%=re_level%>">
@@ -56,22 +56,14 @@
 			<%} %>
 		</tr>
 		<tr>
-			<td class="hd">Email</td>		
-			<td><input type="text" size="40" maxlength="30" name="email" ></td>
-		</tr>
-		<tr>
 			<td class="hd">내용</td>		
 			<td><textarea name="content" ></textarea></td>
-		</tr>
-		<tr>
-			<td class="hd">비밀번호</td>		
-			<td><input type="password" name="pw" size="8" maxlength="12"></td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="submit" value="글쓰기" >  
   				<input type="reset" value="다시작성">
-  				<input type="button" value="목록보기" OnClick="window.location='/home/home/main.jsp?main=/board/list.jsp'">
+  				<input type="button" value="목록보기" OnClick="window.location='/home/home/main.jsp'">
 			</td>		
 		</tr>										
 	</table>

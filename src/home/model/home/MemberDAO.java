@@ -1,4 +1,4 @@
-package home.home.model;
+package home.model.home;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,35 +10,32 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SignupDAO {
+public class MemberDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
 	private static Connection getConnection() throws Exception{
-		Context ctx = new InitialContext(); // Context xml ���� ����
-		Context j = (Context)ctx.lookup("java:comp/env"); // �ڹ�������Ʈ ȯ�� ����(�ڹ� ����, �������� �����ϴ� ����)
-		DataSource ds = (DataSource)j.lookup("jdbc/orcl"); // Ŀ�ؼ� Ǯ ���
+		Context ctx = new InitialContext();
+		Context j = (Context)ctx.lookup("java:comp/env"); 
+		DataSource ds = (DataSource)j.lookup("jdbc/orcl"); 
 		Connection conn = ds.getConnection();
 		return conn;	
 	}
 	
 	public ArrayList selectAll() {	
-		ArrayList list = new ArrayList(); //resultSet����� ������ �迭
+		ArrayList list = new ArrayList();
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select * from signup");
+			pstmt = conn.prepareStatement("select * from home_member");
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				SignupDTO dto = new SignupDTO();
+				MemberDTO dto = new MemberDTO();
 				dto.setId(rs.getString("id"));
 				dto.setPw(rs.getString("pw"));
 				dto.setName(rs.getString("name"));
-				dto.setGender(rs.getString("gender"));
 				dto.setNickname(rs.getString("nickname"));
-				dto.setNum(rs.getString("num"));
 				dto.setEmail(rs.getString("email"));
-				dto.setAddress(rs.getString("address"));
 				dto.setReg(rs.getTimestamp("reg"));
 				list.add(dto);
 			}
@@ -51,20 +48,16 @@ public class SignupDAO {
 	}
 	
 
-	public void insert(SignupDTO dto) {
+	public void insert(MemberDTO dto) {
 		try {
 			conn = getConnection();
-	    	String sql = "insert into signup values(?,?,?,?,?,?,?,?, sysdate,?)";
+	    	String sql = "insert into home_member values(board_seq.nextval,?,?,?,?,?,Y,sysdate)";
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setString(1, dto.getId());
 	    	pstmt.setString(2, dto.getPw());
 	    	pstmt.setString(3, dto.getName());
-	    	pstmt.setString(4, dto.getGender());
-	    	pstmt.setString(5, dto.getNickname());
-	    	pstmt.setString(6, dto.getNum());
-	    	pstmt.setString(7, dto.getEmail());
-	    	pstmt.setString(8, dto.getAddress());
-	    	pstmt.setString(9, dto.getImg());
+	    	pstmt.setString(4, dto.getNickname());
+	    	pstmt.setString(5, dto.getEmail());
 	    	
 	    	pstmt.executeUpdate();
 	    	
@@ -79,7 +72,7 @@ public class SignupDAO {
 		boolean result = false;
 		try {
 			conn = getConnection();
-			String sql = "select * from signup where id = ?";
+			String sql = "select * from home_member where id = ? and fleg=Y";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -95,11 +88,11 @@ public class SignupDAO {
 	}
 	
 	
-	public boolean loginCheck(SignupDTO dto) {
+	public boolean loginCheck(MemberDTO dto) {
 		boolean result = false;
 		try{
 			conn = getConnection();
-			String sql = "select * from signup where id=? and pw=?";
+			String sql = "select * from home_member where id=? and pw=? and fleg=Y";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getId());
 			pstmt.setString(2, dto.getPw());
@@ -116,11 +109,11 @@ public class SignupDAO {
 	}	
 	
 
-	public SignupDTO idInfo(String Id) {
-		SignupDTO dto = new SignupDTO();
+	public MemberDTO idInfo(String Id) {
+		MemberDTO dto = new MemberDTO();
 		try{
 			conn = getConnection();
-			String sql = "select * from signup where id=?";
+			String sql = "select * from home_member where id=? and fleg=Y";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, Id);
 			rs = pstmt.executeQuery();
@@ -128,10 +121,8 @@ public class SignupDAO {
 				dto.setId(rs.getString("id"));
 				dto.setPw(rs.getString("pw"));
 				dto.setName(rs.getString("name"));
-				dto.setGender(rs.getString("gender"));
-				dto.setNum(rs.getString("num"));
+				dto.setNickname(rs.getString("nickname"));
 				dto.setEmail(rs.getString("email"));
-				dto.setAddress(rs.getString("address"));
 				dto.setReg(rs.getTimestamp("reg"));
 			}
 		}catch(Exception e) {
@@ -143,11 +134,11 @@ public class SignupDAO {
 	}	
 	
 	
-	public SignupDTO myInfo(String sessionId) {
-		SignupDTO dto = new SignupDTO();
+	public MemberDTO myInfo(String sessionId) {
+		MemberDTO dto = new MemberDTO();
 		try{
 			conn = getConnection();
-			String sql = "select * from signup where id=?";
+			String sql = "select * from home_member where id=? and fleg=Y";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, sessionId);
 			rs = pstmt.executeQuery();
@@ -155,10 +146,7 @@ public class SignupDAO {
 				dto.setId(rs.getString("id"));
 				dto.setPw(rs.getString("pw"));
 				dto.setName(rs.getString("name"));
-				dto.setGender(rs.getString("gender"));
-				dto.setNum(rs.getString("num"));
 				dto.setEmail(rs.getString("email"));
-				dto.setAddress(rs.getString("address"));
 				dto.setReg(rs.getTimestamp("reg"));
 			}
 		}catch(Exception e) {
@@ -169,18 +157,15 @@ public class SignupDAO {
 		return dto;
 	}
 	
-	public void update(SignupDTO dto) {
+	public void update(MemberDTO dto) {
 		try{
 			conn = getConnection();
-			String sql = "update signup set pw=?, name=?, gender=?, nickname=?, email=?, address=?, img=? where id=?";
+			String sql = "update home_member set pw=?, name=?, nickname=?, email=? where id=? and fleg=Y";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getPw());
 			pstmt.setString(2, dto.getName());
-			pstmt.setString(3, dto.getGender());
 			pstmt.setString(4, dto.getNickname());
 			pstmt.setString(5, dto.getEmail());
-			pstmt.setString(6, dto.getAddress());
-			pstmt.setString(7, dto.getImg());
 			pstmt.setString(8, dto.getId());
 			pstmt.executeQuery();
 		}catch(Exception e) {
@@ -190,10 +175,10 @@ public class SignupDAO {
 		}	
 	}
 	
-    public void delete (SignupDTO dto){
+    public void delete (MemberDTO dto){
     	try{
     		conn = getConnection();
-    		String sql = "delete from signup where id=? and pw=?";
+    		String sql = "update from home_member set fleg=D where id=? and pw=?";
     		pstmt = conn.prepareStatement(sql);
     		pstmt.setString(1, dto.getId());
     		pstmt.setString(2, dto.getPw());
@@ -205,42 +190,6 @@ public class SignupDAO {
     	}
     }
     
-    
-	public String selectImg(String id) {
-		String img = null;
-		try {
-			conn = DataBaseConnection.getConnection();
-			String sql = "select img from signup where id=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				img = rs.getString("img");
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			closeAll();
-		}
-		return img;
-	}
-
-	
-	public void deleteAdmin(String id) {
-		try {
-			conn = DataBaseConnection.getConnection();
-			String sql = "delete from signup where id=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.executeUpdate();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			closeAll();
-		}
-	}
-	
-	
 	private void closeAll() {
 		if(rs != null) {try {rs.close();}catch(SQLException s) {}}
 		if(pstmt != null) {try {pstmt.close();}catch(SQLException s) {}}

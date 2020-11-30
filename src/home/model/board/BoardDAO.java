@@ -1,4 +1,4 @@
-package home.home.board;
+package home.model.board;
 import java.sql.*;
 import javax.sql.*;
 
@@ -15,7 +15,6 @@ public class BoardDAO {
 		return instance;
 	}
 	
-	// DB�� ���� �޼ҵ�
 	private Connection getConnection() throws Exception{
 	      Context initCtx = new InitialContext();
 	      Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -23,10 +22,8 @@ public class BoardDAO {
 	      return ds.getConnection();		
 	}
 	
-	// �Խñ� �ۼ� �޼ҵ�
 	public void insertArticle(BoardDTO article)	{
-		// writeForm���� ���� hidden �� ����
-		int num=article.getNum();
+		int no=article.getNo();
 		int ref=article.getRef();
 		int re_step=article.getRe_step();
 		int re_level=article.getRe_level();
@@ -35,18 +32,16 @@ public class BoardDAO {
 		
 		try {
 			conn = getConnection();
-			// �Խñ� ���� Ȯ���� �� �۹�ȣ�� �ڵ����� �����ϴ� �޼ҵ�
 			pstmt = conn.prepareStatement("select max(num) from homeboard");
 			rs = pstmt.executeQuery();
 						
-			if(rs.next())					// select���� ����� ���� ��� true
-				number = rs.getInt(1)+1;	 // select�� ����� �� +1
+			if(rs.next())					
+				number = rs.getInt(1)+1;	 
 			else
-				number = 1;		// ù��° �Խñ��� ���
+				number = 1;		
 			
 			if(num != 0) {
-				// �亯���� ���
-				// ref �� re_step�� ���� ������ �÷��� �˻�
+
 				sql ="update homeboard set re_step = re_step+1 where ref = ? and re_step > ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, ref);
@@ -55,15 +50,14 @@ public class BoardDAO {
 				re_step = re_step+1;
 				re_level = re_level+1;
 			}else {
-				// �亯���� �ƴҰ��
+
 				ref = number;
 				re_step = 0;
 				re_level = 0;
 			}
 			
-			
-			// �Խñ� �ۼ� ������
-            sql = "insert into homeboard(num, writer,email,subject,pw,reg_date,";
+
+            sql = "insert into homeboard(no, writer,email,subject,pw,reg_date,";
 		    sql+="ref,re_step,re_level,content,ip) values(board_seq.nextval,?,?,?,?,?,?,?,?,?,?)";
 
             pstmt = conn.prepareStatement(sql);
@@ -86,7 +80,7 @@ public class BoardDAO {
         }
 	}
 	
-	// ���̺� ����� ��� �Խñ��� ���� �˻��ϴ� �޼ҵ�
+
 	public int getArticleCount() throws Exception{
         int x=0;
 		try {
@@ -95,7 +89,7 @@ public class BoardDAO {
 	         rs = pstmt.executeQuery();
 	         
 	         if(rs.next()) {
-	        	 x = rs.getInt(1);		// ����� �����ϸ� �� ù��° ���� ���� �� ����
+	        	 x = rs.getInt(1);	
 	         }
 		}catch(Exception ex) {
             ex.printStackTrace();
@@ -105,16 +99,13 @@ public class BoardDAO {
 		return x;
 	}
 	
-	// �Խ��ǿ� ǥ�õǴ� �Խñ� ������ ǥ���ϴ� �޼ҵ�
+
 	public List getArticles(int start, int end) throws Exception{
         List articleList=null;
         try {
         	conn = getConnection();
             pstmt = conn.prepareStatement(
 
-            // ref ���������ϰ� re_step ������������ ����
-            // rownum r�� ���ʷ� ����
-            // rownum r�� startrow�� endrow������ ���� select 
             "select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,r "+
         	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r " +
         	"from (select num,writer,email,subject,pw,reg_date,ref,re_step,re_level,content,ip,readcount " +
@@ -150,19 +141,17 @@ public class BoardDAO {
 		return articleList;
 	}
 	
-	// �Խñ� ���� Ȯ�� �޼ҵ�
+
 	public BoardDTO getArticle(int num) {
         BoardDTO article=null;
 		try {
 			conn = getConnection();
 			
-			// ���� Ȯ�ν� ��ȸ�� �����ϴ� �޼ҵ�
             pstmt = conn.prepareStatement(
             		"update homeboard set readcount=readcount+1 where num = ?");
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate();
 			
-			// ���޹��� ��ȣ�� �Խñ� ���� Ȯ���ϴ� �޼ҵ�
             pstmt = conn.prepareStatement(
             		"select * from homeboard where num = ?");
             pstmt.setInt(1, num);
@@ -191,7 +180,6 @@ public class BoardDAO {
 	return article;
 }
 	
-	// ������Ʈ�� �Խñ� ���� Ȯ�� �޼ҵ�
 	public BoardDTO updateGetArticle(int num)throws Exception{
 		BoardDTO article = null;
 		try {
@@ -226,16 +214,12 @@ public class BoardDAO {
 	
 	
 
-	// �Խñ� ��й�ȣ ��ġ Ȯ�� �� ���� �޼ҵ�
-	// x = 1 -> true ��ġ
-	// x = 0 -> false ����ġ
 	public int updateArticle(BoardDTO article)throws Exception{
 		String dbpw = "";
 		String sql = "";
 		int x = -1;
 		try {
 			conn = getConnection();
-			// ��ȣ�� �ش��ϴ� �Խñ��� ��й�ȣ Ȯ�� �޼ҵ�
 			pstmt = conn.prepareStatement(
 				"select pw from homeboard where num = ?");
 			pstmt.setInt(1, article.getNum());
@@ -243,7 +227,6 @@ public class BoardDAO {
 			
 			if(rs.next()) {
 				dbpw = rs.getString("pw");
-				// �Խñ� ��й�ȣ�� ��ġ�ϴ��� Ȯ��
 				if(dbpw.equals(article.getPw())) {
 					sql = "update homeboard set writer=?,email=?,subject=?,pw=?";
 					sql += ",content=? where num=?";
@@ -269,22 +252,17 @@ public class BoardDAO {
 		}
 		return x;
 	}
-	
-	// �Խñ� ��й�ȣ Ȯ�� �� ���� �޼ҵ�
-	// x = 1 -> true ��ġ
-	// x = 0 -> false ����ġ
+
 	public int deleteArticle(int num, String pw)throws Exception{
 		String dbpw = "";
 		int x = -1;
 		try {
 			conn = getConnection();
-			// �Խñ� ��ȣ�� ������ �Խñ� Ȯ��
 			pstmt = conn.prepareStatement("select pw from homeboard where num = ?");
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				// ��й�ȣ�� ��ġ�ҽ� �Խñ� ����
 				dbpw = rs.getString("pw");
 				pstmt = conn.prepareStatement("delete from homeboard where num =?");
 				pstmt.setInt(1, num);
@@ -312,7 +290,7 @@ public class BoardDAO {
 	         rs = pstmt.executeQuery();
 	         
 	         if(rs.next()) {
-	        	 y = rs.getInt(1);		// ����� �����ϸ� �� ù��° ���� ���� �� ����
+	        	 y = rs.getInt(1);		
 	         }
 		}catch(Exception e) {
             e.printStackTrace();

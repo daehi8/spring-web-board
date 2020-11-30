@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "home.home.board.BoardDTO" %>
-<%@ page import = "home.home.board.BoardDAO" %>
+<%@ page import = "home.model.board.BoardDTO" %>
+<%@ page import = "home.model.board.BoardDAO" %>
     
 <%
 	// contents01.jsp에서 보낸 파라미터 확인

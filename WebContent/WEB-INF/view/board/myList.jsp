@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.List" %>
 <%@ page import = "java.text.SimpleDateFormat" %>
-<%@ page import = "home.home.board.BoardDTO" %>
-<%@ page import = "home.home.board.BoardDAO" %> 
+<%@ page import = "home.model.board.BoardDTO" %>
+<%@ page import = "home.model.board.BoardDAO" %> 
 
 
 <%!
