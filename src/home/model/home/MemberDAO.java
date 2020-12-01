@@ -14,7 +14,13 @@ public class MemberDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
-
+	
+	// singleton
+	private static MemberDAO instance = new MemberDAO();
+	public static MemberDAO getInstance() {
+		return instance;
+	}
+	
 	private static Connection getConnection() throws Exception{
 		Context ctx = new InitialContext();
 		Context j = (Context)ctx.lookup("java:comp/env"); 
@@ -50,12 +56,12 @@ public class MemberDAO {
 	public void insert(MemberDTO dto) {
 		try {
 			conn = getConnection();
-	    	String sql = "insert into home_member values(board_seq.nextval,?,?,?,?,Y,sysdate)";
+	    	String sql = "insert into home_member values(board_seq.nextval,?,?,?,?,'Y',sysdate) ";
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setString(1, dto.getId());
 	    	pstmt.setString(2, dto.getPw());
 	    	pstmt.setString(3, dto.getName());
-	    	pstmt.setString(5, dto.getEmail());
+	    	pstmt.setString(4, dto.getEmail());
 	    	
 	    	pstmt.executeUpdate();
 	    	
@@ -70,7 +76,7 @@ public class MemberDAO {
 		boolean result = false;
 		try {
 			conn = getConnection();
-			String sql = "select * from home_member where id = ? and fleg=Y";
+			String sql = "select * from home_member where id = ? and fleg='Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -90,7 +96,7 @@ public class MemberDAO {
 		boolean result = false;
 		try{
 			conn = getConnection();
-			String sql = "select * from home_member where id=? and pw=? and fleg=Y";
+			String sql = "select * from home_member where id=? and pw=? and fleg='Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getId());
 			pstmt.setString(2, dto.getPw());
@@ -111,7 +117,7 @@ public class MemberDAO {
 		MemberDTO dto = new MemberDTO();
 		try{
 			conn = getConnection();
-			String sql = "select * from home_member where id=? and fleg=Y";
+			String sql = "select * from home_member where id=? and fleg='Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, Id);
 			rs = pstmt.executeQuery();
@@ -135,7 +141,7 @@ public class MemberDAO {
 		MemberDTO dto = new MemberDTO();
 		try{
 			conn = getConnection();
-			String sql = "select * from home_member where id=? and fleg=Y";
+			String sql = "select * from home_member where id=? and fleg='Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, sessionId);
 			rs = pstmt.executeQuery();
@@ -157,7 +163,7 @@ public class MemberDAO {
 	public void update(MemberDTO dto) {
 		try{
 			conn = getConnection();
-			String sql = "update home_member set pw=?, name=?, email=? where id=? and fleg=Y";
+			String sql = "update home_member set pw=?, name=?, email=? where id=? and fleg='Y'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getPw());
 			pstmt.setString(2, dto.getName());

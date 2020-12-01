@@ -3,7 +3,7 @@ package home.model.home;
 import java.sql.Timestamp;
 
 public class MemberDTO {
-	private String no;
+	private int no;
 	private String id;
 	private String pw;
 	private String name;
@@ -54,10 +54,10 @@ public class MemberDTO {
 	public void setFleg(String fleg) {
 		this.fleg = fleg;
 	}
-	public String getNo() {
+	public int getNo() {
 		return no;
 	}
-	public void setNo(String no) {
+	public void setNo(int no) {
 		this.no = no;
 	}
 }
