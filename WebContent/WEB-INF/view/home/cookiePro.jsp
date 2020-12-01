@@ -30,11 +30,11 @@
 		response.addCookie(cpw);
 		response.addCookie(cauto);
 	}			
-	response.sendRedirect("loginHome.jsp");
+	response.sendRedirect("/home/main.do");
 		}else{
 %>
 	<script>
 		alert("아이디 / 비밀번호를 확인하세요.");			
-		window.location="main.jsp";
+		window.location="/home/main.do";
 	</script>
 	<%}%>

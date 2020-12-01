@@ -7,13 +7,13 @@
 	<%
         		String sessionId = (String)session.getAttribute("id");
         	        		if(sessionId == null){
-        	        			response.sendRedirect("/home/home/main.jsp");
+        	        			response.sendRedirect("/home/main.do");
         	        		}
         	        		MemberDAO dao = new MemberDAO();
         	        		MemberDTO dto = dao.myInfo(sessionId);
         	%>
 	
-	<form action="updatePro.jsp" method="post">
+	<form action="/home/updatepro.do" method="post">
 		아이디 : <%=dto.getId() %> <br />
 			<input type="hidden" name="id" value="<%=dto.getId() %>" />
  		비밀번호 : <input type="text" name="pw" value="<%=dto.getPw() %>" /> <br />

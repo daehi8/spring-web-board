@@ -13,10 +13,10 @@
 		}
 	}
 	if (auto != null && id != null && pw != null){
-		response.sendRedirect("cookiePro.jsp");
+		response.sendRedirect("/home/cookiepro.do");
 	}
 %>
-<form action = "loginPro.jsp" method="post" >
+<form action = "/home/loginpro.do" method="post" >
 	id : <input type = "text" name = "id" /> <br />
 	pw : <input type = "password" name = "pw"/> <br />
 	<input type="checkbox" name = "auto" value="1">자동로그인 <br />

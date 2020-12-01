@@ -94,6 +94,7 @@
 		<%}%>
 		
 		<%-- 제목 클릭시 내용 확인 --%>
+		if()
 		<a href ="/home/board/contents.jsp?no=<%=article.getNo()%>&pageNum=<%=currentPage %>&number=<%=number%>">
 		<%=article.getSubject()%></a>
 		

@@ -4,10 +4,10 @@
 <%
 	String sessionId = (String)session.getAttribute("id");
 	if(sessionId == null){
-	response.sendRedirect("main.jsp");
+	response.sendRedirect("/home/main.do");
 }
 %>
-<form action = "deletePro.jsp" method = "post">
+<form action = "/home/deletepro.do" method = "post">
 		<input type= "hidden" name ="id" value = "<%=sessionId%>" />
 	pw : <input type = "text" name = "pw" /> <br/>
 		<input type = "submit" value = "탈퇴"/>

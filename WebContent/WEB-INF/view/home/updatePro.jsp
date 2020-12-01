@@ -7,7 +7,7 @@
 		request.setCharacterEncoding("UTF-8");
 		String sessionId = (String)session.getAttribute("id");
 		if(sessionId == null){
-			response.sendRedirect("main.jsp");
+			response.sendRedirect("/home/main.do");
 		}
 	%>
 	
@@ -20,5 +20,5 @@
 		%>
 	<script>
 		alert("수정되었습니다.");
-		window.location="/home/home/main.jsp?main=loginHome.jsp";
+		window.location="/home/main.do";
 	</script>

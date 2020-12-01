@@ -21,9 +21,4 @@ public class MainBean {
 		return "/WEB-INF/view/home/bottom.jsp";
 	}
 
-	@RequestMapping("/list.do")
-	public String List() {
-		return "/WEB-INF/view/board/list.jsp";
-	}
-
 }

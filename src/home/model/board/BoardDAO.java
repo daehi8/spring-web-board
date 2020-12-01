@@ -325,7 +325,7 @@ public class BoardDAO {
 				dbmemberNo = rs.getInt("member_no");
 				if(dbmemberNo == memberNo) {
 					pstmt = conn.prepareStatement(
-							"update home_board set fleg ='D', subject ='삭제된 글입니다.', content='', member_id='', ip='' where no =?");
+							"update home_board set fleg ='D', subject ='삭제된 글', content='', member_id='', ip='' where no =?");
 					pstmt.setInt(1, no);
 					pstmt.executeUpdate();
 					x= 1;

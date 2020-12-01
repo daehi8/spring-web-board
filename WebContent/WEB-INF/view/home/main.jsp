@@ -33,14 +33,14 @@
 		<tr width = "150">
 			<td>
 				<%if(sessionId == null){%> 
-					<input type = "button" value ="회원가입" onclick="window.location='/home/home/main.jsp?main=signup01.jsp'"/>
-					<input type = "button" value = "로그인" onclick="window.location='/home/home/main.jsp?main=loginForm.jsp'"/>
-					<input type="button" value ="게시판" onclick="window.location='/home/home/main.jsp?main=/board/list.jsp'"/>
+					<input type = "button" value ="회원가입" onclick="window.location='/home/signup.do'"/>
+					<input type = "button" value = "로그인" onclick="window.location='/home/loginform.do'"/>
+					<input type="button" value ="게시판" onclick="window.location='/home/list.do'"/>
 				<%}else{%>
-					<input type= "button" value="게시판" onclick="window.location='/home/home/main.jsp?main=/board/list.jsp'">
-					<input type= "button" value="회원탈퇴"onclick="window.location='/home/home/main.jsp?main=delete.jsp'">
-					<input type= "button" value="내정보확인" onclick="window.location='/home/home/main.jsp?main=myInfo.jsp'">
-					<input type= "button" value="로그아웃" onclick="window.location='/home/home/main.jsp?main=logout.jsp'">
+					<input type= "button" value="게시판" onclick="window.location='/home/list.do'">
+					<input type= "button" value="회원탈퇴"onclick="window.location='/home/deleteform.do'">
+					<input type= "button" value="내정보확인" onclick="window.location='/home/myinfo.do'">
+					<input type= "button" value="로그아웃" onclick="window.location='/home/logout.do'">
 				<%}%>
 			</td>
 		</tr>

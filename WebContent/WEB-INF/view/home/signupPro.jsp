@@ -18,13 +18,13 @@
 	%>
    		 <script>
     		alert("이미 등록되었습니다.");
-    		window.location = "/home/home/main.jsp?main=signup01.jsp";  
+    		window.location = "/home/signup.do";  
   		</script>
   	  <%}else{
     	dao.insert(dto);
     %>
     	<script>
     		alert("등록되었습니다.");
-    		window.location = "main.jsp";   
+    		window.location = "/home/main.do";   
     	</script>
     <%}%>

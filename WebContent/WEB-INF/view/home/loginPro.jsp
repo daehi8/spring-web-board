@@ -11,7 +11,7 @@
 		if(result){
 			session.setAttribute("id",dto.getId());
 			session.setAttribute("pw",dto.getPw());
-			response.sendRedirect("main.jsp");
+			response.sendRedirect("/home/main.do");
 		}else{
 	%>
 	<script> 

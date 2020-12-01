@@ -76,7 +76,7 @@ a {
 </head>
 
 
-<form action = "signupPro.jsp" method = "post">
+<form action = "/home/signuppro.do" method = "post">
 	<div class ="container">
 		<h1>회원가입</h1>
 		<p>계정을 만들려면 양식에 따라 작성해주세요.</p>
