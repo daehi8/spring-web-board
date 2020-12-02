@@ -4,21 +4,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/member/")
 public class MainBean {
 	
-	@RequestMapping("/main.do")
+	@RequestMapping("main.do")
 	public String Main() {
-		return "/WEB-INF/view/home/main.jsp";
+		return "home/main";
 	}
 
-	@RequestMapping("/top.do")
+	@RequestMapping("top.do")
 	public String Top() {
-		return "/WEB-INF/view/home/top.jsp";
+		return "home/top";
 	}
 
-	@RequestMapping("/bottom.do")
+	@RequestMapping("bottom.do")
 	public String Bottom() {
-		return "/WEB-INF/view/home/bottom.jsp";
+		return "home/bottom";
 	}
 
 }

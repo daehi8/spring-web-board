@@ -4,41 +4,42 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/board/")
 public class BoardBean {
 	
-	@RequestMapping("/contents.do")
+	@RequestMapping("contents.do")
 	public String Contents() {
-		return "/WEB-INF/view/board/contents.jsp";
+		return "board/contents";
 	}
 	
-	@RequestMapping("/list.do")
+	@RequestMapping("list.do")
 	public String List() {
-		return "/WEB-INF/view/board/list.jsp";
+		return "board/list";
 	}
 	
-	@RequestMapping("/mylist.do")
+	@RequestMapping("mylist.do")
 	public String MyList() {
-		return "/WEB-INF/view/board/mylist.jsp";
+		return "board/mylist";
 	}
 	
-	@RequestMapping("/writedeleteform.do")
+	@RequestMapping("writedeleteform.do")
 	public String WriteDeleteForm() {
-		return "/WEB-INF/view/board/writeDeleteForm.jsp";
+		return "board/writeDeleteForm";
 	}
 	
-	@RequestMapping("/writedeletepro.do")
+	@RequestMapping("writedeletepro.do")
 	public String WriteDeletePro() {
-		return "/WEB-INF/view/board/writeDeletePro.jsp";
+		return "board/writeDeletePro";
 	}
 
-	@RequestMapping("/writeform.do")
+	@RequestMapping("writeform.do")
 	public String WriteForm() {
-		return "/WEB-INF/view/board/writeForm.jsp";
+		return "board/writeForm";
 	}
 
-	@RequestMapping("/writepro.do")
+	@RequestMapping("writepro.do")
 	public String WritePro() {
-		return "/WEB-INF/view/board/writePro.jsp";
+		return "board/writePro";
 	}
 	
 	@RequestMapping("/writeupdateform.do")

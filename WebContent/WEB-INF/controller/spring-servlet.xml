@@ -9,6 +9,11 @@
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
 	>
 	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
 	<!-- 해당 패키지에서 @controller가 있는 곳을 호출 -->
 	<context:component-scan base-package="home.model"></context:component-scan>
 	

@@ -10,37 +10,41 @@ import home.model.dao.MemberDAO;
 import home.model.dto.MemberDTO;
 
 @Controller
+@RequestMapping("/member/")
 public class MemberBean {
 	
 	@Autowired
 	private MemberDAO memberDao = null;
 	
-	@RequestMapping("/deleteform.do")
+	@Autowired
+	private MemberDAO memberDto = null;
+	
+	@RequestMapping("deleteform.do")
 	public String DeleteForm() {
-		return "/WEB-INF/view/home/deleteForm.jsp";
+		return "home/deleteForm";
 	}
 	
-	@RequestMapping("/deletePro.do")
+	@RequestMapping("deletePro.do")
 	public String DeletePro() {
-		return "/WEB-INF/view/home/deletePro.jsp";
+		return "home/deletePro";
 	}
 	
-	@RequestMapping("/myinfo.do")
+	@RequestMapping("myinfo.do")
 	public String MyInfo() {
-		return "/WEB-INF/view/home/myInfo.jsp";
+		return "home/myInfo";
 	}
 	
-	@RequestMapping("/updatePro.do")
+	@RequestMapping("updatePro.do")
 	public String UpdatePro() {
-		return "/WEB-INF/view/home/updatePro.jsp";
+		return "home/updatePro";
 	}
 	
-	@RequestMapping("/signup.do")
+	@RequestMapping("signup.do")
 	public String Signup() {
-		return "/WEB-INF/view/home/signup.jsp";
+		return "home/signup";
 	}
 	
-	@RequestMapping("/signuppro.do")
+	@RequestMapping("signuppro.do")
 	public String SignupPro(MemberDTO memberDto, Model model) {
 
 		boolean result = memberDao.selectId(memberDto.getId());
@@ -49,35 +53,31 @@ public class MemberBean {
 		}
 		
 		model.addAttribute("result", result);
-		System.out.println(result);
-		System.out.println(memberDto.getId());
-		System.out.println(memberDto.getPw());
-		System.out.println(memberDto.getName());
-		return "/WEB-INF/view/home/signupPro.jsp";
+		return "home/signupPro";
 	}
 	
-	@RequestMapping("/loginform.do")
+	@RequestMapping("loginform.do")
 	public String LoginForm() {
-		return "/WEB-INF/view/home/loginForm.jsp";
+		return "home/loginForm";
 	}
 	
-	@RequestMapping(value="/loginpro.do", method=RequestMethod.POST)
+	@RequestMapping(value="loginpro.do", method=RequestMethod.POST)
 	public String LoginPro(MemberDTO memberDto, Model model) {
 		
 		boolean result = memberDao.loginCheck(memberDto);
 		model.addAttribute("result", result);
 		
 		memberDto.getId();
-		return "/WEB-INF/view/home/loginPro.jsp";
+		return "home/loginPro";
 	}
 	
-	@RequestMapping("/logout.do")
+	@RequestMapping("logout.do")
 	public String Logout() {
-		return "/WEB-INF/view/home/logout.jsp";
+		return "home/logout";
 	}
 	
-	@RequestMapping("/cookiepro.do")
+	@RequestMapping("cookiepro.do")
 	public String CookiePro() {
-		return "/WEB-INF/view/home/cookiePro.jsp";
+		return "home/cookiePro";
 	}
 }
