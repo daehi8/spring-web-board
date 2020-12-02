@@ -11,11 +11,6 @@ public class BoardDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
-	private static BoardDAO instance = new BoardDAO();
-	
-	public static BoardDAO getInstance() {	// singleton
-		return instance;
-	}
 	
 	private Connection getConnection() throws Exception{
 	      Context initCtx = new InitialContext();

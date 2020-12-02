@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>    
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <h1> deleteForm</h1>
-<%
-	String sessionId = (String)session.getAttribute("id");
-	if(sessionId == null){
-	response.sendRedirect("/home/main.do");
-}
-%>
+
+<c:if test="${sessionId == null}">
+	<script>
+		window.location = "/home/main.do"
+	</script>
+</c:if>
+
 <form action = "/home/deletepro.do" method = "post">
-		<input type= "hidden" name ="id" value = "<%=sessionId%>" />
+		<input type= "hidden" name ="id" value = "${sessionId}" />
 	pw : <input type = "text" name = "pw" /> <br/>
 		<input type = "submit" value = "탈퇴"/>
 </form>

@@ -1,26 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="home.model.dao.MemberDAO" %>
-<%@ page import="home.model.dto.MemberDTO" %>
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
-    
-	<%
-        		String sessionId = (String)session.getAttribute("id");
-        	        		if(sessionId == null){
-        	        			response.sendRedirect("/home/main.do");
-        	        		}
-        	        		MemberDAO dao = new MemberDAO();
-        	        		MemberDTO dto = dao.myInfo(sessionId);
-        	%>
-	
+    <c:if test="${sessionId == null}">
+    	<script>
+    		window.loacation="/home/main.do";
+    	</script>
+    </c:if>
+
 	<form action="/home/updatepro.do" method="post">
-		아이디 : <%=dto.getId() %> <br />
-			<input type="hidden" name="id" value="<%=dto.getId() %>" />
- 		비밀번호 : <input type="text" name="pw" value="<%=dto.getPw() %>" /> <br />
-		이름 : <input type="text" name="name" value="<%=dto.getName() %>" /> <br />
-		이메일 : <input type="text" name="email" value="<%=dto.getEmail() %>" /> <br />
-		가입날짜 : <%=dto.getReg() %> <br />
-		<input type="hidden" name = "id" value="<%=dto.getId() %>"/>
+		아이디 : ${dto.getId()} <br />
+ 		비밀번호 : <input type="text" name="pw" value="${dto.getPw()}" /> <br />
+		이름 : <input type="text" name="name" value="${dto.getName()}" /> <br />
+		이메일 : <input type="text" name="email" value="${dto.getEmail()}" /> <br />
+		가입날짜 : ${dto.getReg()} <br />
+		<input type="hidden" name = "id" value="${dto.getId()}"/>
 		
 		<input type="submit" value="수정하기">
 	</form>

@@ -17,12 +17,6 @@ public class MemberDAO {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
-	// singleton
-	private static MemberDAO instance = new MemberDAO();
-	public static MemberDAO getInstance() {
-		return instance;
-	}
-	
 	private static Connection getConnection() throws Exception{
 		Context ctx = new InitialContext();
 		Context j = (Context)ctx.lookup("java:comp/env"); 
@@ -58,7 +52,7 @@ public class MemberDAO {
 	public void insert(MemberDTO dto) {
 		try {
 			conn = getConnection();
-	    	String sql = "insert into home_member(id,pw,name,email) values(?,?,?,?) ";
+	    	String sql = "insert into home_member(no,id,pw,name,email,fleg,reg) values(home_member_seq.nextval,?,?,?,?,'Y',sysdate) ";
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setString(1, dto.getId());
 	    	pstmt.setString(2, dto.getPw());
@@ -169,8 +163,8 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getPw());
 			pstmt.setString(2, dto.getName());
-			pstmt.setString(5, dto.getEmail());
-			pstmt.setString(8, dto.getId());
+			pstmt.setString(3, dto.getEmail());
+			pstmt.setString(4, dto.getId());
 			pstmt.executeQuery();
 		}catch(Exception e) {
 			e.printStackTrace();

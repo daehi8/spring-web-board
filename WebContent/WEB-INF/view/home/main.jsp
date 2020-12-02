@@ -22,7 +22,7 @@
 		if (auto != null && id != null && pw != null){		// 쿠키가 있으면 -> true
 			response.sendRedirect("cookiePro.jsp");			// 세션 생성		
 		}
-		String sessionId = (String)session.getAttribute("id");
+		String sessionId = (String)session.getAttribute("sessionId");
 	%>
 	<table width="800" border="1" cellpadding="2" cellspacing="0">
 		<tr>
@@ -46,7 +46,7 @@
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<c:import url="http://localhost:8080/home/list.do" />
+				<%--<c:import url="http://localhost:8080/home/list.do" />--%>
 			</td>
 		</tr>
 		<tr>
