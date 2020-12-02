@@ -1,4 +1,4 @@
-package home.model.home;
+package home.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import home.model.dto.MemberDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,7 +58,7 @@ public class MemberDAO {
 	public void insert(MemberDTO dto) {
 		try {
 			conn = getConnection();
-	    	String sql = "insert into home_member values(board_seq.nextval,?,?,?,?,'Y',sysdate) ";
+	    	String sql = "insert into home_member(id,pw,name,email) values(?,?,?,?) ";
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setString(1, dto.getId());
 	    	pstmt.setString(2, dto.getPw());

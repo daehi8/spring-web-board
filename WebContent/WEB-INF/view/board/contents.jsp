@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.text.SimpleDateFormat" %>
-<%@ page import = "home.model.board.BoardDTO"%>
-<%@ page import = "home.model.board.BoardDAO"%>
+<%@ page import = "home.model.dto.BoardDTO"%>
+<%@ page import = "home.model.dao.BoardDAO"%>
 
 <%
 	int number = Integer.parseInt(request.getParameter("number"));

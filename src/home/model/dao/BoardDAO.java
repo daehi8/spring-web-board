@@ -1,6 +1,8 @@
-package home.model.board;
+package home.model.dao;
 import java.sql.*;
 import javax.sql.*;
+
+import home.model.dto.BoardDTO;
 
 import javax.naming.*;
 import java.util.*;

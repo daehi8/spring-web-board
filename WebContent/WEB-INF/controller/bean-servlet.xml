@@ -9,4 +9,9 @@
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
 	>
 	
+	<bean id = "memberDao" class="home.model.dao.MemberDAO"/>
+	<bean id = "boardDao" class="home.model.dao.BoardDAO"/>
+	
+	<bean id = "memberDto" class="home.model.dto.MemberDTO"/>
+	<bean id = "boardDto" class="home.model.dto.BoardDTO"/>  
 </beans>

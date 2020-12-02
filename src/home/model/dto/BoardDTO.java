@@ -1,4 +1,4 @@
-package home.model.board;
+package home.model.dto;
 import java.sql.Timestamp;
 
 public class BoardDTO{

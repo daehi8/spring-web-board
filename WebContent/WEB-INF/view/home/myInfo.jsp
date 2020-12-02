@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="home.model.home.MemberDAO" %>
-<%@ page import="home.model.home.MemberDTO" %>
+<%@ page import="home.model.dao.MemberDAO" %>
+<%@ page import="home.model.dto.MemberDTO" %>
     
     
 	<%
