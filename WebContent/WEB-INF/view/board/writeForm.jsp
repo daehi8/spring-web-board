@@ -1,41 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <style>
 	table{	border :  3px solid black;}
 </style>
-    
-<% 
-
-	String sessionId = (String)session.getAttribute("id");
-	if(sessionId == null){
-%>	<script>
-		alert("로그인후 사용가능합니다.");
-		window.location='/home/home/main.jsp';
-	</script>		
-<%}%>    
-<%
-	int no=0,ref=1,re_step=1,re_level=0;
-		try{
-		if(request.getParameter("no") != null){
-			// 답글일경우 원래글에서 값을 전달받아 저장
-			no=Integer.parseInt(request.getParameter("no"));
-			ref=Integer.parseInt(request.getParameter("ref"));
-			re_step=Integer.parseInt(request.getParameter("re_step"));
-			re_level=Integer.parseInt(request.getParameter("re_level"));
-	}
-%>
+   
 <head>
-	<link href="../board/write.css" rel="stylesheet">
+	<link href="/resorce/css/write.css" rel="stylesheet">
 </head>
 <body>
 <br>
-<form method = "post" name = "writeform" action = "../board/writePro.jsp">
+<form method = "post" name = "writeform" action = "/home/writepro.do">
 	<%-- 히든타입으로 만든 값을 pro페이지로 전송 --%>
-	<input type="hidden" name="no" value="<%=no%>">
-	<input type="hidden" name="ref" value="<%=ref%>">
-	<input type="hidden" name="re_step" value="<%=re_step%>">
-	<input type="hidden" name="re_level" value="<%=re_level%>">
+	<input type="hidden" name="no" value="${no}">
+	<input type="hidden" name="ref" value="${ref}">
+	<input type="hidden" name="re_step" value="${re_step}">
+	<input type="hidden" name="re_level" value="${re_level}">
 	
 	<table>
 		<tr>
@@ -43,17 +24,18 @@
 		</tr>
 		<tr>
 			<td class="hd">이름</td>
-			<td class="writeId"><%=sessionId %><input type="hidden" name="writer" value = "<%=sessionId%>"></td>			
+			<td class="writeId">${sessionId}<input type="hidden" name="writer" value = "${sessionId}"></td>			
 		</tr>
 		<tr>
 			<td class="hd">제목</td>		
 			<td>
-			<%-- 답변글일경우 제목에 답변 표시 --%>
-			<%if(request.getParameter("num")==null) {%> 
-				<input type="text" size="40" maxlength="50" name="subject"></td>
-			<%}else{ %>
-				<input type="text" size="40" maxlength="50" name="subject" value="[답변]"></td>
-			<%} %>
+			<c:if test="${no == 0}">
+				<input type="text" size="40" maxlength="50" name="subject">
+			</c:if>
+			<c:if test="${no != 0}">
+				<input type="text" size="40" maxlength="50" name="subject" value="[답변]">
+			</c:if>
+			</td>
 		</tr>
 		<tr>
 			<td class="hd">내용</td>		
@@ -63,12 +45,9 @@
 			<td colspan="2">
 				<input type="submit" value="글쓰기" >  
   				<input type="reset" value="다시작성">
-  				<input type="button" value="목록보기" OnClick="window.location='/home/home/main.jsp'">
+  				<input type="button" value="목록보기" OnClick="window.location='/home/list.do'">
 			</td>		
 		</tr>										
 	</table>
-	<%
-		}catch(Exception e){}
-	%>
 </form>
 </body>

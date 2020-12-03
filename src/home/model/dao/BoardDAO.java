@@ -29,7 +29,7 @@ public class BoardDAO {
 		
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select max(num) from homeboard");
+			pstmt = conn.prepareStatement("select max(no) from home_board");
 			rs = pstmt.executeQuery();
 						
 			if(rs.next())					

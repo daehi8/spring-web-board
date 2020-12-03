@@ -46,7 +46,7 @@
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<%--<c:import url="http://localhost:8080/home/list.do" />--%>
+				<c:import url="http://localhost:8080/home/list.do" />
 			</td>
 		</tr>
 		<tr>

@@ -13,5 +13,7 @@
 	<bean id = "boardDao" class="home.model.dao.BoardDAO"/>
 	
 	<bean id = "memberDto" class="home.model.dto.MemberDTO"/>
-	<bean id = "boardDto" class="home.model.dto.BoardDTO"/>  
+	<bean id = "boardDto" class="home.model.dto.BoardDTO"/>
+	
+	<bean id = "page" class ="home.model.dto.PaginationDTO"/>  
 </beans>

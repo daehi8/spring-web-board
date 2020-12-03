@@ -3,18 +3,8 @@
 <%@ page import = "java.sql.Timestamp" %>
 <%@ page import = "home.model.dao.BoardDAO" %>
 
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-<jsp:useBean id="article" scope="page" class="home.model.dto.BoardDTO"/>
-<jsp:setProperty name="article" property="*"/>
+<script>
+	arlet="등록되었습니다.";
+	window.location="/home/list.do";
+</script>
 
-<%
-	article.setReg_date(new Timestamp(System.currentTimeMillis()) );
-	article.setIp(request.getRemoteAddr());
-	
-    BoardDAO dao = BoardDAO.getInstance();
-    dao.insertArticle(article);
-
-    response.sendRedirect("/home/home/main.jsp?main=/board/list.jsp");
-%>
