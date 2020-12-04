@@ -1,6 +1,6 @@
 package home.model.dto;
 
-public class PaginationDTO {
+public class PageDTO {
 	private int pageSize = 10;
 	private String pageNum;
 	private int currentPage;
@@ -93,5 +93,6 @@ public class PaginationDTO {
 		this.pageCount = count / pageSize + ( count % pageSize == 0 ? 0 : 1);
 		this.startPage = (int)(currentPage/10)*10+1;
 		this.endPage = startPage + pageBlock-1;
+		if (endPage > pageCount) endPage = pageCount;
 	}
 }

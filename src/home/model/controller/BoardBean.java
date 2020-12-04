@@ -10,14 +10,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import home.model.dao.BoardDAO;
 import home.model.dto.BoardDTO;
-import home.model.dto.PaginationDTO;
+import home.model.dto.PageDTO;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/board/")
 public class BoardBean {
 	
 	@Autowired
@@ -27,88 +29,116 @@ public class BoardBean {
 	private BoardDTO boardDto = null;
 	
 	@Autowired
-	private PaginationDTO page = null;
+	private PageDTO page = null;
 	
 	@RequestMapping("contents.do")
-	public String Contents() {
+	public String Contents(@RequestParam(defaultValue ="1") int pageNum,
+			int number,
+			BoardDTO boardDto,
+			Model model) {
+		boardDto = boardDao.getArticle(boardDto.getNo());
+		model.addAttribute("dto", boardDto);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("number", number);
+		
 		return "board/contents";
 	}
 	
 	@RequestMapping("list.do")
-	public String List(PaginationDTO page,
+	public String List(@ModelAttribute PageDTO page,
+			@RequestParam(defaultValue ="1") int pageNum,
 			HttpSession session,
 			Model model) throws Exception {
-		
-		String sessionId = (String)session.getAttribute("sessionId");
-		String pageNum = page.getPageNum();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		List articleList = null;
+		if(pageNum == 0) {
+			page.setPageNum("1");
+		}else {
+			page.setPageNum(Integer.toString(pageNum));
+		}		
 		int count = boardDao.getArticleCount();
-		
-		int wid = 0;
-		
-		if(pageNum == null) pageNum = "1";
 		page.setCount(count);
+		page.paging(page.getPageNum(), count);
+		
+		String sessionId = (String)session.getAttribute("sessionId");		
+		List articleList = null;					
 		if(count > 0) articleList = boardDao.getArticles(page.getStartRow(), page.getEndRow());
 		
-		model.addAttribute("sdf", sdf);
 		model.addAttribute("sessionId", sessionId);
-		model.addAttribute("wid", wid);
 		model.addAttribute("page", page);
 		model.addAttribute("articleList", articleList);
 		
 		return "board/list";
 	}
 	
-	@RequestMapping("mylist.do")
-	public String MyList() {
-		return "board/mylist";
+	@RequestMapping("deleteform.do")
+	public String WriteDeleteForm(@RequestParam(defaultValue ="1") int pageNum,
+			@RequestParam(defaultValue ="1") int no,
+			HttpSession session,
+			Model model) {
+		String sessionId = (String)session.getAttribute("sessionId");
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("no", no);
+		model.addAttribute("sessionId", sessionId);
+		return "board/deleteForm";
 	}
 	
-	@RequestMapping("writedeleteform.do")
-	public String WriteDeleteForm() {
-		return "board/writeDeleteForm";
-	}
-	
-	@RequestMapping("writedeletepro.do")
-	public String WriteDeletePro() {
-		return "board/writeDeletePro";
+	@RequestMapping("deletepro.do")
+	public String WriteDeletePro(@RequestParam(defaultValue ="1") int pageNum,
+			@RequestParam(defaultValue ="1") int no,
+			HttpSession session,
+			Model model) throws Exception {
+		String sessionId = (String)session.getAttribute("sessionId");
+		int refNo = boardDao.notDeleteComment(no);
+		int memberNo = boardDao.getMemberNo(sessionId);
+		int check = -1;
+		if(refNo != 0) {
+			check = boardDao.deleteCommentArticle(no, memberNo);
+		}else {
+			check = boardDao.deleteArticle(no, memberNo);
+		}
+		model.addAttribute("check", check);
+		model.addAttribute("sessionId", sessionId);
+		
+		return "board/deletePro";
 	}
 
 	@RequestMapping("writeform.do")
-	public String WriteForm(HttpSession session, BoardDTO boardDto, Model model) {
-		
+	public String WriteForm(HttpSession session, BoardDTO boardDto, Model model) {		
 		String sessionId = (String)session.getAttribute("sessionId");
-		int no=0,ref=1,re_step=1,re_level=0;
-		if(boardDto.getNo() != 0) {
-			no = boardDto.getNo();
-			ref = boardDto.getRef();
-			re_step = boardDto.getRe_step();
-			re_level = boardDto.getRe_level();
-		}
-		model.addAttribute("no", no);
-		model.addAttribute("ref", ref);
-		model.addAttribute("re_step", re_step);
-		model.addAttribute("re_level", re_level);
 		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("dto", boardDto);
+		
 		return "board/writeForm";
 	}
 
 	@RequestMapping("writepro.do")
 	public String WritePro(BoardDTO boardDto, HttpServletRequest request) {
-		boardDto.setReg_date(new Timestamp(System.currentTimeMillis()));
 		boardDto.setIp(request.getRemoteAddr());
 		boardDao.insertArticle(boardDto);
+		
 		return "board/writePro";
 	}
 	
-	@RequestMapping("/writeupdateform.do")
-	public String WriteUpdateForm() {
-		return "/WEB-INF/view/board/writeUpdateForm.jsp";
+	@RequestMapping("updateform.do")
+	public String WriteUpdateForm(@RequestParam(defaultValue ="1") int pageNum,
+			@RequestParam(defaultValue ="1") int no,
+			Model model) throws Exception {		
+		boardDto = boardDao.updateGetArticle(no);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("dto", boardDto);
+		
+		return "board/updateForm";
 	}
 	
-	@RequestMapping("/writeupdatepro.do")
-	public String WriteUpdatePro() {
-		return "/WEB-INF/view/board/writeUpdatePro.jsp";
+	@RequestMapping("updatepro.do")
+	public String WriteUpdatePro(@RequestParam(defaultValue ="1") int pageNum,
+			HttpSession session,
+			Model model) throws Exception {
+		String sessionId = (String)session.getAttribute("sessionId");
+		int memNo = boardDao.getMemberNo(sessionId);
+		int check = boardDao.updateArticle(boardDto, memNo);
+		model.addAttribute("check", check);
+		model.addAttribute("pageNum", pageNum);
+		
+		return "board/updatePro";
 	}
 }

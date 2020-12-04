@@ -75,12 +75,13 @@ public class BoardDAO {
         }
 	}
 	// 회원 고유번호 리턴
-	public int getMemberNo() throws Exception{
+	public int getMemberNo(String sessionId) throws Exception{
         int x=0;
 		try {
 			 conn = getConnection();
-			 pstmt = conn.prepareStatement("select member_no from home_member where id =? and fleg =Y ");
-	         rs = pstmt.executeQuery();
+			 pstmt = conn.prepareStatement("select no from home_member where id =? and fleg ='Y' ");
+			 pstmt.setString(1, sessionId);
+			 rs = pstmt.executeQuery();
 	   
 	         if(rs.next()) {
 	        	 x = rs.getInt(1);	
@@ -152,7 +153,7 @@ public class BoardDAO {
         	articleList = new ArrayList(end);
         	do{
                  BoardDTO article= new BoardDTO();
-				 article.setNo(rs.getInt("num"));
+				 article.setNo(rs.getInt("no"));
 				 article.setMember_no(rs.getInt("member_no"));
 				 article.setMember_id(rs.getString("Member_id"));
                  article.setSubject(rs.getString("subject"));
@@ -262,9 +263,9 @@ public class BoardDAO {
 					sql += ",content=? where no=?";
 					pstmt = conn.prepareStatement(sql);
 					
-					pstmt.setString(3, article.getSubject());
-					pstmt.setString(5, article.getContent());
-					pstmt.setInt(6, article.getNo());
+					pstmt.setString(1, article.getSubject());
+					pstmt.setString(2, article.getContent());
+					pstmt.setInt(3, article.getNo());
 					pstmt.executeUpdate();
 					x= 1;					
 				}else{
