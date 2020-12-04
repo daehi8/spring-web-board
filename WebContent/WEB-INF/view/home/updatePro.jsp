@@ -4,7 +4,7 @@
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h2>update</h2>
 
-<c:if test="${sessionId == null}">
+<c:if test="${sessionScope.sessionId == null}">
 	<script>
 		window.location="/home/main.do";
 	</script>

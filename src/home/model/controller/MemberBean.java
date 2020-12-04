@@ -25,10 +25,7 @@ public class MemberBean {
 	private MemberDTO memberDto = null;
 	
 	@RequestMapping("deleteform.do")
-	public String DeleteForm(HttpSession session,
-			Model model) {
-		String sessionId = (String)session.getAttribute("id");
-		model.addAttribute("sessionId", sessionId);
+	public String DeleteForm(Model model) {
 		
 		return "home/deleteForm";
 	}
@@ -59,12 +56,8 @@ public class MemberBean {
 	}
 	
 	@RequestMapping("updatepro.do")
-	public String UpdatePro(MemberDTO memberDto,
-			HttpSession session,
-			Model model) {
-		String sessionId = (String)session.getAttribute("sessionId");
+	public String UpdatePro(MemberDTO memberDto) {
 		memberDao.update(memberDto);
-		model.addAttribute("sessionId",sessionId);
 		
 		return "home/updatePro";
 	}

@@ -12,9 +12,7 @@
 
 <div class="row">
   <div class="leftcolumn">
-  	<div class="card">
   	<tiles:insertAttribute name="body"/>
-  	</div>
   </div>
 	<tiles:insertAttribute name="right"/>
 </div>

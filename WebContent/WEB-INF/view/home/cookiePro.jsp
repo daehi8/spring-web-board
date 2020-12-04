@@ -4,12 +4,12 @@
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<c:if test="${reust==true}">
+<c:if test="${result==true}">
 	<script>			
 		window.location="/home/main.do";
 	</script>
 </c:if>
-<c:if test="">
+<c:if test="${result==false}">
 	<script>
 		alert("아이디 / 비밀번호를 확인하세요.");			
 		window.location="/home/loginform.do";

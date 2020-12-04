@@ -9,22 +9,31 @@
 <title> start page </title>
 </head>
 <body>
-	<%--			
-		String id = null, pw = null, auto = null;	// 쿠키 확인
-		Cookie [] cookies = request.getCookies();
-		if(cookies != null){
-			for(Cookie c : cookies){
-				if(c.getName().equals("cid")) id = c.getValue();
-				if(c.getName().equals("cpw")) pw = c.getValue();
-				if(c.getName().equals("cauto")) auto = c.getValue();
-			}
-		}
-		if (auto != null && id != null && pw != null){		// 쿠키가 있으면 -> true
-			response.sendRedirect("cookiePro.jsp");			// 세션 생성		
-		}
-		String sessionId = (String)session.getAttribute("sessionId");
-	--%>
-	hello
-
+<c:if test="${auto != null && id != null && pw != null }">
+	<script> 
+         window.location = "/home/cookiepro.do";
+    </script>
+</c:if>
+    <div class="card">
+		<h2>TITLE</h2>
+		<h5>yymmdd</h5>
+		<div class="fakeimg" style="height:200px;">Image</div>
+		<p>text</p>
+		<p>column</p>
+    </div>
+    <div class="card">
+		<h2>TITLE</h2>
+		<h5>yymmdd</h5>
+		<div class="fakeimg" style="height:200px;">Image</div>
+		<p>text</p>
+		<p>column</p>
+    </div>
+    <div class="card">
+		<h2>TITLE</h2>
+		<h5>yymmdd</h5>
+		<div class="fakeimg" style="height:200px;">Image</div>
+		<p>text</p>
+		<p>column</p>
+    </div>
 </body>
 </html>

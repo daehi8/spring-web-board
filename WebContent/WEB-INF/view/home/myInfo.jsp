@@ -3,7 +3,7 @@
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
-    <c:if test="${sessionId == null}">
+    <c:if test="${sessionScope.sessionId == null}">
     	<script>
     		window.loacation="/home/main.do";
     	</script>

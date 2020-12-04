@@ -43,6 +43,12 @@ input[type=submit]:hover {
 }
 </style>
 </head>
+<c:if test="${sessionScope.sessionId == null}">
+	<script>
+		arlet="로그인해야 작성가능합니다.";
+		window.loacation="/home/main.do";
+	</script>
+</c:if>
 <body>
 
 <h3>글쓰기</h3>

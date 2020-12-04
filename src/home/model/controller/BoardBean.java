@@ -47,7 +47,6 @@ public class BoardBean {
 	@RequestMapping("list.do")
 	public String List(@ModelAttribute PageDTO page,
 			@RequestParam(defaultValue ="1") int pageNum,
-			HttpSession session,
 			Model model) throws Exception {
 		if(pageNum == 0) {
 			page.setPageNum("1");
@@ -57,12 +56,10 @@ public class BoardBean {
 		int count = boardDao.getArticleCount();
 		page.setCount(count);
 		page.paging(page.getPageNum(), count);
-		
-		String sessionId = (String)session.getAttribute("sessionId");		
+			
 		List articleList = null;					
 		if(count > 0) articleList = boardDao.getArticles(page.getStartRow(), page.getEndRow());
 		
-		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("page", page);
 		model.addAttribute("articleList", articleList);
 		
@@ -72,12 +69,10 @@ public class BoardBean {
 	@RequestMapping("deleteform.do")
 	public String WriteDeleteForm(@RequestParam(defaultValue ="1") int pageNum,
 			@RequestParam(defaultValue ="1") int no,
-			HttpSession session,
 			Model model) {
-		String sessionId = (String)session.getAttribute("sessionId");
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("no", no);
-		model.addAttribute("sessionId", sessionId);
+		
 		return "board/deleteForm";
 	}
 	
@@ -96,15 +91,12 @@ public class BoardBean {
 			check = boardDao.deleteArticle(no, memberNo);
 		}
 		model.addAttribute("check", check);
-		model.addAttribute("sessionId", sessionId);
 		
 		return "board/deletePro";
 	}
 
 	@RequestMapping("writeform.do")
-	public String WriteForm(HttpSession session, BoardDTO boardDto, Model model) {		
-		String sessionId = (String)session.getAttribute("sessionId");
-		model.addAttribute("sessionId", sessionId);
+	public String WriteForm(BoardDTO boardDto, Model model) {
 		model.addAttribute("dto", boardDto);
 		
 		return "board/writeForm";
