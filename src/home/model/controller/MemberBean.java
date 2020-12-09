@@ -171,4 +171,10 @@ public class MemberBean {
 		
 		return "home/cookiePro";
 	}
+	
+	@RequestMapping("mypage.do")
+	public String MyPage() {
+		return "home/myPage";
+	}
+	
 }
