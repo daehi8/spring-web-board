@@ -3,7 +3,51 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="memberDTO">
+		insert into home_member(no,
+								id,
+								pw,
+								name,
+								email,
+								fleg,
+								reg) 
+		values(home_member_seq.nextval,
+				#{id},
+				#{pw},
+				#{name},
+				#{email},
+				'Y',
+				sysdate)
+	</insert>
 	
-	<!-- sql query 작성  -->
+	<!-- 아이디 중복 체크 -->
+	<select id="selectIdCheck" parameterType="String" resultType="int">
+		select count(*) from home_member where id=#{value} 
+		<if test="pw != null">
+			and pw=#{pw}
+		</if>	
+		and fleg='Y'
+	</select>
+	
+	<!-- 내 정보 확인 -->
+	<select id="myInfo" parameterType="String" resultType="memberDTO">
+		select * from home_member where id=#{value} and fleg='Y'
+	</select>
+	
+	<!-- 정보 수정 -->
+	<update id="updateMember" parameterType="memberDTO">
+		update home_member <set>
+							<if test="pw != null">pw=#{pw},</if>
+							<if test="name != null">name=#{name},</if>
+							<if test="email != null">email=#{email}</if>
+							</set>
+		where id=#{id} and fleg='Y'
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="deleteMember" parameterType="memberDTO">
+		update from home_member set fleg='D' where id=#{id} and pw=#{pw}
+	</update>
 </mapper>
 

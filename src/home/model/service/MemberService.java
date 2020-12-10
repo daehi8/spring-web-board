@@ -8,7 +8,7 @@ import home.model.dto.MemberDTO;
 public interface MemberService {
 	
 	// 회원가입
-	public void insert(MemberDTO dto);
+	public void insertMember(MemberDTO dto);
 	
 	// 아이디 중복 체크
 	public boolean selectId(String id);
@@ -20,8 +20,8 @@ public interface MemberService {
 	public MemberDTO myInfo(String id);
 	
 	// 정보 수정
-	public void update(MemberDTO dto);
+	public void updateMember(MemberDTO dto);
 	
 	// 회원 탈퇴
-	public void delete (MemberDTO dto);
+	public void deleteMember (MemberDTO dto);
 }
