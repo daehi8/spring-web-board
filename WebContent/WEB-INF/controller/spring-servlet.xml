@@ -16,7 +16,7 @@
 	<bean id="downloadViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
        <property name="order" value="0" />
     </bean>
-	<bean id ="download" class="spring.model.DownloadView"/>
+	<bean id ="download" class="home.model.controller.DownloadView"/>
 	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/view/"/>

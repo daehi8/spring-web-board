@@ -13,10 +13,9 @@
 	</div>
 
 	<div class="topnav">
-		<a href="#">Link</a>
-	    <a href="#">Link</a>
-		<a href="#">Link</a>
-		<a href="#" style="float:right">Link</a>
+		<a href="#">익명 게시판</a>
+	    <a href="#">회원 게시판</a>
+		<a href="#">관리</a>
 	</div>
 </body>
 </html>
