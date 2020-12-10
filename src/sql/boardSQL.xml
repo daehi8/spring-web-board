@@ -4,6 +4,81 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	
-	<!-- sql query 작성  -->
+	<select id="maxNoArticle" resultType="int">
+		select max(no) from home_board
+	</select>
+	
+	<update id="refArticle" parameterType="boardDTO">
+		update home_board set re_step = re_step+1 where ref = #{ref} and re_step > #{re_step}
+	</update>
+	
+	<insert id="insertArticle" parameterType="boardDTO">
+	insert into home_board(no, 
+							member_no,
+							subject, 
+							reg_date, 
+							ref, 
+							re_step, 
+							re_level, 
+							content, 
+							ip) 
+							values(board_seq.nextval,
+									#{member_no},
+									#{subject},
+									#{reg_date},
+									sysdate,
+									#{ref},
+									#{re_step},
+									#{re_level},
+									#{content},
+									#{ip})
+	</insert>
+	
+	<select id="notDelComment" parameterType="int" resultType="int">
+		select * from (select * from home_board where ref in (select ref from (select ref, count(ref) 
+		from home_board group by ref having count(ref) > '1'))) 
+		where no=#{value}
+	</select>
+	
+	<select id="getArticleCount" resultType="int">
+		select count(*) from home_board
+	</select>
+	
+	<select id="getArticleList" parameterType="boardDTO" resultType="boardDTO">
+		select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,r
+		from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r
+		from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount
+		from home_board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= #{start} and r <= #{end} 
+	</select>
+	
+	<update id="getReadCount" parameterType="int">
+		update home_board set readcount=readcount+1 where no = #{value}
+	</update>
+	
+	<select id="getArticle" parameterType="int" resultType="boardDTO">
+		select * from home_board where no = ?
+	</select>
+	
+	<select id="selectMemNo" parameterType="int" resultType="int">
+		select member_no from home_board where no = #{value}
+	</select>
+	
+	<update id="updateArticle" parameterType="boardDTO">
+		update home_board <set> subject=?, content=? 
+							<if test="subject != null">subject=#{subject}</if>
+							<if test="content != null">content=#{content}</if>
+						</set>
+		where no=#{no}
+	</update>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from home_board where no = #{value}
+	</delete>
+	
+	<update id="delCommentArticle" parameterType="int">
+		update home_board set fleg ='D', subject ='삭제된 글', content='', member_id='', ip='' where no = #{no}
+	</update>
+	
+	
 </mapper>
 
