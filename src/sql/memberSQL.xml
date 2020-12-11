@@ -22,8 +22,8 @@
 	</insert>
 	
 	<!-- 아이디 중복 체크 -->
-	<select id="selectIdCheck" parameterType="String" resultType="int">
-		select count(*) from home_member where id=#{value} 
+	<select id="selectIdCheck" parameterType="memberDTO" resultType="int">
+		select count(*) from home_member where id=#{id} 
 		<if test="pw != null">
 			and pw=#{pw}
 		</if>	

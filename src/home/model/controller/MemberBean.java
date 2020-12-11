@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import home.model.dao.MemberDAO;
 import home.model.dto.MemberDTO;
+import home.model.service.MemberService;
 
 @Controller
 @RequestMapping("/")
 public class MemberBean {
 	
 	@Autowired
-	private MemberDAO memberDao = null;
+	private MemberService memberDAO = null;
 	
 	@Autowired
 	private MemberDTO memberDto = null;
@@ -35,9 +37,9 @@ public class MemberBean {
 			HttpSession session,
 			Model model) {
 		String sessionId = (String)session.getAttribute("id");
-		boolean result = memberDao.loginCheck(memberDto);
+		boolean result = memberDAO.loginCheck(memberDto);
 		if(result) {
-			memberDao.delete(memberDto);
+			memberDAO.deleteMember(memberDto);
 			session.invalidate();
 		}
 		model.addAttribute("sessionId", sessionId);
@@ -49,7 +51,7 @@ public class MemberBean {
 	@RequestMapping("myinfo.do")
 	public String MyInfo(HttpSession session, Model model) {
 		String sessionId = (String)session.getAttribute("sessionId");
-		memberDto = memberDao.myInfo(sessionId);
+		memberDto = memberDAO.myInfo(sessionId);
 		model.addAttribute("dto", memberDto);
 		
 		return "home/myInfo";
@@ -57,7 +59,7 @@ public class MemberBean {
 	
 	@RequestMapping("updatepro.do")
 	public String UpdatePro(MemberDTO memberDto) {
-		memberDao.update(memberDto);
+		memberDAO.updateMember(memberDto);
 		
 		return "home/updatePro";
 	}
@@ -70,9 +72,9 @@ public class MemberBean {
 	@RequestMapping("signuppro.do")
 	public String SignupPro(MemberDTO memberDto, 
 			Model model) {
-		boolean result = memberDao.selectId(memberDto.getId());
+		boolean result = memberDAO.selectId(memberDto);
 		if(result == false) {
-			memberDao.insert(memberDto);
+			memberDAO.insertMember(memberDto);
 		}		
 		model.addAttribute("result", result);
 		
@@ -103,7 +105,7 @@ public class MemberBean {
 			Model model, 
 			HttpSession session) {		
 		String id = memberDto.getId();
-		boolean result = memberDao.loginCheck(memberDto);
+		boolean result = memberDAO.loginCheck(memberDto);
 		if(result == true) {
 			session.setAttribute("sessionId", id);
 		}
@@ -152,7 +154,7 @@ public class MemberBean {
 				if(c.getName().equals("cauto")) {auto = c.getValue(); memberDto.setAuto(auto);}
 			}
 		}
-		boolean result = memberDao.loginCheck(memberDto);
+		boolean result = memberDAO.loginCheck(memberDto);
 		if(result){
 			session.setAttribute("sessionId", memberDto.getId());	
 			if(memberDto.getAuto() != null && memberDto.getAuto().equals("1")){		

@@ -48,7 +48,7 @@
 		select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,r
 		from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r
 		from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount
-		from home_board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= #{start} and r <= #{end} 
+		from home_board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r &lt;= #{start} and r &gt;= #{end} 
 	</select>
 	
 	<update id="getReadCount" parameterType="int">

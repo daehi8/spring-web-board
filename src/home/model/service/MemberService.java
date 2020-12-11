@@ -11,7 +11,7 @@ public interface MemberService {
 	public void insertMember(MemberDTO dto);
 	
 	// 아이디 중복 체크
-	public boolean selectId(String id);
+	public boolean selectId(MemberDTO dto);
 	
 	// 로그인
 	public boolean loginCheck(MemberDTO dto);
