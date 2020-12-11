@@ -9,9 +9,6 @@ public interface BoardService {
 	// 글작성
 	public void insertArticle(BoardDTO article);
 	
-	// 회원 번호 리턴
-	public int getMemberNo(String sessionId) throws Exception;
-	
 	// 답변글 처리
 	public int notDeleteComment(int no) throws Exception;
 	

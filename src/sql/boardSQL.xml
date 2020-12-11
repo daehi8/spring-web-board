@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="member">
+<mapper namespace="board">
 	
 	<select id="maxNoArticle" resultType="int">
 		select max(no) from home_board
@@ -35,7 +35,7 @@
 	</insert>
 	
 	<select id="notDelComment" parameterType="int" resultType="int">
-		select * from (select * from home_board where ref in (select ref from (select ref, count(ref) 
+		select count(*) from (select * from home_board where ref in (select ref from (select ref, count(ref) 
 		from home_board group by ref having count(ref) > '1'))) 
 		where no=#{value}
 	</select>
@@ -78,6 +78,10 @@
 	<update id="delCommentArticle" parameterType="int">
 		update home_board set fleg ='D', subject ='삭제된 글', content='', member_id='', ip='' where no = #{no}
 	</update>
+	
+	<select id="articleCheck" parameterType="int" resultType="int">
+		select member_no from home_board where no = #{value}
+	</select>
 	
 	
 </mapper>
