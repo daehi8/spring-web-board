@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+
+	<select id="selectReplyList" parameterType="int" resultType="replyDTO">
+		select no, depth, board_no, member_no, writer, content, reg_date, parent, fleg 
+		from(select * from home_reply where board_no = #{value})
+		start with parent=0
+		connect by prior no = parent
+		order siblings by no 
+	</select>
+
+    <insert id="insertReply" parameterType="replyDTO">
+	insert into home_reply(
+		no, 
+		board_no,
+		member_no,
+		writer,
+		content, 
+		reg_date,
+		parent, 
+		depth
+	) 
+	values(
+		home_reply_seq.nextval,
+		#{board_no},
+		#{member_no},
+		#{writer},
+		#{content},
+		sysdate,
+		#{parent},
+		#{depth}
+	)
+	</insert>
+</mapper>
+

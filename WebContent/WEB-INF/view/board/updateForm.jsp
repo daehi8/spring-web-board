@@ -10,14 +10,8 @@
 	<b>글수정</b>
 	<br>
 	<form method = "post" name = "writeForm" action = "/home/board/updatepro.do?pageNum=${pageNum}">
+	<input type="hidden" name="no" value="${dto.no}">
 		<table>
-			<tr>
-				<td>이름</td>
-				<td>
-					<input type = "text" size="10" maxlength="10" name="writer" value="${dto.member_id}">
-					<input type="hidden" name="num" value="${dto.no}">
-				</td>
-			</tr>
 			<tr>
 				<td>제목</td>
 				<td>

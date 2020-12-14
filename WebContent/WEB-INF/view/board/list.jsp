@@ -41,32 +41,48 @@
 					<td class="header" style="width:10%">조회</td>
 					<td class="header" style="width:10%">IP</td>
 				</tr>
+				<c:set var ="idList" value="${memIdList}"/>
 				<c:set var ="number" value="${page.number}"/>
 				<c:forEach var="article" items="${articleList}">
 				<tr>
 					<td>${number}</td>
-					<td class ="subtd">
-						<c:if test="${article.re_level > 0}">
-							<%-- 답변 이미지 표시와 들여쓰기 --%>
-							<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
-							<img src="/home/resorce/image/re.gif">
-						</c:if>
-						<c:if test="${article.re_level == 0}">
-							<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
-						</c:if>
-						<%-- 제목 클릭시 내용 확인 --%>
-						<a class ="subject" href ="/home/board/contents.do?no=${article.no}&pageNum=${page.currentPage}&number=${page.number}">
-						${article.subject}</a>		
-						<%-- 조회수가 20 이상일시 이미지 표시 --%>
-						<c:if test ="${article.readcount >= 20}">
-							<img src="/home/resorce/image/hot.gif">
-						</c:if>
-					</td>
-					<td>${article.member_id}</td>		
-					<%-- 작성 시간, 조회수, 작성IP 표시 --%>
-					<td><fmt:formatDate value="${article.reg_date}" type="both"/></td>
-					<td>${article.readcount}</td>
-					<td>${article.ip}</td>
+					<c:if test="${article.fleg eq 'Y'}">
+						<td class ="subtd">
+							<c:if test="${article.re_level > 0}">
+								<%-- 답변 이미지 표시와 들여쓰기 --%>
+								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
+								<img src="/home/resorce/image/re.gif">
+							</c:if>
+							<c:if test="${article.re_level == 0}">
+								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
+							</c:if>
+							<%-- 제목 클릭시 내용 확인 --%>
+							<a class ="subject" href ="/home/board/contents.do?no=${article.no}&pageNum=${page.currentPage}&number=${page.number}">
+							${article.subject}</a>		
+							<%-- 조회수가 20 이상일시 이미지 표시 --%>
+							<c:if test ="${article.readcount >= 20}">
+								<img src="/home/resorce/image/hot.gif">
+							</c:if>
+						</td>
+						<td>${article.writer}</td>					
+						<%-- 작성 시간, 조회수, 작성IP 표시 --%>
+						<td><fmt:formatDate value="${article.reg_date}" type="both"/></td>
+						<td>${article.readcount}</td>
+						<td>${article.ip}</td>
+					</c:if>
+					<c:if test="${article.fleg eq 'D'}">
+						<td colspan="5">
+							<c:if test="${article.re_level > 0}">
+								<%-- 답변 이미지 표시와 들여쓰기 --%>
+								<img src="/home/resorce/image/level.gif" width="${20 * article.re_level}">
+								<img src="/home/resorce/image/re.gif">
+							</c:if>
+							<c:if test="${article.re_level == 0}">
+								<img src="/home/resorce/image/level.gif" width="${20 * article.re_level}">
+							</c:if>
+							${article.subject}
+						</td>
+					</c:if>
 				</tr>
 				<c:set var="number" value="${number-1}"/>
 				</c:forEach>

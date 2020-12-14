@@ -59,8 +59,6 @@ input[type=submit]:hover {
 		<input type="hidden" name="ref" value="${dto.ref}">
 		<input type="hidden" name="re_step" value="${dto.re_step}">
 		<input type="hidden" name="re_level" value="${dto.re_level}">
-	    <label for="member_id">아이디</label>
-	    <input type="text" id="member_id" name="member_id" placeholder="아이디">
 	
 	    <label for="subject">제목</label>
 	    <c:if test="${dto.no == 0}">
@@ -69,12 +67,6 @@ input[type=submit]:hover {
 		<c:if test="${dto.no != 0}">
 			<input type="text" size="40" maxlength="50" name="subject" value="[답변]">
 		</c:if>
-		
-	    <label for="type">타입</label>
-	    <select id="type" name="type">
-	      <option value="free">자유</option>
-	      <option value="question">질문</option>
-	    </select>
 	
 	    <label for="content">내용</label>
 	    <textarea id="content" name="content" placeholder="내용을 적어주세요" style="height:200px"></textarea>

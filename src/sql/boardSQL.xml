@@ -13,25 +13,32 @@
 	</update>
 	
 	<insert id="insertArticle" parameterType="boardDTO">
-	insert into home_board(no, 
-							member_no,
-							subject, 
-							reg_date, 
-							ref, 
-							re_step, 
-							re_level, 
-							content, 
-							ip) 
-							values(board_seq.nextval,
-									#{member_no},
-									#{subject},
-									#{reg_date},
-									sysdate,
-									#{ref},
-									#{re_step},
-									#{re_level},
-									#{content},
-									#{ip})
+	insert into home_board(
+		no, 
+		member_no,
+		file_no,
+		subject, 
+		reg_date, 
+		ref, 
+		re_step, 
+		re_level, 
+		content, 
+		ip,
+		type
+	) 
+	values(
+		home_board_seq.nextval,
+		#{member_no},
+		#{file_no},
+		#{subject},
+		sysdate,
+		#{ref},
+		#{re_step},
+		#{re_level},
+		#{content},
+		#{ip},
+		'1'
+	)
 	</insert>
 	
 	<select id="notDelComment" parameterType="int" resultType="int">
@@ -41,14 +48,14 @@
 	</select>
 	
 	<select id="getArticleCount" resultType="int">
-		select count(*) from home_board
+		select count(*) from home_board where type = '1'
 	</select>
 	
-	<select id="getArticleList" parameterType="boardDTO" resultType="boardDTO">
-		select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,r
-		from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r
-		from (select no,member_no,Member_id,subject,reg_date,ref,re_step,re_level,content,ip,readcount
-		from home_board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r &lt;= #{start} and r &gt;= #{end} 
+	<select id="getArticleList" parameterType="hashMap" resultType="boardDTO">
+		select no,member_no,file_no,subject,reg_date,ref,re_step,re_level,content,ip,readcount,type,fleg,r
+		from (select no,member_no,file_no,subject,reg_date,ref,re_step,re_level,content,ip,readcount,type,fleg,rownum r
+		from (select * from home_board order by ref desc, re_step asc) order by ref desc, re_step asc ) 
+		<![CDATA[where r >= #{start} and r <= #{end} and type ='1']]>
 	</select>
 	
 	<update id="getReadCount" parameterType="int">
@@ -56,7 +63,7 @@
 	</update>
 	
 	<select id="getArticle" parameterType="int" resultType="boardDTO">
-		select * from home_board where no = ?
+		select * from home_board where no = #{value}
 	</select>
 	
 	<select id="selectMemNo" parameterType="int" resultType="int">
@@ -64,8 +71,8 @@
 	</select>
 	
 	<update id="updateArticle" parameterType="boardDTO">
-		update home_board <set> subject=?, content=? 
-							<if test="subject != null">subject=#{subject}</if>
+		update home_board <set>
+							<if test="subject != null">subject=#{subject},</if>
 							<if test="content != null">content=#{content}</if>
 						</set>
 		where no=#{no}
@@ -76,13 +83,22 @@
 	</delete>
 	
 	<update id="delCommentArticle" parameterType="int">
-		update home_board set fleg ='D', subject ='삭제된 글', content='', member_id='', ip='' where no = #{no}
+		update home_board set fleg ='D', subject ='삭제된 글', content='', ip='' where no = #{no}
 	</update>
 	
 	<select id="articleCheck" parameterType="int" resultType="int">
 		select member_no from home_board where no = #{value}
 	</select>
 	
+	<select id="selectMemId" parameterType="int" resultType="String">
+		select id from home_member join home_board on home_member.no = home_board.member_no 
+		where home_board.member_no = #{value}
+		group by id
+	</select>
 	
+	<select id="selectNoCheck" parameterType="String" resultType="int">
+		select no from home_member where id = #{value} and fleg = 'Y'
+	</select>
+
 </mapper>
 

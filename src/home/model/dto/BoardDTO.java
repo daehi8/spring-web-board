@@ -5,7 +5,7 @@ public class BoardDTO{
 
 	private int no;
 	private int member_no;
-    private String member_id;		
+	private int file_no;
     private String subject;				
     private String content;			
     private Timestamp reg_date;	
@@ -15,7 +15,15 @@ public class BoardDTO{
     private int re_step;		
     private int re_level;
     private String fleg;
+    private String type;
+    private String writer;
     
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	public int getNo() {
 		return no;
 	}
@@ -28,11 +36,11 @@ public class BoardDTO{
 	public void setMember_no(int member_no) {
 		this.member_no = member_no;
 	}
-	public String getMember_id() {
-		return member_id;
+	public int getFile_no() {
+		return file_no;
 	}
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	public void setFile_no(int file_no) {
+		this.file_no = file_no;
 	}
 	public String getSubject() {
 		return subject;
@@ -87,6 +95,12 @@ public class BoardDTO{
 	}
 	public void setFleg(String fleg) {
 		this.fleg = fleg;
-	}		
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
     
 }

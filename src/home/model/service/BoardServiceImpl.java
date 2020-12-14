@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import home.model.dto.BoardDTO;
+import home.model.dto.ReplyDTO;
 
 @Service("boardDAO")
 public class BoardServiceImpl implements BoardService{
 
 	@Autowired
-	private SqlSessionTemplate dao = null;
+	private SqlSessionTemplate dao = null;	
 	
 	@Override
 	public void insertArticle(BoardDTO article) {
@@ -23,18 +24,20 @@ public class BoardServiceImpl implements BoardService{
 		int ref = article.getRef();
 		int re_step = article.getRe_step();
 		int re_level = article.getRe_level();
-		int number = dao.selectOne("board.maxNoArticle");
+		int number = 0;
 		
-		if(number != 0) number += 1;
-		else if(number == 0) number = 1;
+		if (dao.selectOne("board.maxNoArticle") != null) {
+			number = dao.selectOne("board.maxNoArticle");
+		}
+		if(number != 0) {number += 1;}
+		else if(number == 0) {number = 1;}
 		
 		if(no != 0) {
 			dao.update("board.refArticle", article);
 			re_step = re_step+1;
 			re_level = re_level+1;
 		}
-		else ref = number; re_step = 0; re_level = 0;
-		
+		else {ref = number; re_step = 0; re_level = 0;}
 		article.setRef(ref);
 		article.setRe_step(re_step);
 		article.setRe_level(re_level);
@@ -51,7 +54,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int getArticleCount() throws Exception {
-		int result = dao.selectOne("board.getArticleCOunt");
+		int result = dao.selectOne("board.getArticleCount");
 		return result;
 	}
 
@@ -77,9 +80,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int updateArticle(BoardDTO article, int memNo) throws Exception {
+	public int updateArticle(BoardDTO article, int memNo, int no) throws Exception {
 		int result = -1;
-		int dbMemNo = dao.selectOne("board.articleCheck", memNo);
+		int dbMemNo = dao.selectOne("board.articleCheck", no);
 		if(dbMemNo == memNo) {
 			dao.update("board.updateArticle", article);
 			result = 1;
@@ -92,7 +95,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int deleteArticle(int no, int memberNo) throws Exception {
 		int result = -1;
-		int dbMemNo = dao.selectOne("board.articleCheck", memberNo);
+		int dbMemNo = dao.selectOne("board.articleCheck", no);
 		if(dbMemNo == memberNo) {
 			dao.delete("board.deleteArticle", no);
 			result = 1;
@@ -105,7 +108,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int deleteCommentArticle(int no, int memberNo) throws Exception {
 		int result = -1;
-		int dbMemNo = dao.selectOne("board.articleCheck", memberNo);
+		int dbMemNo = dao.selectOne("board.articleCheck", no);
 		if(dbMemNo == memberNo) {
 			dao.update("board.delCommentArticle", no);
 			result = 1;
@@ -115,4 +118,14 @@ public class BoardServiceImpl implements BoardService{
 			return result;
 	}
 
+	@Override
+	public String selectMemId(int memNo) throws Exception {
+		return dao.selectOne("board.selectMemId", memNo);
+	}
+
+	@Override
+	public int selectNoCheck(String id) throws Exception {
+		return dao.selectOne("board.selectNoCheck", id);
+	}
+	
 }

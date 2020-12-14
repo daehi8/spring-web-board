@@ -1,26 +1,16 @@
 package home.model.dto;
 
-import java.sql.Timestamp;
-
 public class FileDTO {
 	
-	private int num;
-	private String id;
+	private int no;
 	private String orgname;
 	private String savename;
-	private Timestamp reg;
 	
-	public int getNum() {
-		return num;
+	public int getNo() {
+		return no;
 	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
+	public void setNo(int no) {
+		this.no = no;
 	}
 	public String getOrgname() {
 		return orgname;
@@ -33,11 +23,5 @@ public class FileDTO {
 	}
 	public void setSavename(String savename) {
 		this.savename = savename;
-	}
-	public Timestamp getReg() {
-		return reg;
-	}
-	public void setReg(Timestamp reg) {
-		this.reg = reg;
 	}
 }
