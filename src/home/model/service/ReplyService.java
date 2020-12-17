@@ -10,11 +10,13 @@ public interface ReplyService {
 	public List getReply(int boardNo)throws Exception;
 
 	// 댓글 추가
-	public void insertReply(ReplyDTO replyDTO)throws Exception;
+	public int insertReply(ReplyDTO replyDTO)throws Exception;
 	
 	// 댓글 삭제
-	public int deleteReply()throws Exception;
+	public int deleteReply(int no)throws Exception;
 	
 	// 댓글 수정
-	public int updateReply()throws Exception;
+	public int updateReply(ReplyDTO replyDTO)throws Exception;
+	
+	public int maxNoreply()throws Exception;
 }

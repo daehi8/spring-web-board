@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "home.model.dto.BoardDTO" %>
-<%@ page import = "home.model.dao.BoardDAO" %>
     
 <head>
 	<link href="../board/write.css" rel="stylesheet">

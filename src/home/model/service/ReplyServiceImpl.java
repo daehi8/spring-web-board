@@ -15,25 +15,30 @@ public class ReplyServiceImpl implements ReplyService{
 	private SqlSessionTemplate dao = null;
 	
 	@Override
-	public void insertReply(ReplyDTO replyDTO) throws Exception {
-		dao.insert("reply.insertReply", replyDTO);
+	public int insertReply(ReplyDTO replyDTO) throws Exception {
+		
+		return dao.insert("reply.insertReply", replyDTO);
 	}
 
 	@Override
-	public int deleteReply() throws Exception {
+	public int deleteReply(int no) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.delete("reply.deleteReply", no);
 	}
 
 	@Override
-	public int updateReply() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateReply(ReplyDTO replyDTO) throws Exception {
+		return dao.update("reply.updateReply", replyDTO);
 	}
 
 	@Override
 	public List getReply(int boardNo) throws Exception {
 		return dao.selectList("reply.selectReplyList", boardNo);
+	}
+
+	@Override
+	public int maxNoreply() throws Exception {
+		return dao.selectOne("reply.maxNoReply");
 	}
 
 }

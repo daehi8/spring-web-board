@@ -4,12 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reply">
 
+	<select id="maxNoReply" resultType="int">
+		select max(no) from home_reply
+	</select>
+	
 	<select id="selectReplyList" parameterType="int" resultType="replyDTO">
-		select no, depth, board_no, member_no, writer, content, reg_date, parent, fleg 
-		from(select * from home_reply where board_no = #{value})
-		start with parent=0
-		connect by prior no = parent
-		order siblings by no 
+		select * from home_reply where board_no = #{value} order by parent
+		
 	</select>
 
     <insert id="insertReply" parameterType="replyDTO">
@@ -20,6 +21,7 @@
 		writer,
 		content, 
 		reg_date,
+		ip,
 		parent, 
 		depth
 	) 
@@ -30,9 +32,23 @@
 		#{writer},
 		#{content},
 		sysdate,
-		#{parent},
-		#{depth}
+		#{ip},
+		<if test="parent != 0">#{parent},</if>
+		<if test="parent == 0">home_reply_seq.currval,</if>
+		<if test="parent != 0">'2'</if>
+		<if test="parent == 0">'1'</if>
 	)
 	</insert>
+	
+	<update id="updateReply" parameterType="replyDTO">
+        UPDATE home_reply
+            SET
+            CONTENT = #{content}
+        WHERE no = #{no}
+    </update>
+	
+	<delete id="deleteReply" parameterType="int">
+        DELETE FROM home_reply WHERE NO = #{no}
+    </delete>
 </mapper>
 

@@ -14,7 +14,7 @@
 
 	<div class="topnav">
 		<a href="#">익명 게시판</a>
-	    <a href="#">회원 게시판</a>
+	    <a href="/home/board/list.do">회원 게시판</a>
 		<a href="#">관리</a>
 	</div>
 </body>

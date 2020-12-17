@@ -11,9 +11,17 @@ public class ReplyDTO {
 	private String content;
 	private Timestamp reg_date;
 	private int parent;
+	private String ip;
 	private int depth;
 	private String fleg;
 	
+	
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 	public String getWriter() {
 		return writer;
 	}

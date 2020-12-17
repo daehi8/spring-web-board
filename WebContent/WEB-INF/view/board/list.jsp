@@ -3,7 +3,6 @@
 <%@ page import = "java.util.List" %>
 <%@ page import = "java.text.SimpleDateFormat" %>
 <%@ page import = "home.model.dto.BoardDTO" %>
-<%@ page import = "home.model.dao.BoardDAO" %> 
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 

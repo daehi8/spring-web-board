@@ -4,85 +4,8 @@
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <head>
-	<link href="/home/resorce/css/write.css" rel="stylesheet">
-	
-	    <script type="text/javascript">
-        function changeView(value)
-        {
-            if(value == 0)    
-                location.href='BoardListAction.bo?page=${pageNum}';
-            else if(value == 1)
-                location.href='BoardReplyFormAction.bo?num=${board.board_num}&page=${pageNum}';
-        }
-        
-        function doAction(value)
-        {
-            if(value == 0) // 수정
-                location.href="BoardUpdateFormAction.bo?num=${board.board_num}&page=${pageNum}";
-            else if(value == 1) // 삭제
-                location.href="BoardDeleteAction.bo?num=${board.board_num}";
-        }
-        
- 
-        var httpRequest = null;
-        
-        // httpRequest 객체 생성
-        function getXMLHttpRequest(){
-            var httpRequest = null;
-        
-            if(window.ActiveXObject){
-                try{
-                    httpRequest = new ActiveXObject("Msxml2.XMLHTTP");    
-                } catch(e) {
-                    try{
-                        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                    } catch (e2) { httpRequest = null; }
-                }
-            }
-            else if(window.XMLHttpRequest){
-                httpRequest = new window.XMLHttpRequest();
-            }
-            return httpRequest;    
-        }
-        
-        // 댓글 등록
-        function writeReply()
-        {
-            var form = document.getElementById("writeReplyForm");
-            
-            var board = form.board_no.value
-            var writer = form.writer.value
-            var content = form.content.value;
-            
-            if(!content)
-            {
-                alert("내용을 입력하세요.");
-                return false;
-            }
-            else
-            {    
-                var param="board_no="+board+"&writer="+writer+"&content="+content;
-                    
-                httpRequest = getXMLHttpRequest();
-                httpRequest.onreadystatechange = checkFunc;
-                httpRequest.open("POST", "writeReply.co", true);    
-                httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=EUC-KR'); 
-                httpRequest.send(param);
-            }
-        }
-        
-        function checkFunc(){
-            if(httpRequest.readyState == 4){
-                // 결과값을 가져온다.
-                var resultText = httpRequest.responseText;
-                if(resultText == 1){ 
-                    document.location.reload(); // 상세보기 창 새로고침
-                }
-            }
-        }
-    
-    </script>
-
+<link href="/home/resorce/css/write.css" rel="stylesheet">
+<script src="/home/resorce/script/jquery-1.10.2.min.js"></script>
 </head>
 <body>
 <form>
@@ -134,24 +57,24 @@
 	</tr>
 </table>
 </form>
-<c:forEach var="replylist" items="${replylist}" varStatus="status">
-    <div style="border: 1px solid gray; width: 600px; padding: 5px; margin-top: 5px;
-          margin-left: ${20*replylist.depth}px; display: inline-block">   
-       	${replylist.writer} ${replylist.reg_date}
-        <a href="#" ${replylist.no}>삭제</a>
-        <a href="#" ${replylist.no}>수정</a>
-        <a href="#" onclick="replyOpne(${replylist.no})">답변</a>
-        <br/>
-    </div><br/>
-</c:forEach>
-<c:if test="${sessionScope.sessionId != null}">
-	<tr>
-	<form id="writeReplyForm">
-		<input type="hidden" name="board_no" value="${dto.no}">
-		<input type="hidden" name="writer" value="${sessionScope.sessionId}">
-		아이디 : ${sessionScope.sessionId}
-		<textarea name="content" rows="4" cols="70"></textarea>
-		<a href="/home/board/insertReply.do" onclick="writeReply()">댓글등록</a>
-	</form>
-</c:if>
+
+    <div class="container">
+        <label for="content">comment</label>
+        <form name="commentInsertForm">
+            <div class="input-group">
+               <input type="hidden" name="board_no" value="${dto.no}"/>
+               <input type="hidden" name="writer" value="${sessionScope.sessionId}"/>
+               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+               </span>
+              </div>
+        </form>
+    </div>
+    
+    <div class="container">
+        <div class="commentList"></div>
+    </div>
+<%@ include file="/resorce/script/replyJs.jsp" %>
+  
 </body>

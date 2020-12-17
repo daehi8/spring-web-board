@@ -15,9 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import home.model.dao.BoardDAO;
 import home.model.dto.BoardDTO;
 import home.model.dto.PageDTO;
 import home.model.dto.ReplyDTO;
@@ -38,19 +39,7 @@ public class BoardBean {
 	private BoardDTO boardDto = null;
 	
 	@Autowired
-	private ReplyDTO replyDTO = null;
-	
-	@Autowired
 	private PageDTO page = null;
-	
-	@RequestMapping("insertReply.do")
-	public void insertReply(ReplyDTO replyDTO, HttpServletResponse response) throws Exception {
-		replyDAO.insertReply(replyDTO);
-		response.setContentType("text/html;charset=euc-kr");
-        PrintWriter out = response.getWriter();
-        out.println("1");
-        out.close();
-	} 
 	
 	
 	@RequestMapping("contents.do")
