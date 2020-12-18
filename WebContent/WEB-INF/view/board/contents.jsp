@@ -6,6 +6,48 @@
 <head>
 <link href="/home/resorce/css/write.css" rel="stylesheet">
 <script src="/home/resorce/script/jquery-1.10.2.min.js"></script>
+<style>
+.container{
+	margin : auto;
+	text-align : left;
+	width : 1000px;
+}
+h1{
+	text-align : center;
+}
+.input-group{
+	width : 100%;
+	border-collapse: collapse;
+}
+.commentList{
+	float:left;
+	width : 100%;
+}
+.form-control{
+	float:left;
+	width : 93%;
+	height : 70px;
+}
+.input-insert{
+	float:left;
+	width : 7%;
+}
+button.btn-default{
+	cursor : pointer;
+	text-decoration : none;
+	border: 2px solid #e7e7e7;
+	padding : 5px 10px;
+	transition-duration : 0.4s;
+	background-color : white;
+	color : black;
+	display : inlin-block;	
+}
+
+button.btn-default:hover{
+	background-color: #e7e7e7;
+}
+
+</style>
 </head>
 <body>
 <form>
@@ -59,16 +101,19 @@
 </form>
 
     <div class="container">
-        <label for="content">comment</label>
-        <form name="commentInsertForm">
+        <label for="content"></label>
+        <h1>comment</h1>
+        <form name="commentInsertForm" onsubmit="return false;">
             <div class="input-group">
                <input type="hidden" name="board_no" value="${dto.no}"/>
                <input type="hidden" name="writer" value="${sessionScope.sessionId}"/>
-               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-               <span class="input-group-btn">
+               <textarea class="form-control" id="content" name="content" placeholder="내용을 입력하세요."></textarea>
+            </div>
+             <div class="input-insert">
+              <span class="input-group-btn">
                     <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
-               </span>
-              </div>
+              </span>
+          	</div>
         </form>
     </div>
     

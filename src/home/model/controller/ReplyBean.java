@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,16 +49,16 @@ public class ReplyBean {
     }
     
     @RequestMapping("updatereply.do") //댓글 수정  
-    public @ResponseBody int updateReply(ReplyDTO replyDTOt) throws Exception{
+    public @ResponseBody int updateReply(ReplyDTO replyDTO) throws Exception{
         
-        return 0;
+        return replyDAO.updateReply(replyDTO);
     }
 
     
     @RequestMapping("deletereply/{no}.do") //댓글 삭제  
-    public @ResponseBody int deleteReply() throws Exception{
+    public @ResponseBody int deleteReply(@PathVariable int no) throws Exception{
         
-        return 0;
+        return replyDAO.deleteReply(no);
     }
 
 }

@@ -22,7 +22,7 @@ function commentList(boardNo){
                 a += '<div class="commentInfo'+value.no+'">'+'댓글번호 : '+value.no+' / 작성자 : '+value.writer;
                 a += '<a onclick="commentUpdate('+value.no+',\''+value.content+'\');"> 수정 </a>';
                 a += '<a onclick="commentDelete('+value.no+');"> 삭제 </a> </div>';
-                a += '<div class="commentContent'+value.no+'"> <p> 내용 : '+value.content +'</p>';
+                a += '<div class="commentContent'+value.no+'"> <p style="white-space: pre-line;"> 내용 : '+value.content +'</p>';
                 a += '</div></div>';
             });
             
@@ -39,7 +39,7 @@ function commentInsert(insertData){
         data : insertData,
         success : function(data){
             if(data == 1) {
-                commentList(); //댓글 작성 후 댓글 목록 reload
+                commentList(boardNo); //댓글 작성 후 댓글 목록 reload
                 $('[name=content]').val('');
             }
         }

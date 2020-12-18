@@ -60,10 +60,6 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover{
 b{
 	text-align : center:
 }
-a{
-	margin : 20px auto;
-}
 A:link {text-decoration:none;color:#696969}
 A:hover{text-decoration:yes;color:#66CCFF}
 A:visited {text-decoration:none;color:#330066;}
-
