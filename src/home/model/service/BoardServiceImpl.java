@@ -46,8 +46,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int notDeleteComment(int no) throws Exception {
-		int result = dao.selectOne("board.notDelComment", no);
+	public int deleteCheck(int no) throws Exception {
+		int result = dao.selectOne("board.deleteCheck", no);
 		
 		return result;
 	}
@@ -98,6 +98,7 @@ public class BoardServiceImpl implements BoardService{
 		int dbMemNo = dao.selectOne("board.articleCheck", no);
 		if(dbMemNo == memberNo) {
 			dao.delete("board.deleteArticle", no);
+			dao.delete("board.deleteArticleReply", no);
 			result = 1;
 		}else {
 			result = 0;

@@ -70,14 +70,14 @@
 						<td>${article.ip}</td>
 					</c:if>
 					<c:if test="${article.fleg eq 'D'}">
-						<td colspan="5">
+						<td class ="subtd" colspan="5">
 							<c:if test="${article.re_level > 0}">
 								<%-- 답변 이미지 표시와 들여쓰기 --%>
-								<img src="/home/resorce/image/level.gif" width="${20 * article.re_level}">
+								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
 								<img src="/home/resorce/image/re.gif">
 							</c:if>
 							<c:if test="${article.re_level == 0}">
-								<img src="/home/resorce/image/level.gif" width="${20 * article.re_level}">
+								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
 							</c:if>
 							${article.subject}
 						</td>

@@ -41,10 +41,8 @@
 	)
 	</insert>
 	
-	<select id="notDelComment" parameterType="int" resultType="int">
-		select count(*) from (select * from home_board where ref in (select ref from (select ref, count(ref) 
-		from home_board group by ref having count(ref) > '1'))) 
-		where no=#{value}
+	<select id="deleteCheck" parameterType="int" resultType="int">
+		select count(case when fleg='Y' then 1 end) from home_board where ref = (select ref from home_board where no = #{value})
 	</select>
 	
 	<select id="getArticleCount" resultType="int">
@@ -79,7 +77,11 @@
 	</update>
 	
 	<delete id="deleteArticle" parameterType="int">
-		delete from home_board where no = #{value}
+		delete from home_board where ref = (select ref from home_board where no = #{value})
+	</delete>
+	
+	<delete id="deleteArticleReply" parameterType="int">
+		delete from home_reply where board_no = #{value}
 	</delete>
 	
 	<update id="delCommentArticle" parameterType="int">

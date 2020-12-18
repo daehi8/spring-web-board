@@ -10,8 +10,8 @@ public interface BoardService {
 	// 글작성
 	public void insertArticle(BoardDTO article);
 	
-	// 답변글 처리
-	public int notDeleteComment(int no) throws Exception;
+	// 답변글 삭제체크
+	public int deleteCheck(int no) throws Exception;
 	
 	// 전체 게시글 수 확인
 	public int getArticleCount() throws Exception;

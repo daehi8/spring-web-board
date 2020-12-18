@@ -104,12 +104,12 @@ public class BoardBean {
 			HttpSession session,
 			Model model) throws Exception {
 		String sessionId = (String)session.getAttribute("sessionId");
-		int refNo = boardDAO.notDeleteComment(no);
+		int deleteCheck = boardDAO.deleteCheck(no);
 		int memberNo = boardDAO.selectNoCheck(sessionId);
 		int check = -1;
-		if(refNo != 0) {
+		if(deleteCheck > 1) {
 			check = boardDAO.deleteCommentArticle(no, memberNo);
-		}else {
+		}else if(deleteCheck == 1){
 			check = boardDAO.deleteArticle(no, memberNo);
 		}
 		model.addAttribute("check", check);
