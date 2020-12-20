@@ -84,7 +84,6 @@ public class BoardBean {
 		}
 		model.addAttribute("page", page);
 		model.addAttribute("articleList", articleList);
-		
 		return "board/list";
 	}
 	

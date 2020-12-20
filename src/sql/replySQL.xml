@@ -9,7 +9,7 @@
 	</select>
 	
 	<select id="selectReplyList" parameterType="int" resultType="replyDTO">
-		select * from home_reply where board_no = #{value} order by parent
+		select * from home_reply where board_no = #{value} order by parent, reg_date
 		
 	</select>
 
@@ -35,8 +35,8 @@
 		#{ip},
 		<if test="parent != 0">#{parent},</if>
 		<if test="parent == 0">home_reply_seq.currval,</if>
-		<if test="parent != 0">'2'</if>
-		<if test="parent == 0">'1'</if>
+		<if test="parent != 0">'1'</if>
+		<if test="parent == 0">'0'</if>
 	)
 	</insert>
 	

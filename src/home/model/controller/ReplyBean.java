@@ -42,6 +42,10 @@ public class ReplyBean {
     	String sessionId = (String) session.getAttribute("sessionId");
         int member_no = boardDAO.selectNoCheck(sessionId);
         
+        String content = replyDTO.getContent().replace("\r\n","<br>");
+        
+        replyDTO.setContent(content);
+        replyDTO.setWriter(sessionId);
         replyDTO.setIp(request.getRemoteAddr());
         replyDTO.setMember_no(member_no);
         
@@ -50,7 +54,7 @@ public class ReplyBean {
     
     @RequestMapping("updatereply.do") //댓글 수정  
     public @ResponseBody int updateReply(ReplyDTO replyDTO) throws Exception{
-        
+        System.out.println(replyDTO.getContent());
         return replyDAO.updateReply(replyDTO);
     }
 

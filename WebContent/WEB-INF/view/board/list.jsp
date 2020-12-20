@@ -5,7 +5,6 @@
 <%@ page import = "home.model.dto.BoardDTO" %>
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <html>
 	<head>
 		<title>게시판</title>

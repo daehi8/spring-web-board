@@ -2,13 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <head>
 <link href="/home/resorce/css/write.css" rel="stylesheet">
-<script src="/home/resorce/script/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
 <style>
 .container{
-	margin : auto;
+	margin : 0 auto;
 	text-align : left;
 	width : 1000px;
 }
@@ -106,8 +105,7 @@ button.btn-default:hover{
         <form name="commentInsertForm" onsubmit="return false;">
             <div class="input-group">
                <input type="hidden" name="board_no" value="${dto.no}"/>
-               <input type="hidden" name="writer" value="${sessionScope.sessionId}"/>
-               <textarea class="form-control" id="content" name="content" placeholder="내용을 입력하세요."></textarea>
+               <textarea class="form-control" id="insertContent" name="content" placeholder="내용을 입력하세요."></textarea>
             </div>
              <div class="input-insert">
               <span class="input-group-btn">
@@ -116,10 +114,10 @@ button.btn-default:hover{
           	</div>
         </form>
     </div>
-    
+
     <div class="container">
         <div class="commentList"></div>
     </div>
-<%@ include file="/resorce/script/replyJs.jsp" %>
+<%@include file="/resorce/script/replyJs.jsp" %>
   
 </body>
