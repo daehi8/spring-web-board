@@ -20,17 +20,23 @@ public class FileServiceImpl implements FileService{
 
 	@Override
 	public FileDTO selectFile(int no) throws Exception {
-		return dao.selectOne("file.selectFileNo");
+		return dao.selectOne("file.selectFile", no);
 	}
 
 	@Override
 	public void fileUpdate(FileDTO dto) throws Exception {
-		dao.update("file.updateFile");		
+		dao.update("file.updateFile", dto);		
 	}
 
 	@Override
 	public void fileDelete(int no) throws Exception {
-		dao.delete("file.deleteFile");
+		int fileNo = dao.selectOne("file.selectFileNo", no);
+		dao.delete("file.deleteFile", fileNo);
+	}
+
+	@Override
+	public int fileNo(int boardNo) throws Exception {
+		return dao.selectOne("file.selectFileNo", boardNo);
 	}
 
 }

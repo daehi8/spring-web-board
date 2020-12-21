@@ -4,35 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">
 
-	<select id="selectFileNo" parameterType="int" resultType="int">
-		select file_no from home_board where no=#{value}
-	</select>
-
-	<select id="selectCount" resultType="int">
-		select count(*) from home_file
-	</select>
-
-	<insert id="insertFile" parameterType="fileDTO">
-		insert into home_file values(home_file_seq.nextval, #{orgname}, #{savename})
-	</insert>
-
-	<update id="updateFile" parameterType="fileDTO">
-		update home_file <set> 
-							<if test = "orgname != null">orgname=#{orgname},</if> 
-							<if test = "savename != null">savename=#{savename}</if> 
-						</set>
-			where no=#{no}
-	</update>
 	
-	<select id="selectFor" resultType="fileDTO">
-		select * from home_file where no in
-		<foreach item="it" collection="list" open="(" separator="," close=")">
-			#{it}
-		</foreach>
-	</select>
-	
-	<delete id ="deleteFile" parameterType="int">
-		delete from gome_file where no = #{value} 
-	</delete>
 </mapper>
 

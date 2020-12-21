@@ -27,18 +27,11 @@ import home.model.dto.FileDTO;
 import home.model.dto.PageDTO;
 import home.model.dto.ReplyDTO;
 import home.model.service.BoardService;
-import home.model.service.FileService;
 import home.model.service.ReplyService;
 
 @Controller
 @RequestMapping("/board/")
 public class BoardBean {
-	
-	@Autowired
-	private FileDTO fileDTO = null;
-	
-	@Autowired
-	private FileService fileDAO = null;
 	
 	@Autowired
 	private ReplyService replyDAO = null;
@@ -139,30 +132,8 @@ public class BoardBean {
 	@RequestMapping("writepro.do")
 	public String WritePro(BoardDTO boardDto,
 			FileDTO fileDTO,
-			MultipartHttpServletRequest request, 
+			HttpServletRequest request, 
 			HttpSession session) throws Exception {
-	
-		MultipartFile mf = request.getFile("save");	
-		String fileName = mf.getOriginalFilename();		
-
-		fileDTO.setOrgname(fileName);
-		int no = fileDAO.fileInsert(fileDTO);
-		
-		String ext = fileName.substring(fileName.lastIndexOf("."));	
-		String saveName = "file_"+no+ext;
-		
-		fileDTO.setNo(no);
-		fileDTO.setSavename(saveName);
-		fileDAO.fileUpdate(fileDTO);
-		
-		String savePath = request.getRealPath("save");
-		System.out.println(savePath);
-		File saveFile = new File(savePath+"\\"+saveName); 	
-		try {
-			mf.transferTo(saveFile);
-		}catch(Exception e){
-			e.printStackTrace();
-		}	
 		
 		String sessionId = (String)session.getAttribute("sessionId");
 		int memNo = boardDAO.selectNoCheck(sessionId);

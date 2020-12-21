@@ -17,4 +17,6 @@ public interface FileService {
 	
 	// 삭제
 	public void fileDelete(int no)throws Exception;
+	
+	public int fileNo(int boardNo)throws Exception;
 }

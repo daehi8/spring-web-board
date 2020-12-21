@@ -19,10 +19,10 @@
    -->
    
 	<typeAliases >
-		<typeAlias type="home.model.dto.FileDTO" alias="fileDTO"/>
 		<typeAlias type="home.model.dto.MemberDTO" alias="memberDTO"/>
 		<typeAlias type="home.model.dto.BoardDTO" alias="boardDTO"/>
 		<typeAlias type="home.model.dto.ReplyDTO" alias="replyDTO"/>
+		<typeAlias type="home.model.dto.FileDTO" alias="fileDTO"/>
 	</typeAliases>
 	<mappers> 
 		<mapper resource="/sql/memberSQL.xml"/>
