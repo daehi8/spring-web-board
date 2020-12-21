@@ -19,21 +19,18 @@ public class FileServiceImpl implements FileService{
 	}
 
 	@Override
-	public FileDTO selectFile(int num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public FileDTO selectFile(int no) throws Exception {
+		return dao.selectOne("file.selectFileNo");
 	}
 
 	@Override
 	public void fileUpdate(FileDTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		dao.update("file.updateFile");		
 	}
 
 	@Override
-	public void fileDelete(int num) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void fileDelete(int no) throws Exception {
+		dao.delete("file.deleteFile");
 	}
 
 }

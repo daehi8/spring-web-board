@@ -16,5 +16,5 @@ public interface FileService {
 	public void fileUpdate(FileDTO dto)throws Exception;
 	
 	// 삭제
-	public void fileDelete(int num)throws Exception;
+	public void fileDelete(int no)throws Exception;
 }
