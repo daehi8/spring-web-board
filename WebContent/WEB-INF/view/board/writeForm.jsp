@@ -54,7 +54,7 @@ input[type=submit]:hover {
 <h3>글쓰기</h3>
 
 <div class="container">
-  	<form method = "post" name = "writeform" action = "/home/board/writepro.do">
+  	<form method = "post" name = "writeform" action = "/home/board/writepro.do" enctype="multipart/form-data">
 	  	<input type="hidden" name="no" value="${dto.no}">
 		<input type="hidden" name="ref" value="${dto.ref}">
 		<input type="hidden" name="re_step" value="${dto.re_step}">
@@ -67,13 +67,14 @@ input[type=submit]:hover {
 		<c:if test="${dto.no != 0}">
 			<input type="text" size="40" maxlength="50" name="subject" value="[답변]">
 		</c:if>
-	
+		
+		<input type="file" name="save"/>
+		
 	    <label for="content">내용</label>
 	    <textarea id="content" name="content" placeholder="내용을 적어주세요" style="height:200px"></textarea>
 	
 	    <input type="submit" value="글쓰기">
 	</form>
 </div>
-
 </body>
 </html>

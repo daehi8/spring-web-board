@@ -54,15 +54,23 @@ public class ReplyBean {
     
     @RequestMapping("updatereply.do") //댓글 수정  
     public @ResponseBody int updateReply(ReplyDTO replyDTO) throws Exception{
-        System.out.println(replyDTO.getContent());
+        
         return replyDAO.updateReply(replyDTO);
     }
 
     
     @RequestMapping("deletereply/{no}.do") //댓글 삭제  
     public @ResponseBody int deleteReply(@PathVariable int no) throws Exception{
-        
-        return replyDAO.deleteReply(no);
+        int check = replyDAO.deleteCheck(no);
+        int result = -1;
+        if(check == 1) {
+        	replyDAO.deleteReplyAll(no);
+        	result = 1;
+        }else if(check > 1){
+        	replyDAO.delteCheckRe(no);
+        	result = 1;
+        }
+		return result;      
     }
 
 }

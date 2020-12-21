@@ -46,9 +46,19 @@
             CONTENT = #{content}
         WHERE no = #{no}
     </update>
-	
-	<delete id="deleteReply" parameterType="int">
-        DELETE FROM home_reply WHERE NO = #{no}
+    
+    <delete id="deleteReplyAll" parameterType="int">
+    	delete from home_reply where parent = (select parent from home_reply where no = #{value})
     </delete>
+    
+    <update id="deleteCheckRe" parameterType="int">
+    	update home_reply set fleg ='D', content='삭제된 글입니다.', ip='' where no = #{value}
+    </update>
+    
+    <select id="deleteCheck" parameterType="int" resultType="int">
+    	select count(case when fleg='Y' then 1 end) 
+    	from home_reply where parent = (select parent from home_reply where no = #{value})
+    </select>
+    
 </mapper>
 

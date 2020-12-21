@@ -21,12 +21,6 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public int deleteReply(int no) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.delete("reply.deleteReply", no);
-	}
-
-	@Override
 	public int updateReply(ReplyDTO replyDTO) throws Exception {
 		return dao.update("reply.updateReply", replyDTO);
 	}
@@ -39,6 +33,21 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public int maxNoreply() throws Exception {
 		return dao.selectOne("reply.maxNoReply");
+	}
+
+	@Override
+	public int deleteCheck(int no) throws Exception {
+		return dao.selectOne("reply.deleteCheck", no);
+	}
+
+	@Override
+	public int delteCheckRe(int no) throws Exception {	
+		return dao.update("reply.deleteCheckRe", no);
+	}
+
+	@Override
+	public int deleteReplyAll(int no) throws Exception {
+		return dao.delete("reply.deleteReplyAll", no);
 	}
 
 }

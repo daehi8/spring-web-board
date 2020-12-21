@@ -1,5 +1,6 @@
 package home.model.controller;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -17,17 +18,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import home.model.dto.BoardDTO;
+import home.model.dto.FileDTO;
 import home.model.dto.PageDTO;
 import home.model.dto.ReplyDTO;
 import home.model.service.BoardService;
+import home.model.service.FileService;
 import home.model.service.ReplyService;
 
 @Controller
 @RequestMapping("/board/")
 public class BoardBean {
+	
+	@Autowired
+	private FileDTO fileDTO = null;
+	
+	@Autowired
+	private FileService fileDAO = null;
 	
 	@Autowired
 	private ReplyService replyDAO = null;
@@ -111,6 +122,7 @@ public class BoardBean {
 		}else if(deleteCheck == 1){
 			check = boardDAO.deleteArticle(no, memberNo);
 		}
+		
 		model.addAttribute("check", check);
 		model.addAttribute("pageNum", pageNum);
 		
@@ -125,13 +137,39 @@ public class BoardBean {
 	}
 
 	@RequestMapping("writepro.do")
-	public String WritePro(BoardDTO boardDto, 
-			HttpServletRequest request, 
+	public String WritePro(BoardDTO boardDto,
+			FileDTO fileDTO,
+			MultipartHttpServletRequest request, 
 			HttpSession session) throws Exception {
+	
+		MultipartFile mf = request.getFile("save");	
+		String fileName = mf.getOriginalFilename();		
+
+		fileDTO.setOrgname(fileName);
+		int no = fileDAO.fileInsert(fileDTO);
+		
+		String ext = fileName.substring(fileName.lastIndexOf("."));	
+		String saveName = "file_"+no+ext;
+		
+		fileDTO.setNo(no);
+		fileDTO.setSavename(saveName);
+		fileDAO.fileUpdate(fileDTO);
+		
+		String savePath = request.getRealPath("save");
+		System.out.println(savePath);
+		File saveFile = new File(savePath+"\\"+saveName); 	
+		try {
+			mf.transferTo(saveFile);
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+		
 		String sessionId = (String)session.getAttribute("sessionId");
 		int memNo = boardDAO.selectNoCheck(sessionId);
+		
 		boardDto.setMember_no(memNo);
 		boardDto.setIp(request.getRemoteAddr());
+		boardDto.setFile_no(fileDTO.getNo());
 		boardDAO.insertArticle(boardDto);
 		
 		return "board/writePro";

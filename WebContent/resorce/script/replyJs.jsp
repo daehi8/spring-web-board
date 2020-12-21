@@ -20,11 +20,14 @@ function commentList(boardNo){
             $.each(data, function(key, value){
             	var depth = value.depth * 40;
                 a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom:15px; margin-left:'+depth+'px;">';
-                a += '<div class="commentInfo'+value.no+'">'+'댓글번호 : '+value.no+' / 작성자 : '+value.writer;
-                a += '<a onclick="commentUpdate('+value.no+',\''+value.content+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+value.no+');"> 삭제 </a>';
-                if(value.depth == 0){
-                	a += '<a onclick="commentReply('+value.no+');"> 답변 </a>';
+                a += '<div class="commentInfo'+value.no+'">'+'댓글번호 : '+value.no;
+                if(value.fleg == 'Y'){
+                	a += '/ 작성자 : '+value.writer;
+	                a += '<a onclick="commentUpdate('+value.no+',\''+value.content+'\');"> 수정 </a>';
+	                a += '<a onclick="commentDelete('+value.no+');"> 삭제 </a>';
+	                if(value.depth == 0){
+	                	a += '<a onclick="commentReply('+value.no+');"> 답변 </a>';
+	                }
                 }
                 a += '</div>';
                 a += '<div class="commentContent'+value.no+'"id="reply'+value.no+'"><p>'+value.content+'</p>';
