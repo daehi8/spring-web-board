@@ -27,11 +27,18 @@ import home.model.dto.FileDTO;
 import home.model.dto.PageDTO;
 import home.model.dto.ReplyDTO;
 import home.model.service.BoardService;
+import home.model.service.FileService;
 import home.model.service.ReplyService;
 
 @Controller
 @RequestMapping("/board/")
 public class BoardBean {
+	
+	@Autowired
+	private FileDTO fileDTO = null;
+	
+	@Autowired
+	private FileService fileDAO = null;
 	
 	@Autowired
 	private ReplyService replyDAO = null;
@@ -52,7 +59,9 @@ public class BoardBean {
 			BoardDTO boardDto,
 			Model model) throws Exception {
 		boardDto = boardDAO.getArticle(boardDto.getNo());
+		fileDTO = fileDAO.selectFile(boardDto.getFile_no());
 		
+		model.addAttribute("fileDTO", fileDTO);
 		model.addAttribute("id", boardDAO.selectMemId(boardDto.getMember_no()));
 		model.addAttribute("dto", boardDto);
 		model.addAttribute("pageNum", pageNum);
@@ -104,16 +113,36 @@ public class BoardBean {
 	@RequestMapping("deletepro.do")
 	public String WriteDeletePro(@RequestParam(defaultValue ="1") int pageNum,
 			@RequestParam(defaultValue ="1") int no,
-			HttpSession session,
+			HttpSession session, HttpServletRequest request,
 			Model model) throws Exception {
+		int fileNo = fileDAO.fileNo(no);
+		String savePath = "";
+		String saveName = "";
+		if(fileNo != 0) {
+			fileDTO = fileDAO.selectFile(fileNo);
+			savePath = request.getRealPath("save");
+			saveName = fileDTO.getSavename();
+		}
+		File file = new File(savePath + "\\" + saveName);
+		
+		
 		String sessionId = (String)session.getAttribute("sessionId");
+
 		int deleteCheck = boardDAO.deleteCheck(no);
 		int memberNo = boardDAO.selectNoCheck(sessionId);
 		int check = -1;
 		if(deleteCheck > 1) {
 			check = boardDAO.deleteCommentArticle(no, memberNo);
+			if(file.exists() == true){
+				file.delete();
+				fileDAO.fileDelete(fileNo);
+			}			
 		}else if(deleteCheck == 1){
 			check = boardDAO.deleteArticle(no, memberNo);
+			if(file.exists() == true){
+				file.delete();
+				fileDAO.fileDelete(fileNo);
+			}
 		}
 		
 		model.addAttribute("check", check);
@@ -132,15 +161,34 @@ public class BoardBean {
 	@RequestMapping("writepro.do")
 	public String WritePro(BoardDTO boardDto,
 			FileDTO fileDTO,
-			HttpServletRequest request, 
+			MultipartHttpServletRequest request, 
 			HttpSession session) throws Exception {
 		
 		String sessionId = (String)session.getAttribute("sessionId");
 		int memNo = boardDAO.selectNoCheck(sessionId);
 		
+		MultipartFile mf = request.getFile("save");			
+		if(mf.isEmpty() == false) {
+			String fileName = mf.getOriginalFilename();				
+			fileDTO.setOrgname(fileName);
+			int no = fileDAO.fileInsert(fileDTO);
+			String ext = fileName.substring(fileName.lastIndexOf("."));			
+			String saveName = "file_"+no+ext;
+			fileDTO.setNo(no);
+			fileDTO.setSavename(saveName);
+			fileDAO.fileUpdate(fileDTO);
+			
+			String savePath = request.getRealPath("save");
+			File saveFile = new File(savePath+"\\"+saveName); 	
+			try {
+				mf.transferTo(saveFile);
+			}catch(Exception e){
+				e.printStackTrace();
+			}		
+			boardDto.setFile_no(no);
+		}
 		boardDto.setMember_no(memNo);
 		boardDto.setIp(request.getRemoteAddr());
-		boardDto.setFile_no(fileDTO.getNo());
 		boardDAO.insertArticle(boardDto);
 		
 		return "board/writePro";
@@ -151,6 +199,9 @@ public class BoardBean {
 			@RequestParam(defaultValue ="1") int no,
 			Model model) throws Exception {		
 		boardDto = boardDAO.updateGetArticle(no);
+		fileDTO = fileDAO.selectFile(boardDto.getFile_no());
+		
+		model.addAttribute("fileDTO", fileDTO);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("dto", boardDto);
 		
@@ -159,15 +210,70 @@ public class BoardBean {
 	
 	@RequestMapping("updatepro.do")
 	public String WriteUpdatePro(@RequestParam(defaultValue ="1") int pageNum,
+			MultipartHttpServletRequest request, 
 			HttpSession session,
 			BoardDTO boardDto,
-			Model model) throws Exception {
-		String sessionId = (String)session.getAttribute("sessionId");
+			Model model, FileDTO fileDTO, int delFile) throws Exception {
+		String sessionId = (String)session.getAttribute("sessionId");		
+		MultipartFile mf = request.getFile("save");
+		String savePath = "";
+		String saveName = "";
+		
+		if(mf.isEmpty() == false) {
+			int fileNo = fileDAO.fileNo(boardDto.getNo());
+			if(fileNo != 0) {
+				fileDTO = fileDAO.selectFile(fileNo);
+				savePath = request.getRealPath("save");
+				saveName = fileDTO.getSavename();
+				File file = new File(savePath + "\\" + saveName);
+				if(file.exists() == true){
+					file.delete();
+					fileDAO.fileDelete(fileNo);
+				}
+			}
+			String fileName = mf.getOriginalFilename();
+			fileDTO.setOrgname(fileName);
+			int no = fileDAO.fileInsert(fileDTO);
+			String ext = fileName.substring(fileName.lastIndexOf("."));			
+			saveName = "file_"+no+ext;
+			fileDTO.setNo(no);
+			fileDTO.setSavename(saveName);
+			fileDAO.fileUpdate(fileDTO);
+			
+			savePath = request.getRealPath("save");
+			File saveFile = new File(savePath+"\\"+saveName); 	
+			try {
+				mf.transferTo(saveFile);
+			}catch(Exception e){
+				e.printStackTrace();
+			}		
+			boardDto.setFile_no(no);
+		}else {		
+			int fileNo = fileDAO.fileNo(boardDto.getNo());
+			if(fileNo != 0) {
+				boardDto.setFile_no(fileNo);
+			}
+		}
+		if(mf.isEmpty() == true) {
+			if(delFile == 1) {
+				int fileNo = fileDAO.fileNo(boardDto.getNo());
+				if(fileNo != 0) {
+					fileDTO = fileDAO.selectFile(fileNo);
+					savePath = request.getRealPath("save");
+					saveName = fileDTO.getSavename();
+					File file = new File(savePath + "\\" + saveName);
+					if(file.exists() == true){
+						file.delete();
+						fileDAO.fileDelete(fileNo);
+					}
+					boardDto.setFile_no(0);
+				}
+			}
+		}
 		int memNo = boardDAO.selectNoCheck(sessionId);
 		int check = boardDAO.updateArticle(boardDto, memNo, boardDto.getNo());
 		model.addAttribute("check", check);
 		model.addAttribute("pageNum", pageNum);
-		
 		return "board/updatePro";
 	}
 	

@@ -71,6 +71,13 @@ button.btn-default:hover{
 		<td class="hd">글제목</td>
 		<td colspan="3">${dto.subject}</td>
 	</tr>
+	<c:if test="${fileDTO.orgname != null}">
+		<tr>
+			<td colspan="3">
+				<a href="/home/file/download.do?no=${fileDTO.no}">${fileDTO.orgname}</a>
+			</td>
+		</tr>
+	</c:if>
 	<tr>
 		<td class="hd">글내용</td>
 		<td colspan="3"><pre>${dto.content}</pre></td>

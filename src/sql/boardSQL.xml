@@ -71,7 +71,8 @@
 	<update id="updateArticle" parameterType="boardDTO">
 		update home_board <set>
 							<if test="subject != null">subject=#{subject},</if>
-							<if test="content != null">content=#{content}</if>
+							<if test="content != null">content=#{content},</if>
+							<if test="file_no != null">file_no=#{file_no}</if>
 						</set>
 		where no=#{no}
 	</update>

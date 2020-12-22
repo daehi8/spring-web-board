@@ -15,7 +15,7 @@ public class FileServiceImpl implements FileService{
 	@Override
 	public int fileInsert(FileDTO dto) throws Exception {
 		dao.insert("file.insertFile", dto);
-		return dao.selectOne("file.selectCoint");
+		return dao.selectOne("file.selectCount");
 	}
 
 	@Override
@@ -30,13 +30,17 @@ public class FileServiceImpl implements FileService{
 
 	@Override
 	public void fileDelete(int no) throws Exception {
-		int fileNo = dao.selectOne("file.selectFileNo", no);
-		dao.delete("file.deleteFile", fileNo);
+		dao.delete("file.deleteFile", no);
 	}
 
 	@Override
 	public int fileNo(int boardNo) throws Exception {
 		return dao.selectOne("file.selectFileNo", boardNo);
+	}
+
+	@Override
+	public FileDTO selectFileSave(String savename) throws Exception {
+		return dao.selectOne("file.selectFileSave", savename);
 	}
 
 }

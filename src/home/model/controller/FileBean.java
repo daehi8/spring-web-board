@@ -71,8 +71,7 @@ public class FileBean {
 	
 	@RequestMapping("download.do")
 	public void download(HttpServletResponse response, HttpServletRequest request, int no)throws Exception{
-		int fileNo = fileDAO.fileNo(no);
-		FileDTO dto = fileDAO.selectFile(fileNo);
+		FileDTO dto = fileDAO.selectFile(no);
 		
 		// 다운로드할 파일 위치
 		String savePath = request.getRealPath("save");

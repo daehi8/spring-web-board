@@ -18,5 +18,8 @@ public interface FileService {
 	// 삭제
 	public void fileDelete(int no)throws Exception;
 	
+	// 게시글에 맞는 파일번호 찾기
 	public int fileNo(int boardNo)throws Exception;
+	
+	public FileDTO selectFileSave(String savename)throws Exception;
 }

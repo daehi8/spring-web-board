@@ -3,7 +3,36 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">
+	<insert id="insertFile" parameterType="fileDTO">
+		insert into home_file(no, orgname) values(home_file_seq.nextval, #{orgname})
+	</insert>
 
+	<select resultType="int" id="selectCount">
+		select max(no) from home_file 
+	</select>
 	
+	<update id="updateFile" parameterType="fileDTO">
+		update home_file <set>
+							<if test = "orgname != null">orgname=#{orgname},</if> 
+							<if test = "savename != null">savename=#{savename}</if> 
+						</set>
+			where no=#{no}
+	</update>
+	
+	<select id="selectFile" resultType="fileDTO" parameterType="int">
+		select * from home_file where no = #{value}		
+	</select>
+	
+	<select id="selectFileSave" resultType="fileDTO" parameterType="String">
+		select * from home_file where savename = #{value}		
+	</select>
+
+	<delete id="deleteFile" parameterType="int">
+		delete from home_file where no = #{value} 
+	</delete>
+	
+	<select resultType="int" parameterType="int" id="selectFileNo">
+		select file_no from home_board where no=#{value} 
+	</select>
 </mapper>
 
