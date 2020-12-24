@@ -1,4 +1,4 @@
-package home.model.controller;
+package home.model.bean;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -113,7 +113,8 @@ public class BoardBean {
 	@RequestMapping("deletepro.do")
 	public String WriteDeletePro(@RequestParam(defaultValue ="1") int pageNum,
 			@RequestParam(defaultValue ="1") int no,
-			HttpSession session, HttpServletRequest request,
+			HttpSession session, 
+			HttpServletRequest request,
 			Model model) throws Exception {
 		int fileNo = fileDAO.fileNo(no);
 		String savePath = "";

@@ -1,4 +1,4 @@
-package home.model.controller;
+package home.model.bean;
 
 import java.util.List;
 

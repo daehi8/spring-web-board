@@ -1,4 +1,4 @@
-package home.model.controller;
+package home.model.bean;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
