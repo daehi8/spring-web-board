@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,9 @@ import home.model.service.MemberService;
 @Controller
 @RequestMapping("/")
 public class MemberBean {
+	
+	@Autowired
+	private BCryptPasswordEncoder passEncoder = null;
 	
 	@Autowired
 	private MemberService memberDAO = null;
@@ -57,6 +61,9 @@ public class MemberBean {
 	
 	@RequestMapping("updatepro.do")
 	public String UpdatePro(MemberDTO memberDto) {
+		String inputPw = memberDto.getPw();
+		String pw = passEncoder.encode(inputPw);
+		memberDto.setPw(pw);
 		memberDAO.updateMember(memberDto);
 		
 		return "home/updatePro";
@@ -70,6 +77,10 @@ public class MemberBean {
 	@RequestMapping("signuppro.do")
 	public String SignupPro(MemberDTO memberDto, 
 			Model model) {
+		String inputPw = memberDto.getPw();
+		String pw = passEncoder.encode(inputPw);
+		memberDto.setPw(pw);
+		
 		boolean result = memberDAO.selectId(memberDto);
 		if(result == false) {
 			memberDAO.insertMember(memberDto);
@@ -103,8 +114,12 @@ public class MemberBean {
 			Model model, 
 			HttpSession session) {		
 		String id = memberDto.getId();
+		MemberDTO check = memberDAO.myInfo(id);
+		
+		boolean passMatch = passEncoder.matches(memberDto.getPw(), check.getPw());
+		
 		boolean result = memberDAO.loginCheck(memberDto);
-		if(result == true) {
+		if(result == true && passMatch) {
 			session.setAttribute("sessionId", id);
 		}
 		model.addAttribute("result", result);		
