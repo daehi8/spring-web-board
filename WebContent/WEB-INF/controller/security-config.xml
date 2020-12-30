@@ -40,5 +40,4 @@
             <!--<password-encoder ref="bcryptPasswordEncoder" /> -->
             </authentication-provider>
         </authentication-manager>
-        <beans:bean id="userService" class="home.main.sequrity.CustomUserDetailsService"/>
 </beans:beans>

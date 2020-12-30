@@ -1,4 +1,4 @@
-package home.main.sequrity;
+package home.main.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -39,6 +39,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider{
 		// DB에 정보가 없는 경우 예외 발생 (아이디/패스워드 잘못됐을 때와 동일한 것이 좋음)
 		// ID 및 PW 체크해서 안맞을 경우 (matches를 이용한 암호화 체크를 해야함)
 		if (userDetails == null || !id.equals(userDetails.getUsername())
+				|| !pw.equals(userDetails.getPassword())
 				/*|| !passEncoder.matches(pw, userDetails.getPassword())*/) {
 
 			throw new BadCredentialsException(id);

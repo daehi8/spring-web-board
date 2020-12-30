@@ -1,4 +1,4 @@
-package home.main.sequrity;
+package home.main.security;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

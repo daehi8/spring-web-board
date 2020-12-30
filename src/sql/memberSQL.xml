@@ -47,7 +47,7 @@
 	</update>
 	
 	<!-- test -->
-	<select id="selectUserById" resultType="home.main.sequrity.CustomUserDetails">
+	<select id="selectUserById" resultType="home.main.security.CustomUserDetails">
 		select * from test_member where id=#{id}
 	</select>
 </mapper>

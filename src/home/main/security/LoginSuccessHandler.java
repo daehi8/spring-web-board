@@ -1,4 +1,4 @@
-package home.main.sequrity;
+package home.main.security;
 
 import java.io.IOException;
 
