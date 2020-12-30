@@ -13,5 +13,5 @@
 	<bean id = "boardDto" class="home.model.dto.BoardDTO"/>
 	<bean id = "replyDTO" class="home.model.dto.ReplyDTO"/>
 	<bean id = "pageDto" class ="home.model.dto.PageDTO"/>
-	<bean id = "fileDto" class="home.model.dto.FileDTO"/> 
+	<bean id = "fileDTO" class="home.model.dto.FileDTO"/> 
 </beans>

@@ -24,4 +24,7 @@ public interface MemberService {
 	
 	// 회원 탈퇴
 	public void deleteMember (MemberDTO dto);
+	
+	public MemberDTO getUserById(String username)throws Exception;
+	
 }

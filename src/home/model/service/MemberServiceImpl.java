@@ -54,4 +54,9 @@ public class MemberServiceImpl implements MemberService{
 		dao.update("member.deleteMember", dto);		
 	}
 
+	@Override
+	public MemberDTO getUserById(String username) throws Exception{
+		return dao.selectOne("member.selectUserById", username);		
+	}
+
 }

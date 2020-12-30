@@ -15,7 +15,7 @@
 	<mvc:annotation-driven/>
 	
 	<!-- config파일 자동 로드 location="classpath:database.properties" /!-->
-	<context:property-placeholder location="/WEB-INF/config.properties"/>
+	<context:property-placeholder location="classpath:properties/*.properties"/>
 	
 	<!-- spring interceptor -fileUpload -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -33,7 +33,6 @@
 	
 	<!-- 해당 패키지에서 @controller가 있는 곳을 호출 -->
 	<context:component-scan base-package="home.model"></context:component-scan>
-	
 	
 	<!-- tiles 설정 -->
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">

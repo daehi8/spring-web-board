@@ -45,5 +45,10 @@
 	<update id="deleteMember" parameterType="memberDTO">
 		update from home_member set fleg='D' where id=#{id} and pw=#{pw}
 	</update>
+	
+	<!-- test -->
+	<select id="selectUserById" resultType="home.main.sequrity.CustomUserDetails">
+		select * from test_member where id=#{id}
+	</select>
 </mapper>
 
