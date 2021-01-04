@@ -3,6 +3,17 @@
     
 <script>
 var boardNo = '${dto.no}'; //게시글 번호
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+
+// ajax 토큰
+$(function() {
+	if(token && header){
+	    $(document).ajaxSend(function(e, xhr, options) {
+	        xhr.setRequestHeader(header, token);
+	    });
+	}
+});
 
 $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭시 
     var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴

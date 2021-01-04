@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,22 +40,23 @@ public class MemberBean {
 	public String DeletePro(MemberDTO memberDto,
 			HttpSession session,
 			Model model) {
-		String sessionId = (String)session.getAttribute("id");
 		boolean result = memberDAO.loginCheck(memberDto);
-		if(result) {
+		MemberDTO check = memberDAO.myInfo(memberDto.getId());
+		boolean passMatch = passEncoder.matches(memberDto.getPw(), check.getPw());
+		if(result && passMatch) {
 			memberDAO.deleteMember(memberDto);
 			session.invalidate();
+			SecurityContextHolder.getContext().setAuthentication(null);
 		}
-		model.addAttribute("sessionId", sessionId);
-		model.addAttribute("result", result);
-		
+		model.addAttribute("result", passMatch);
+		System.out.println(passMatch);
+		System.out.println(result);
 		return "home/deletePro";
 	}
 	
 	@RequestMapping("myinfo.do")
-	public String MyInfo(HttpSession session, Model model) {
-		String sessionId = (String)session.getAttribute("sessionId");
-		memberDto = memberDAO.myInfo(sessionId);
+	public String MyInfo(String id, Model model) {
+		memberDto = memberDAO.myInfo(id);
 		model.addAttribute("dto", memberDto);
 		
 		return "home/myInfo";
@@ -108,7 +111,7 @@ public class MemberBean {
 		
 		return "home/loginForm";
 	}
-	
+	/*
 	@RequestMapping(value="loginpro.do", method=RequestMethod.POST)
 	public String LoginPro(MemberDTO memberDto, 
 			Model model, 
@@ -186,7 +189,7 @@ public class MemberBean {
 		
 		return "home/cookiePro";
 	}
-	
+	*/
 	@RequestMapping("mypage.do")
 	public String MyPage() {
 		return "home/myPage";

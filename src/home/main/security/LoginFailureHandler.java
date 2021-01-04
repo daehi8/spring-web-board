@@ -44,7 +44,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
 			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
 		}
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/test");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/loginform.do");
 		dispatcher.forward(request, response);
 
 	}

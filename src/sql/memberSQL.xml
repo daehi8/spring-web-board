@@ -43,12 +43,12 @@
 	
 	<!-- 회원 탈퇴 -->
 	<update id="deleteMember" parameterType="memberDTO">
-		update from home_member set fleg='D' where id=#{id} and pw=#{pw}
+		update home_member set fleg='D' where id=#{id}
 	</update>
 	
 	<!-- test -->
 	<select id="selectUserById" resultType="home.main.security.CustomUserDetails">
-		select * from test_member where id=#{id}
+		select * from home_member where id=#{id} and fleg='Y'
 	</select>
 </mapper>
 

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -113,7 +114,7 @@ public class BoardBean {
 	@RequestMapping("deletepro.do")
 	public String WriteDeletePro(@RequestParam(defaultValue ="1") int pageNum,
 			@RequestParam(defaultValue ="1") int no,
-			HttpSession session, 
+			BoardDTO boardDto,
 			HttpServletRequest request,
 			Model model) throws Exception {
 		int fileNo = fileDAO.fileNo(no);
@@ -126,8 +127,7 @@ public class BoardBean {
 		}
 		File file = new File(savePath + "\\" + saveName);
 		
-		
-		String sessionId = (String)session.getAttribute("sessionId");
+		String sessionId = boardDto.getWriter();
 
 		int deleteCheck = boardDAO.deleteCheck(no);
 		int memberNo = boardDAO.selectNoCheck(sessionId);
@@ -162,10 +162,9 @@ public class BoardBean {
 	@RequestMapping("writepro.do")
 	public String WritePro(BoardDTO boardDto,
 			FileDTO fileDTO,
-			MultipartHttpServletRequest request, 
-			HttpSession session) throws Exception {
+			MultipartHttpServletRequest request) throws Exception {
 		
-		String sessionId = (String)session.getAttribute("sessionId");
+		String sessionId = boardDto.getWriter();
 		int memNo = boardDAO.selectNoCheck(sessionId);
 		
 		MultipartFile mf = request.getFile("save");			
@@ -212,10 +211,9 @@ public class BoardBean {
 	@RequestMapping("updatepro.do")
 	public String WriteUpdatePro(@RequestParam(defaultValue ="1") int pageNum,
 			MultipartHttpServletRequest request, 
-			HttpSession session,
 			BoardDTO boardDto,
 			Model model, FileDTO fileDTO, int delFile) throws Exception {
-		String sessionId = (String)session.getAttribute("sessionId");		
+		String sessionId = boardDto.getWriter();	
 		MultipartFile mf = request.getFile("save");
 		String savePath = "";
 		String saveName = "";

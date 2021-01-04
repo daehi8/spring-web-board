@@ -21,7 +21,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {
 		
 		// 디폴트 URI
-		String uri = "/home/main";
+		String uri = "/home/main.do";
 
 		/* 강제 인터셉트 당했을 경우의 데이터 get */
 		RequestCache requestCache = new HttpSessionRequestCache();

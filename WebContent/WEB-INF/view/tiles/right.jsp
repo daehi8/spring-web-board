@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,19 +12,24 @@
 <body>
 	
   <div class="rightcolumn">
-    <c:if test="${sessionScope.sessionId == null}">
+    <sec:authorize access="isAnonymous()">
     <div class="card">
       <input type="button" value="로그인" onclick="document.location.href='/home/loginform.do'">
       <input type="button" value="회원가입" onclick="document.location.href='/home/signup.do'">
     </div>
-    </c:if>
-    <c:if test="${sessionScope.sessionId != null}">
+    </sec:authorize>
+    <sec:authorize access="isAuthenticated()">
     <div class="card">
-      <h2>${sessionScope.sessionId}</h2>
+    <sec:authentication property="principal" var="user"/>${user.username}
       <p>환영합니다</p>
-      <input type="button" value="로그아웃" onclick="document.location.href='/home/logout.do'">
+      	<a href="#" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
+		<form id="logout-form" action='<c:url value='/logout'/>' method="POST">
+		   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+		</form>
+		<a href='/home/myinfo.do?id=${user.username}'>내정보</a>
+		<a href='/home/deleteform.do'>회원탈퇴</a>
     </div>
-    </c:if>
+   	</sec:authorize>
     
     <div class="card">
       <h3>Popular Post</h3>

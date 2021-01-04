@@ -49,14 +49,15 @@
 </head>
 
 <h1>로그인</h1>
-
+<!--
 <c:if test="${auto != null && id != null && pw != null}">
 	<script>
 		window.location="/home/cookiepro.do";
 	</script>
 </c:if>
-
-<form action = "/home/loginpro.do" method="post" >
+-->
+<form action="/home/login" method="POST" >
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<div class="container">
 		<label for="id"><b>아이디</b></label>
 		<input type="text" placeholder="아이디를 입력해주세요" name="id"
@@ -66,8 +67,9 @@
 		<input type ="password" placeholder ="비밀번호를 입력해주세요" name ="pw"
 		required>
 		
-		<button type="submit">로그인</button>
+		<button type="submit" name="submit">로그인</button>
 		<label>
+			${requestScope.loginFailMsg}
 			<input type="checkbox" name ="auto" value="1"> 자동로그인
 		</label>
 	</div>

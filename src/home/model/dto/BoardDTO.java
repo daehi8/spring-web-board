@@ -5,6 +5,7 @@ public class BoardDTO{
 
 	private int no;
 	private int member_no;
+	private String writer;
 	private int file_no;
     private String subject;				
     private String content;			
@@ -16,7 +17,6 @@ public class BoardDTO{
     private int re_level;
     private String fleg;
     private String type;
-    private String writer;
     
 	public String getWriter() {
 		return writer;

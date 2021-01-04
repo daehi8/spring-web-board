@@ -55,8 +55,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberDTO getUserById(String username) throws Exception{
+	public MemberDTO getUserById(String username) {
 		return dao.selectOne("member.selectUserById", username);		
 	}
-
 }

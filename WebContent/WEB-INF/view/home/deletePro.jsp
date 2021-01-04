@@ -3,16 +3,10 @@
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 
-<c:if test=${sessionId == null}>
-	<script>
-		window.location = "/home/main.do";
-	</script>
-</c:if>
-
 <c:if test="${result == true}">
    	<script>
    		alert("탈퇴되었습니다");
-   		window.location = "/home/main.do";
+   		window.location.href = "/home/main.do";
    	</script>
 </c:if>
 <c:if test="${result == false}">

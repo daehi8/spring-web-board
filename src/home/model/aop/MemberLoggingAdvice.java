@@ -9,6 +9,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -39,10 +41,10 @@ public class MemberLoggingAdvice {
 		ServletRequestAttributes sra = (ServletRequestAttributes)ra;
 		
 		HttpServletRequest request = sra.getRequest();
-		HttpSession session = request.getSession();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		String ip = request.getRemoteAddr();
-		String id = (String) session.getAttribute("sessionId");
+		String id = authentication.getName();
 		if(id == null) {
 			id = "guest";
 		}

@@ -16,6 +16,7 @@
 	insert into home_board(
 		no, 
 		member_no,
+		writer,
 		file_no,
 		subject, 
 		reg_date, 
@@ -29,6 +30,7 @@
 	values(
 		home_board_seq.nextval,
 		#{member_no},
+		#{writer},
 		#{file_no},
 		#{subject},
 		sysdate,

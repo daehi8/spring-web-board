@@ -13,31 +13,32 @@
         <context:component-scan base-package="home.main"/>
         
         <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" /> 
-		
+        
+		<http pattern="/**/*.css" security="none" />
+		<http pattern="/**/*.js" security="none" />
+		<http pattern="/image/*" security="none" />
         <http auto-config="true">
-        	<intercept-url pattern="/main" access="hasRole('ROLE_USER')"/>
-            <intercept-url pattern="/**" access="permitAll" />
+        	<intercept-url pattern="/board/writeform.do" access="isAuthenticated()"/>
             
                 <!-- 권한 설정 -->    
 		    <form-login
 		        username-parameter="id"
 		        password-parameter="pw"
 		        login-processing-url="/login"
-		        login-page="/test"
+		        login-page="/loginform.do"
 		        authentication-failure-handler-ref="loginFailureHandler"
 		        authentication-success-handler-ref="loginSuccessHandler"
 		    />
 		    
 		    <logout
 		        logout-url="/logout"
-		        logout-success-url="/main"
+		        logout-success-url="/main.do"
     		/>
-
+			<csrf/>
         </http>
         
         <authentication-manager>
             <authentication-provider ref="loginAuthenticationProvider">
-            <!--<password-encoder ref="bcryptPasswordEncoder" /> -->
             </authentication-provider>
         </authentication-manager>
 </beans:beans>

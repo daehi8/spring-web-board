@@ -14,7 +14,6 @@ public class CustomUserDetails implements UserDetails {
     private String pw;
     private String AUTHORITY;
     private boolean ENABLED;
-    private String NAME;
 	
 	// setter
 	public void setUsername(String username) {
@@ -33,42 +32,34 @@ public class CustomUserDetails implements UserDetails {
 		return auth;
 	}
 
-	 @Override
-	    public String getPassword() {
-	        return pw;
-	    }
-	 
-	    @Override
-	    public String getUsername() {
-	        return id;
-	    }
-	 
-	    @Override
-	    public boolean isAccountNonExpired() {
-	        return true;
-	    }
-	 
-	    @Override
-	    public boolean isAccountNonLocked() {
-	        return true;
-	    }
-	 
-	    @Override
-	    public boolean isCredentialsNonExpired() {
-	        return true;
-	    }
-	 
-	    @Override
-	    public boolean isEnabled() {
-	        return ENABLED;
-	    }
-	    
-	    public String getNAME() {
-	        return NAME;
-	    }
-	 
-	    public void setNAME(String name) {
-	        NAME = name;
-	    }
+	@Override
+    public String getPassword() {
+        return pw;
+    }
+ 
+    @Override
+    public String getUsername() {
+        return id;
+    }
+ 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+ 
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+ 
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+ 
+    @Override
+    public boolean isEnabled() {
+        return ENABLED;
+    }
 
 }

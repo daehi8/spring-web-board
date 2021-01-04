@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +78,7 @@ a {
 
 
 <form action = "/home/signuppro.do" method = "post">
+	<sec:csrfInput/>
 	<div class ="container">
 		<h1>회원가입</h1>
 		<p>계정을 만들려면 양식에 따라 작성해주세요.</p>

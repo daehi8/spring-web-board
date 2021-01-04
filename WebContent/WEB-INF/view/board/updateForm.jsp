@@ -2,9 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "home.model.dto.BoardDTO" %>
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>     
+<%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>     
 <head>
-	<link href="../board/write.css" rel="stylesheet">
+	<link href="<c:url value="/resource/css/write.css" />" rel="stylesheet">
 	<script>
 	function div_hide() {
 		document.getElementById("currFile").style.display = "none";
@@ -15,8 +16,11 @@
 <body>
 	<b>글수정</b>
 	<br>
-	<form method = "post" name = "writeForm" enctype="multipart/form-data" action = "/home/board/updatepro.do?pageNum=${pageNum}">
+	<form method = "post" name = "writeForm" enctype="multipart/form-data" action = "/home/board/updatepro.do?pageNum=${pageNum}&${_csrf.parameterName}=${_csrf.token}">
+	<sec:authentication property="principal" var="user"/>
 	<input type="hidden" name="no" value="${dto.no}">
+	<input type="hidden" name="writer" value="${user.username}">
+	<sec:csrfInput/>
 		<table>
 			<tr>
 				<td>제목</td>

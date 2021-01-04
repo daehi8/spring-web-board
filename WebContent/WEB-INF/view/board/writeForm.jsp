@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,12 +55,15 @@ input[type=submit]:hover {
 <h3>글쓰기</h3>
 
 <div class="container">
-  	<form method = "post" name = "writeform" action = "/home/board/writepro.do" enctype="multipart/form-data">
+  	<form method = "post" name = "writeform" action = "/home/board/writepro.do?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+  		<sec:authentication property="principal" var="user"/>
+  		<sec:csrfInput/>
+  		<input type="hidden" name="writer" value="${user.username}">
 	  	<input type="hidden" name="no" value="${dto.no}">
 		<input type="hidden" name="ref" value="${dto.ref}">
 		<input type="hidden" name="re_step" value="${dto.re_step}">
 		<input type="hidden" name="re_level" value="${dto.re_level}">
-	
+		
 	    <label for="subject">제목</label>
 	    <c:if test="${dto.no == 0}">
 	    	<input type="text" id="subject" name="subject" placeholder="제목">

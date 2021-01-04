@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,9 +38,9 @@ public class ReplyBean {
     }
 
     @RequestMapping("insertreply.do") //댓글 작성 
-    public @ResponseBody int insertReply(ReplyDTO replyDTO, HttpSession session, HttpServletRequest request) throws Exception{
+    public @ResponseBody int insertReply(ReplyDTO replyDTO, HttpServletRequest request) throws Exception{
 
-    	String sessionId = (String) session.getAttribute("sessionId");
+    	String sessionId = replyDTO.getWriter();
         int member_no = boardDAO.selectNoCheck(sessionId);
         
         String content = replyDTO.getContent().replace("\r\n","<br>");

@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<title>게시판</title>
-		<link href="/home/resorce/css/board.css" rel="stylesheet">
+		<link href="<c:url value="/resource/css/board.css" />" rel="stylesheet">
 	</head>
 <body>
 	<div class="container">
@@ -48,18 +48,18 @@
 						<td class ="subtd">
 							<c:if test="${article.re_level > 0}">
 								<%-- 답변 이미지 표시와 들여쓰기 --%>
-								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
-								<img src="/home/resorce/image/re.gif">
+								<img src="<c:url value="/resource/image/level.gif" />" width="${5 * article.re_level}">
+								<img src="<c:url value="/resource/image/re.gif" />">
 							</c:if>
 							<c:if test="${article.re_level == 0}">
-								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
+								<img src="<c:url value="/resource/image/level.gif" />" width="${5 * article.re_level}">
 							</c:if>
 							<%-- 제목 클릭시 내용 확인 --%>
 							<a class ="subject" href ="/home/board/contents.do?no=${article.no}&pageNum=${page.currentPage}&number=${page.number}">
 							${article.subject}</a>		
 							<%-- 조회수가 20 이상일시 이미지 표시 --%>
 							<c:if test ="${article.readcount >= 20}">
-								<img src="/home/resorce/image/hot.gif">
+								<img src="<c:url value="/resource/image/hot.gif" />">
 							</c:if>
 						</td>
 						<td>${article.writer}</td>					
@@ -72,11 +72,11 @@
 						<td class ="subtd" colspan="5">
 							<c:if test="${article.re_level > 0}">
 								<%-- 답변 이미지 표시와 들여쓰기 --%>
-								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
-								<img src="/home/resorce/image/re.gif">
+								<img src="<c:url value="/resource/image/level.gif" />" width="${5 * article.re_level}">
+								<img src="<c:url value="/resource/image/re.gif" />">
 							</c:if>
 							<c:if test="${article.re_level == 0}">
-								<img src="/home/resorce/image/level.gif" width="${5 * article.re_level}">
+								<img src="<c:url value="/resource/image/level.gif" />" width="${5 * article.re_level}">
 							</c:if>
 							${article.subject}
 						</td>
