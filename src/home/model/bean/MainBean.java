@@ -12,20 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import home.model.dto.BoardDTO;
+import home.model.dto.FileDTO;
 import home.model.service.BoardService;
+import home.model.service.FileService;
 
 @Controller
 @RequestMapping("/")
 public class MainBean {
 	
-	@Autowired
-	private BoardService boardDAO = null;
-	
-	
 	@RequestMapping("main.do")
-	public String Main(Model model) throws Exception {
-		List populerList = boardDAO.populerArticle();
-		model.addAttribute("populerList", populerList);
+	public String Main() throws Exception {
 		
 		return "home/main";
 	}

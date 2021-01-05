@@ -5,7 +5,14 @@ public class FileDTO {
 	private int no;
 	private String orgname;
 	private String savename;
+	private String ext;
 	
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
 	public int getNo() {
 		return no;
 	}
