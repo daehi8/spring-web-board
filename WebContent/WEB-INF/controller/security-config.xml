@@ -30,9 +30,15 @@
 		        authentication-success-handler-ref="loginSuccessHandler"
 		    />
 		    
+		    <remember-me 
+		    	data-source-ref="dataSource"
+		    	token-validity-seconds="604800"
+			/>
+		    
 		    <logout
 		        logout-url="/logout"
 		        logout-success-url="/main.do"
+		        invalidate-session="true"
     		/>
 			<csrf/>
         </http>

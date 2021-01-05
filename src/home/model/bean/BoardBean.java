@@ -217,9 +217,11 @@ public class BoardBean {
 		MultipartFile mf = request.getFile("save");
 		String savePath = "";
 		String saveName = "";
+		int fileNo = fileDAO.fileNo(boardDto.getNo());
 		
+		// 새로 업로드한 파일로 변경
 		if(mf.isEmpty() == false) {
-			int fileNo = fileDAO.fileNo(boardDto.getNo());
+			// 파일이 업로드 되어있다면 삭제
 			if(fileNo != 0) {
 				fileDTO = fileDAO.selectFile(fileNo);
 				savePath = request.getRealPath("save");
@@ -230,6 +232,7 @@ public class BoardBean {
 					fileDAO.fileDelete(fileNo);
 				}
 			}
+			// 파일 업로드
 			String fileName = mf.getOriginalFilename();
 			fileDTO.setOrgname(fileName);
 			int no = fileDAO.fileInsert(fileDTO);
@@ -247,27 +250,19 @@ public class BoardBean {
 				e.printStackTrace();
 			}		
 			boardDto.setFile_no(no);
-		}else {		
-			int fileNo = fileDAO.fileNo(boardDto.getNo());
-			if(fileNo != 0) {
-				boardDto.setFile_no(fileNo);
-			}
 		}
-		if(mf.isEmpty() == true) {
-			if(delFile == 1) {
-				int fileNo = fileDAO.fileNo(boardDto.getNo());
-				if(fileNo != 0) {
-					fileDTO = fileDAO.selectFile(fileNo);
-					savePath = request.getRealPath("save");
-					saveName = fileDTO.getSavename();
-					File file = new File(savePath + "\\" + saveName);
-					if(file.exists() == true){
-						file.delete();
-						fileDAO.fileDelete(fileNo);
-					}
-					boardDto.setFile_no(0);
-				}
+		// 업로드된 파일만 삭제
+		if(mf.isEmpty() == true && delFile == 1 && fileNo != 0) {
+			boardDto.setFile_no(fileNo);
+			fileDTO = fileDAO.selectFile(fileNo);
+			savePath = request.getRealPath("save");
+			saveName = fileDTO.getSavename();
+			File file = new File(savePath + "\\" + saveName);
+			if(file.exists() == true){
+				file.delete();
+				fileDAO.fileDelete(fileNo);
 			}
+			boardDto.setFile_no(0);
 		}
 		int memNo = boardDAO.selectNoCheck(sessionId);
 		int check = boardDAO.updateArticle(boardDto, memNo, boardDto.getNo());

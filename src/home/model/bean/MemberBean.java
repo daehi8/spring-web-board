@@ -94,20 +94,7 @@ public class MemberBean {
 	}
 	
 	@RequestMapping("loginform.do")
-	public String LoginForm(HttpServletRequest request,
-			Model model) {
-		String id = null, pw = null, auto = null;
-		Cookie [] cookies = request.getCookies();
-		if(cookies != null){
-			for(Cookie c : cookies){
-				if(c.getName().equals("cid")) id = c.getValue();
-				if(c.getName().equals("cpw")) pw = c.getValue();
-				if(c.getName().equals("cauto")) auto = c.getValue();
-			}
-		}
-		model.addAttribute("auto", auto);
-		model.addAttribute("id", id);
-		model.addAttribute("pw", pw);
+	public String LoginForm() {		
 		
 		return "home/loginForm";
 	}

@@ -68,10 +68,10 @@
 		required>
 		
 		<button type="submit" name="submit">로그인</button>
-		<label>
-			${requestScope.loginFailMsg}
-			<input type="checkbox" name ="auto" value="1"> 자동로그인
-		</label>
+		
+		${requestScope.loginFailMsg}
+		<input type="checkbox" name ="remember-me"> 자동로그인
+
 	</div>
 	
 	<div class="container" style ="background-color:#f1f1f1">
