@@ -128,5 +128,10 @@ public class BoardServiceImpl implements BoardService{
 	public int selectNoCheck(String id) throws Exception {
 		return dao.selectOne("board.selectNoCheck", id);
 	}
+
+	@Override
+	public List populerArticle() throws Exception {
+		return dao.selectList("board.populerArticle");
+	}
 	
 }

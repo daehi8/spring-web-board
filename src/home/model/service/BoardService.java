@@ -40,4 +40,6 @@ public interface BoardService {
 	// 아이디에 맞는 회원번호 찾기
 	public int selectNoCheck(String id)throws Exception;
 	
+	// 게시물 인기순 3개
+	public List populerArticle()throws Exception;
 }

@@ -105,5 +105,9 @@
 		select no from home_member where id = #{value} and fleg = 'Y'
 	</select>
 
+	<select id="populerArticle" resultType="boardDTO">
+		select * from (select * from home_board order by readcount desc) 
+		<![CDATA[where rownum <=3]]>
+	</select>
 </mapper>
 

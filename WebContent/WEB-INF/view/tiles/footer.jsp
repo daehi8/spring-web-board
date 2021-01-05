@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="footer">
-  		<h2>Footer</h2>
+  		<h2>footer</h2>
 	</div>
 </body>
 </html>

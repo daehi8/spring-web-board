@@ -3,6 +3,7 @@
 <%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix ="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix ="tiles" uri = "http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,13 +34,13 @@
     
     <div class="card">
       <h3>Popular Post</h3>
-      <div class="fakeimg"><p></p></div>
-      <div class="fakeimg"><p></p></div>
-      <div class="fakeimg"><p></p></div>
-    </div>
-    <div class="card">
-      <h3>ad</h3>
-      <p>ad</p>
+      <tiles:importAttribute name="populerList"/>
+      <c:forEach var="article" items="${populerList}">
+      	<div class="fakeimg"><p>
+      		제목 : <a href='/home/board/contents.do?no=${article.no}'>${article.subject}</a><br />
+      		작성자 : ${article.writer}
+      	</p></div>
+      </c:forEach>
     </div>
   </div>
   

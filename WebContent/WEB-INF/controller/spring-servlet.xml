@@ -36,18 +36,22 @@
 	<!-- 해당 패키지에서 @controller가 있는 곳을 호출 -->
 	<context:component-scan base-package="home.model"></context:component-scan>
 	
+	
 	<!-- tiles 설정 -->
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
     	<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
     	<property name="order" value="1" />
 	</bean>
  
+ 	<bean id="menuPreparer" class="home.main.tiles.MenuPreparer"></bean>
+ 	
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
     	<property name="definitions">
        	 	<list>
             	<value>/WEB-INF/controller/tiles-define.xml</value>
         	</list>
     	</property>
+    	<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory"></property>
 	</bean>
 	
 	<mvc:resources mapping="/resource/**" location="/resource/" />

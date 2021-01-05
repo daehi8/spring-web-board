@@ -13,7 +13,7 @@ public interface MemberService {
 	// 아이디 중복 체크
 	public boolean selectId(MemberDTO dto);
 	
-	// 로그인
+	// 로그인체크
 	public boolean loginCheck(MemberDTO dto);
 	
 	// 내 정보 확인	
@@ -25,6 +25,7 @@ public interface MemberService {
 	// 회원 탈퇴
 	public void deleteMember (MemberDTO dto);
 	
+	// 스프링 시큐리티 로그인
 	public MemberDTO getUserById(String username)throws Exception;
 	
 }

@@ -5,7 +5,7 @@
  
 <tiles-definitions>
 	<!-- main layout -->
-	<definition name=".main" template="/WEB-INF/view/tiles/mainLayout.jsp">
+	<definition name=".main" template="/WEB-INF/view/tiles/mainLayout.jsp" preparer="menuPreparer">
 		<put-attribute name="header" value="/WEB-INF/view/tiles/header.jsp" />
 		<put-attribute name="right" value="/WEB-INF/view/tiles/right.jsp" />
 		<put-attribute name="body" value="" />

@@ -13,9 +13,8 @@
 	</div>
 
 	<div class="topnav">
-		<a href="#">익명 게시판</a>
-	    <a href="/home/board/list.do">회원 게시판</a>
-		<a href="#">관리</a>
+		<a href="/home/main.do">홈</a>
+	    <a href="/home/board/list.do">게시판</a>
 	</div>
 </body>
 </html>
