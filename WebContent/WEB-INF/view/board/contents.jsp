@@ -90,18 +90,23 @@ button.btn-default:hover{
 	<tr>
 		<td class="hd" colspan="4" >
 			<%-- 수정하거나 삭제할 페이지 번호 전송 --%>
-	  		<input type="button" value="글수정" 
-     		onclick="document.location.href='/home/board/updateform.do?no=${dto.no}&pageNum=${pageNum}'">
-	 		&nbsp;&nbsp;&nbsp;&nbsp;
-	 		
-	 		<input type="button" value="글삭제" 
-     		onclick="document.location.href='/home/board/deleteform.do?no=${dto.no}&pageNum=${pageNum}'">
-	  		&nbsp;&nbsp;&nbsp;&nbsp;
-	  		
-	  		<%-- 답글 쓰기 누를경우 값을 전송해 글쓰기와 구분 --%>
-	  		<input type="button" value="답글쓰기" 
-       		onclick="document.location.href='/home/board/writeform.do?no=${dto.no}&ref=${dto.ref}&re_step=${dto.re_step}&re_level=${dto.re_level}'">
-	  		&nbsp;&nbsp;&nbsp;&nbsp;
+			<sec:authorize access="isAuthenticated()">
+            <sec:authentication property="principal" var="user"/>
+		  		<c:if test="${dto.writer eq user.username }">
+			  		<input type="button" value="글수정" 
+		     		onclick="document.location.href='/home/board/updateform.do?no=${dto.no}&pageNum=${pageNum}'">
+			 		&nbsp;&nbsp;&nbsp;&nbsp;
+			 		
+			 		<input type="button" value="글삭제" 
+		     		onclick="document.location.href='/home/board/deleteform.do?no=${dto.no}&pageNum=${pageNum}'">
+			  		&nbsp;&nbsp;&nbsp;&nbsp;
+		  		</c:if>
+		  		
+		  		<%-- 답글 쓰기 누를경우 값을 전송해 글쓰기와 구분 --%>
+		  		<input type="button" value="답글쓰기" 
+	       		onclick="document.location.href='/home/board/writeform.do?no=${dto.no}&ref=${dto.ref}&re_step=${dto.re_step}&re_level=${dto.re_level}'">
+		  		&nbsp;&nbsp;&nbsp;&nbsp;
+	  		</sec:authorize>
 	  		
 	  		<%-- 현재 글의 페이지를 확인해 위치한 페이지로 이동 --%>
 	  		<input type="button" value="글목록" 
@@ -116,8 +121,10 @@ button.btn-default:hover{
         <h1>comment</h1>
         <form name="commentInsertForm" onsubmit="return false;">
             <div class="input-group">
+               <sec:authorize access="isAuthenticated()">
                <sec:authentication property="principal" var="user"/>
                <input type="hidden" name="writer" value="${user.username}"/>
+               </sec:authorize>
                <input type="hidden" name="board_no" value="${dto.no}"/>
                <textarea class="form-control" id="insertContent" name="content" placeholder="내용을 입력하세요."></textarea>
             </div>
@@ -163,8 +170,10 @@ function commentList(boardNo){
                 a += '<div class="commentInfo'+value.no+'">'+'댓글번호 : '+value.no;
                 if(value.fleg == 'Y'){
                 	a += '/ 작성자 : '+value.writer;
-	                a += '<a onclick="commentUpdate('+value.no+',\''+value.content+'\');"> 수정 </a>';
-	                a += '<a onclick="commentDelete('+value.no+');"> 삭제 </a>';
+                	if(value.writer == writer){
+		                a += '<a onclick="commentUpdate('+value.no+',\''+value.content+'\');"> 수정 </a>';
+		                a += '<a onclick="commentDelete('+value.no+');"> 삭제 </a>';
+                	}
 	                if(value.depth == 0){
 	                	a += '<a onclick="commentReply('+value.no+');"> 답변 </a>';
 	                }

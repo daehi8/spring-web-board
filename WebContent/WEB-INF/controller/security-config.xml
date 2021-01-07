@@ -17,9 +17,29 @@
 		<http pattern="/**/*.css" security="none" />
 		<http pattern="/**/*.js" security="none" />
 		<http pattern="/image/*" security="none" />
+		
         <http auto-config="true">
-        	<intercept-url pattern="/board/writeform.do" access="isAuthenticated()"/>
-            
+        	<intercept-url pattern="/file/download.do" access="isAuthenticated()"/>
+        	
+        	<intercept-url pattern="/board/insertreply.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/board/updatereply.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/board/deletereply.do" access="isAuthenticated()"/>
+        	
+        	<intercept-url pattern="/board/deleteform.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/board/deletepro.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/updateform.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/updatepro.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/writeform.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/writepro.do" access="isAuthenticated()"/>
+        	
+        	<intercept-url pattern="/deleteform.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/deletepro.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/myinfo.do" access="isAuthenticated()"/>
+        	<intercept-url pattern="/updatepro.do" access="isAuthenticated()"/>
+        	
+            <intercept-url pattern="/loginform.do" access="isAnonymous()"/>
+            <intercept-url pattern="/signup.do" access="isAnonymous()"/>
+            <intercept-url pattern="/signuppro.do" access="isAnonymous()"/>
                 <!-- 권한 설정 -->    
 		    <form-login
 		        username-parameter="id"
