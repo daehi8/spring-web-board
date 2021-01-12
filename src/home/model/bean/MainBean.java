@@ -25,4 +25,9 @@ public class MainBean {
 		
 		return "home/main";
 	}
+
+	@RequestMapping("/accessdenied")
+	public String accessDeniedPage() throws Exception {
+	    return "error/accessDenied";
+	}
 }

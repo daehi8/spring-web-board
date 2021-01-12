@@ -68,7 +68,6 @@
 		required>
 		
 		<button type="submit" name="submit">로그인</button>
-		
 		${requestScope.loginFailMsg}
 		<input type="checkbox" name ="remember-me"> 자동로그인
 

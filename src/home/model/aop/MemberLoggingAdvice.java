@@ -44,14 +44,16 @@ public class MemberLoggingAdvice {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		String ip = request.getRemoteAddr();
-		String id = authentication.getName();
-		if(id == null) {
+		String id = "";
+		if(authentication != null) {
+			id = authentication.getName();
+		}else{
 			id = "guest";
 		}
 		
 		logger.debug("=================================================");
 		logger.debug(">>>>>>>>> LOGGING START >>>>>>>>>>");
-		logger.debug("[id]:" + id);
+
 		logger.debug("[ip]:" + ip);
    		logger.debug("[class]:" + className);
    		logger.debug("[method]:" + jp.getSignature().getName() + "()");

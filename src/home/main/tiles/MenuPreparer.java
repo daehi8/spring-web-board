@@ -44,7 +44,6 @@ public class MenuPreparer implements ViewPreparer{
 				try {
 					fileDTO = fileDAO.selectFile(fileNo);
 					String ext = fileDTO.getSavename().substring(fileDTO.getSavename().lastIndexOf(".")).toLowerCase();
-					System.out.println(ext);
 					fileDTO.setExt(ext);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -95,7 +95,6 @@ public class MemberBean {
 	
 	@RequestMapping("loginform.do")
 	public String LoginForm() {		
-		
 		return "home/loginForm";
 	}
 	/*
