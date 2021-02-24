@@ -74,7 +74,9 @@
 	</div>
 	
 	<div class="container" style ="background-color:#f1f1f1">
+		<!--
 		<button type="button" class="cancel">취소</button>
 		<span class="forget"><a href='#'>아이디</a> / <a href='#'>비밀번호</a>를 잊으셨습니까?</span>
+		-->
 	</div>
 </form>

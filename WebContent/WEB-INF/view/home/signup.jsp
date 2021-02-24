@@ -100,13 +100,14 @@ a {
 		<input type ="text" placeholder= "이메일를 입력해주세요" name ="email" required>
     	
 		<hr>
+		<!--
 		<p>계정을 생성함으로써 저희의 <a href="#" style="color:dodgerblue">약관 및 개인정보 보호 정책</a>에</p>
 		<p>동의하는것입니다.</p>
-		
+		-->
 		<button type="submit" class="registerbtn">회원가입</button>
 
 		<div class="signin">
-    		<p>이미 계정이 있습니까? <a href="#">로그인</a></p>
+    		<p>이미 계정이 있습니까? <a href="/home/loginform.do">로그인</a></p>
  		</div>
  	</div>
 </form>

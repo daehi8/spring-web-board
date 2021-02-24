@@ -44,14 +44,25 @@ input[type=submit]:hover {
 }
 </style>
 </head>
-<c:if test="${sessionScope.sessionId == null}">
-	<script>
-		arlet="로그인해야 작성가능합니다.";
-		window.loacation="/home/main.do";
-	</script>
-</c:if>
 <body>
-
+<script>
+	function check(){
+		var form = document.writeform;
+		
+		if(form.subject.value == ''){
+			alert('제목을 입력해주세요.');
+			form.after.focus();
+			return false;
+		}
+		
+		if(form.content.value == ''){
+			alert('내용을 입력해주세요.');
+			form.after.focus();
+			return false;
+		}
+		form.submit();
+	}
+</script>
 <h3>글쓰기</h3>
 
 <div class="container">
@@ -77,7 +88,7 @@ input[type=submit]:hover {
 	    <label for="content">내용</label>
 	    <textarea id="content" name="content" placeholder="내용을 적어주세요" style="height:200px"></textarea>
 	
-	    <input type="submit" value="글쓰기">
+	    <button type="button" onclick="check();">글쓰기</button>
 	</form>
 </div>
 </body>

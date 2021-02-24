@@ -55,7 +55,7 @@
 								<img src="<c:url value="/resource/image/level.gif" />" width="${5 * article.re_level}">
 							</c:if>
 							<%-- 제목 클릭시 내용 확인 --%>
-							<a class ="subject" href ="/home/board/contents.do?no=${article.no}&pageNum=${page.currentPage}&number=${page.number}">
+							<a class ="subject" href ="/home/board/contents.do?no=${article.no}&pageNum=${page.currentPage}&number=${number}">
 							${article.subject}</a>		
 							<%-- 조회수가 20 이상일시 이미지 표시 --%>
 							<c:if test ="${article.readcount >= 20}">

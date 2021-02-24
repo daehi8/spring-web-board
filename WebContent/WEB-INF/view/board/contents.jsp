@@ -14,7 +14,7 @@
 .container{
 	margin : 0 auto;
 	text-align : left;
-	width : 1000px;
+	width : 100%;
 }
 h1{
 	text-align : center;
@@ -56,33 +56,27 @@ button.btn-default:hover{
 <body>
 <form>
 <table>
-	<tr>
-		<td class="hd">글번호</td>
-		<%--
-		num이 시퀀스값을 포함해 삭제된 글의 값까지 가지고 있어 제대로 표시되지 않음.
-		<td><%=article.getNum() %></td>
-		--%>
-		<td>${number}</td>
-		<td class="hd">조회수</td>
-		<td>${dto.readcount}</td>
-	</tr>
 	<tr >
 		<td class="hd">작성자</td>
 		<td>${id}</td>
 		<td class="hd">작성일</td>
 		<td><fmt:formatDate value="${dto.reg_date}" type="both"/></td>
+		
 	</tr>
 	<tr>
 		<td class="hd">글제목</td>
 		<td colspan="3">${dto.subject}</td>
 	</tr>
-	<c:if test="${fileDTO.orgname != null}">
 		<tr>
-			<td colspan="3">
-				<a href="/home/file/download.do?no=${fileDTO.no}">${fileDTO.orgname}</a>
+			<td class="hd">파일</td>
+			<td>
+				<c:if test="${fileDTO.orgname != null}">
+					<a href="/home/file/download.do?no=${fileDTO.no}">${fileDTO.orgname}</a>
+				</c:if>
 			</td>
+			<td class="hd">조회수</td>
+			<td>${dto.readcount}</td>
 		</tr>
-	</c:if>
 	<tr>
 		<td class="hd">글내용</td>
 		<td colspan="3"><pre>${dto.content}</pre></td>

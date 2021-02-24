@@ -32,7 +32,6 @@ public class ReplyBean {
 	private ReplyDTO replyDTO = null;
 	
     @RequestMapping("listreply.do") //댓글 리스트
-
     public @ResponseBody List getReplyList(int boardNo) throws Exception{
         return replyDAO.getReply(boardNo);
     }

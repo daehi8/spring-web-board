@@ -56,7 +56,6 @@ public class BoardBean {
 	
 	@RequestMapping("contents.do")
 	public String Contents(@RequestParam(defaultValue ="1") int pageNum,
-			int number,
 			BoardDTO boardDto,
 			Model model) throws Exception {
 		boardDto = boardDAO.getArticle(boardDto.getNo());
@@ -66,7 +65,6 @@ public class BoardBean {
 		model.addAttribute("id", boardDAO.selectMemId(boardDto.getMember_no()));
 		model.addAttribute("dto", boardDto);
 		model.addAttribute("pageNum", pageNum);
-		model.addAttribute("number", number);
 		model.addAttribute("replyList", replyDAO.getReply(boardDto.getNo()));
 		return "board/contents";
 	}
