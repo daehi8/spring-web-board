@@ -10,48 +10,7 @@
 
 <link href="<c:url value="/resource/css/write.css" />" rel="stylesheet">
 <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
-<style>
-.container{
-	margin : 0 auto;
-	text-align : left;
-	width : 100%;
-}
-h1{
-	text-align : center;
-}
-.input-group{
-	width : 100%;
-	border-collapse: collapse;
-}
-.commentList{
-	float:left;
-	width : 100%;
-}
-.form-control{
-	float:left;
-	width : 93%;
-	height : 70px;
-}
-.input-insert{
-	float:left;
-	width : 7%;
-}
-button.btn-default{
-	cursor : pointer;
-	text-decoration : none;
-	border: 2px solid #e7e7e7;
-	padding : 5px 10px;
-	transition-duration : 0.4s;
-	background-color : white;
-	color : black;
-	display : inlin-block;	
-}
 
-button.btn-default:hover{
-	background-color: #e7e7e7;
-}
-
-</style>
 </head>
 <body>
 <form>
