@@ -28,7 +28,7 @@
 			</div>
 		</c:if>
 		<c:if test="${fileList[status.index].savename == 'nofile'}"></c:if>
-		<p>${article.content}</p>
+		<pre>${article.content}</pre>
     </div>
     </c:forEach>
 </body>
