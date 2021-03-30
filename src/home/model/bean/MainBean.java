@@ -20,12 +20,14 @@ import home.model.service.FileService;
 @RequestMapping("/")
 public class MainBean {
 	
+	// 메인페이지
 	@RequestMapping("main.do")
 	public String Main() throws Exception {
 		
 		return "home/main";
 	}
-
+	
+	// 에러페이지
 	@RequestMapping("/accessdenied")
 	public String accessDeniedPage() throws Exception {
 	    return "error/accessDenied";

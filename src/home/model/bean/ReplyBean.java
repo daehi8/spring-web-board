@@ -31,19 +31,23 @@ public class ReplyBean {
 	@Autowired
 	private ReplyDTO replyDTO = null;
 	
-    @RequestMapping("listreply.do") //댓글 리스트
+	//댓글 리스트
+    @RequestMapping("listreply.do")
     public @ResponseBody List getReplyList(int boardNo) throws Exception{
         return replyDAO.getReply(boardNo);
     }
 
-    @RequestMapping("insertreply.do") //댓글 작성 
+    //댓글 작성 
+    @RequestMapping("insertreply.do")
     public @ResponseBody int insertReply(ReplyDTO replyDTO, HttpServletRequest request) throws Exception{
 
     	String sessionId = replyDTO.getWriter();
         int member_no = boardDAO.selectNoCheck(sessionId);
         
+        // 줄바꿈을 코드로 변경해서 DB에 저장
         String content = replyDTO.getContent().replace("\r\n","<br>");
         
+        // 댓글 내용, 작성자, IP, 회원고유번호를 DTO에 저장
         replyDTO.setContent(content);
         replyDTO.setWriter(sessionId);
         replyDTO.setIp(request.getRemoteAddr());
@@ -52,15 +56,20 @@ public class ReplyBean {
         return replyDAO.insertReply(replyDTO);
     }
     
-    @RequestMapping("updatereply.do") //댓글 수정  
+    //댓글 수정 
+    @RequestMapping("updatereply.do")
     public @ResponseBody int updateReply(ReplyDTO replyDTO) throws Exception{
         
         return replyDAO.updateReply(replyDTO);
     }
 
-    
-    @RequestMapping("deletereply/{no}.do") //댓글 삭제  
+    //댓글 삭제  
+    @RequestMapping("deletereply/{no}.do")
     public @ResponseBody int deleteReply(@PathVariable int no) throws Exception{
+    	
+    	// 댓글 삭제처리
+    	// 댓글에 답글이 있을경우 내용만 지우기
+    	// 마지막 댓글 삭제시 모두 삭제 
         int check = replyDAO.deleteCheck(no);
         int result = -1;
         if(check == 1) {

@@ -30,74 +30,94 @@ public class MemberBean {
 	@Autowired
 	private MemberDTO memberDto = null;
 	
+	// 회원탈퇴 폼페이지
 	@RequestMapping("deleteform.do")
 	public String DeleteForm(Model model) {
 		
 		return "home/deleteForm";
 	}
 	
+	// 회원탈퇴 진행페이지
 	@RequestMapping("deletepro.do")
 	public String DeletePro(MemberDTO memberDto,
 			HttpSession session,
 			Model model) {
+		// 회원정보 확인 및 암호화된 비밀번호 확인
 		boolean result = memberDAO.loginCheck(memberDto);
 		MemberDTO check = memberDAO.myInfo(memberDto.getId());
 		boolean passMatch = passEncoder.matches(memberDto.getPw(), check.getPw());
+		
+		// 회원정보 삭제, 세션 삭제, 자동로그인 취소
 		if(result && passMatch) {
 			memberDAO.deleteMember(memberDto);
 			session.invalidate();
 			SecurityContextHolder.getContext().setAuthentication(null);
 		}
+		
+		// 비밀번호 확인 결과 저장
 		model.addAttribute("result", passMatch);
-		System.out.println(passMatch);
-		System.out.println(result);
 		return "home/deletePro";
 	}
 	
+	// 회원정보 수정페이지
 	@RequestMapping("myinfo.do")
 	public String MyInfo(String id, Model model) {
+		// 아이디에 맞는 회원정보 불러오기
 		memberDto = memberDAO.myInfo(id);
+		// 회원 정보 저장
 		model.addAttribute("dto", memberDto);
 		
 		return "home/myInfo";
 	}
 	
+	// 회원정보 수정 진행페이지
 	@RequestMapping("updatepro.do")
 	public String UpdatePro(MemberDTO memberDto) {
-		String inputPw = memberDto.getPw();
-		String pw = passEncoder.encode(inputPw);
-		memberDto.setPw(pw);
+//		비밀번호 변경기능 삭제
+//		String inputPw = memberDto.getPw();
+//		String pw = passEncoder.encode(inputPw);
+//		memberDto.setPw(pw);
 		memberDAO.updateMember(memberDto);
 		
 		return "home/updatePro";
 	}
 	
+	// 회원가입 폼페이지
 	@RequestMapping("signup.do")
 	public String Signup() {
 		return "home/signup";
 	}
 	
+	// 회원가입 진행페이지
 	@RequestMapping("signuppro.do")
 	public String SignupPro(MemberDTO memberDto, 
 			Model model) {
+		
+		// 비밀번호 암호화
 		String inputPw = memberDto.getPw();
 		String pw = passEncoder.encode(inputPw);
 		memberDto.setPw(pw);
 		
+		// 중복아이디 확인
 		boolean result = memberDAO.selectId(memberDto);
 		if(result == false) {
 			memberDAO.insertMember(memberDto);
-		}		
+		}
+		
+		// 중복아이디 확인 결과 저장
 		model.addAttribute("result", result);
 		
 		return "home/signupPro";
 	}
 	
+	// 로그인 폼페이지
 	@RequestMapping("loginform.do")
 	public String LoginForm() {		
 		return "home/loginForm";
 	}
 	/*
+	 *  로그인 진행은 스프링 시큐리티로 대체
+	 * 
 	@RequestMapping(value="loginpro.do", method=RequestMethod.POST)
 	public String LoginPro(MemberDTO memberDto, 
 			Model model, 
@@ -176,9 +196,4 @@ public class MemberBean {
 		return "home/cookiePro";
 	}
 	*/
-	@RequestMapping("mypage.do")
-	public String MyPage() {
-		return "home/myPage";
-	}
-	
 }
